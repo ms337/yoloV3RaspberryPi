@@ -1,6 +1,7 @@
 #ifndef BOUNDINGBOX
 #define BOUNDINGBOX
 #include <iostream>
+#include "Coordinate.h"
 class BoundingBox{
 private:
   Coordinate topLeft;
