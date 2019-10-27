@@ -17,5 +17,5 @@ public:
   void setTR(Coordinate tr);
   void setBL(Coordinate bl);
   void setBR(Coordinate br);
-}
+};
 #endif

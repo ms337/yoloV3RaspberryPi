@@ -9,5 +9,5 @@ private:
 public:
   std::String getID()
   cv::viz::Color getColour();
-}
+};
 #endif

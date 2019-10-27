@@ -10,5 +10,5 @@ public:
   std::string getType();
   void setCoords(BoundingBox box);
   void setType(std::string type)
-}
+};
 #endif
