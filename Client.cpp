@@ -24,7 +24,21 @@ Client::Client(/* args */)
 {
     zonesCollection = ZonesCollection();
     objectsCollection = ObjectsCollection();
-    feedCV = this->getFeed();
+    feedCV = new VideoCapture();
+
+    if (!feedCV.open(0))
+        exit(-1);
+
+    for (;;)
+    {
+        Mat frame;
+        feedCV >> frame;
+        if (frame.empty())
+            break; // end of video stream
+        imshow("this is you, smile! :)", frame);
+        if (waitKey(10) == 27)
+            break; // stop feedCVturing by pressing ESC
+    }
 }
 
 Client::~Client()
@@ -48,20 +62,4 @@ VideoCapture *Client::getFeed()
     VideoCapture cap;
     // open the default camera, use something different from 0 otherwise;
     // Check VideoCapture documentation.
-    if (!cap.open(0))
-        exit(-1);
-
-    for (;;)
-    {
-        Mat frame;
-        cap >> frame;
-        if (frame.empty())
-            break; // end of video stream
-        imshow("this is you, smile! :)", frame);
-        if (waitKey(10) == 27)
-            break; // stop capturing by pressing ESC
-    }
-    // the camera will be closed automatically upon exit
-    // cap.close();
-    return &cap;
 }
