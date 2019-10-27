@@ -9,7 +9,7 @@ public:
     ~Session();
 };
 
-Session::Session(/* args */)
+Session::Session()
 {
 }
 
