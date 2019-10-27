@@ -1,18 +1,14 @@
-
-
-class Session
-{
+#ifndef SESSION
+#define SESSION
+#include "ModelOutput.h"
+#include "SessionData.h"
+#include "TrackingEngine.h"
+#include <iostream>
+class Session{
 private:
-    /* data */
+  int timeInterval;
 public:
-    Session(/* args */);
-    ~Session();
+  ModelOutput runModel(cv::VideoCapture video);
+  void buildSessionData();
 };
-
-Session::Session(/* args */)
-{
-}
-
-Session::~Session()
-{
-}
+#endif
