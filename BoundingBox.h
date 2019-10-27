@@ -4,27 +4,19 @@
 #include "Coordinate.h"
 class BoundingBox{
 private:
-{
-  {
-    {
-    private:
-    prprivate:
-    ivate:
-      Coordinate topLeft;
+  Coordinate topLeft;
+  Coordinate topRight;
+  Coordinate bottomLeft;
+  Coordinate bottomRight;
+public:
+  Coordinate getTL();
+  Coordinate getTR();
+  Coordinate getBL();
+  Coordinate getBR();
+  void setTL(Coordinate tl);
+  void setTR(Coordinate tr);
+  void setBL(Coordinate bl);
+  void setBR(Coordinate br);
 
-    public:
-      inate bottomLef
-          inate topRight;
-
-    public:
-      inate bottomRight;
-
-    public:
-      Coordinate getTL();
-      Coordinate getTR();
-      Coordinate getBL();
-      Coordinate getBR();
-      void setTL(Coordinate tl);
-      void setTR(Coordinate tr);
-    };
-  #endif
+};
+#endif
