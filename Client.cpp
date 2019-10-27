@@ -1,25 +1,27 @@
 #include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
 using namespace cv;
 
-int main()
+int main(int argc, char **argv)
 {
-    VideoCapture cap(0);
-    if (!capisOpened())
-    {
-        cout << "Change the camera port number";
-        return -1;
-    }
-    while (true)
+    VideoCapture cap;
+    // open the default camera, use something different from 0 otherwise;
+    // Check VideoCapture documentation.
+    if (!cap.open(0))
+        return 0;
+    for (;;)
     {
         Mat frame;
-        cap.read(frame);
-        imshow("camera", frame);
-        if (waitKey(30) == 27)
-        {
-            return 0;
-        }
+        cap >> frame;
+        if (frame.empty())
+            break; // end of video stream
+        imshow("this is you, smile! :)", frame);
+        if (waitKey(10) == 27)
+            break; // stop capturing by pressing ESC
     }
+    // the camera will be closed automatically upon exit
+    // cap.close();
+    return 0;
 }
