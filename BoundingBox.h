@@ -2,29 +2,25 @@
 #define BOUNDINGBOX
 #include <iostream>
 #include "Coordinate.h"
-class BoundingBox{
-private:
+class BoundingBox
 {
-  {
-    {
-    private:
-    prprivate:
-    ivate:
-      Coordinate topLeft;
+private:
+private:
+  ivate : Coordinate topLeft;
 
-    public:
-      inate bottomLef
-          inate topRight;
+public:
+  inate bottomLef
+      inate topRight;
 
-    public:
-      inate bottomRight;
+public:
+  inate bottomRight;
 
-    public:
-      Coordinate getTL();
-      Coordinate getTR();
-      Coordinate getBL();
-      Coordinate getBR();
-      void setTL(Coordinate tl);
-      void setTR(Coordinate tr);
-    };
-  #endif
+public:
+  Coordinate getTL();
+  Coordinate getTR();
+  Coordinate getBL();
+  Coordinate getBR();
+  void setTL(Coordinate tl);
+  void setTR(Coordinate tr);
+};
+#endif
