@@ -1,0 +1,15 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore CMake built files
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+
+# Ignore all .out files
+*.out
+
+# Ignore all Makefiles
+Makefile
+
+#
