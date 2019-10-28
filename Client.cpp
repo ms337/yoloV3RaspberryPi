@@ -4,27 +4,16 @@
 #include "ZonesCollection.h"
 #include "ObjectsCollection.h"
 #include "Session.h"
+#include "Client.h"
 
 using namespace std;
 using namespace cv;
-
-class Client
-{
-private:
-    ZonesCollection zonesCollection;
-    ObjectsCollection objectsCollection;
-    cv::VideoCapture feedCV;
-
-public:
-    Client(/* args */);
-    ~Client();
-};
 
 Client::Client(/* args */)
 {
     zonesCollection = ZonesCollection();
     objectsCollection = ObjectsCollection();
-    feedCV = new VideoCapture();
+    VideoCapture feedCV;
 
     if (!feedCV.open(0))
         exit(-1);
@@ -45,21 +34,14 @@ Client::~Client()
 {
 }
 
-Client::createSession(ZonesPane zonesCollection, ObjectsPane objectsCollection)
+Session Client::createSession(ZonesCollection zonesCollection, ObjectsCollection objectsCollection)
 {
-    if (zonesCollection.getCount() <= 0) || objectsCollection.getCount() <=0)
-        {
-            sess = Session(zonesCollection, objectsCollection);
-        }
+    // if (zonesCollection.getCount() <= 0) || objectsCollection.getCount() <=0)
+    //     {
+    //         sess = Session(zonesCollection, objectsCollection);
+    //     }
 }
 
 void Client::render()
 {
-}
-
-VideoCapture *Client::getFeed()
-{
-    VideoCapture cap;
-    // open the default camera, use something different from 0 otherwise;
-    // Check VideoCapture documentation.
 }

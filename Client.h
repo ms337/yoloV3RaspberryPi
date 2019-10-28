@@ -17,8 +17,7 @@ public:
     Client(/* args */);
     ~Client();
     void render();
-    Session createSession();
-    cv::VideoCapture getFeed();
+    Session createSession(ZonesCollection zonesCollection, ObjectsCollection objectsCollection);
     int getData();
 };
 #endif
