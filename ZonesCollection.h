@@ -5,11 +5,11 @@
 class ZonesCollection
 {
 private:
-  ZoneCollectionEntry *listOfZone;
+  ZonesCollectionEntry *listOfZone;
   int maxZonesAllowed;
 
 public:
-  ZoneCollectionEntry *getListOfZones();
+  ZonesCollectionEntry *getListOfZones();
   int createZonePaneEntry();
   int removeZonePaneEntry();
 };

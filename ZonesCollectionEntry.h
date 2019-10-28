@@ -7,10 +7,10 @@ class ZonesCollectionEntry
 {
 private:
   Zone zone;
-  viz::Color regionColour;
+  // cv::viz::Color regionColour;
 
 public:
-  std::String getID();
-  viz::Color getColour();
+  std::string getID();
+  // cv::viz::Color getColour();
 };
 #endif
