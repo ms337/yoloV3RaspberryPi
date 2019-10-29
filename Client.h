@@ -9,8 +9,8 @@
 class Client
 {
 private:
-    ZonesCollection zonesCollection;
-    ObjectsCollection objectsCollection;
+    // ZonesCollection zonesCollection;
+    // ObjectsCollection objectsCollection;
     cv::VideoCapture feedCV;
 
 public:

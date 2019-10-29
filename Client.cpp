@@ -2,17 +2,16 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include "ZonesCollection.h"
-#include "ObjectsCollection.h"
 #include "Session.h"
 #include "Client.h"
 
 using namespace std;
 using namespace cv;
 
-Client::Client(/* args */)
+Client::Client()
 {
-    zonesCollection = ZonesCollection();
-    objectsCollection = ObjectsCollection();
+    // zonesCollection = ZonesCollection();
+    // objectsCollection = ObjectsCollection();
     VideoCapture feedCV;
 
     if (!feedCV.open(0))
