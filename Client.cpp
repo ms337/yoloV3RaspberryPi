@@ -1,4 +1,3 @@
-/**
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "mainwindow.h"
@@ -19,13 +18,7 @@ Client::Client()
 
     if (!feedCV.open(0))
         exit(-1);
-
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-
-    return a.exec();
-
+        
     for (;;)
     {
         Mat frame;
@@ -53,4 +46,3 @@ Session Client::createSession(ZonesCollection zonesCollection, ObjectsCollection
 void Client::render()
 {
 }
-**/

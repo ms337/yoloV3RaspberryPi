@@ -11,5 +11,5 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 include_directories( ${Qt5_INCLUDE_DIRS} )
 
-add_executable( Main.out Main.cpp Client.cpp mainwindow.h mainwindow.cpp mainwindow.ui)
+add_executable( Main.out Main.cpp Client.cpp mainwindow.h mainwindow.cpp mainwindow.ui objectlist.h objectlist.cpp zonelist.h zonelist.cpp)
 target_link_libraries( Main.out ${OpenCV_LIBS} Qt5::Core Qt5::Gui Qt5::Widgets)
