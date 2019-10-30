@@ -21,10 +21,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
     ui->graphicsView->setScene(new QGraphicsScene(this));
+    QPixmap image("./akul.png");
+    QPixmap pixmap();
     ui->graphicsView->scene()->addItem(&pixmap);
-    //QPixmap image("./akul.png");
+    
 
-    //QPainter painter(&image);
+    QPainter painter(&image);
     painter.setPen(QPen(Qt::cyan, 5));
     painter.drawLine(50, 50, 200, 200);
     painter.drawLine(200, 200, 200, 400);
