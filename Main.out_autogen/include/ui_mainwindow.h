@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.7
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListView>
@@ -36,6 +37,7 @@ public:
     QPushButton *pushButton_2;
     QWidget *camera;
     QLabel *label;
+    QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -68,10 +70,13 @@ public:
         label = new QLabel(camera);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 10, 571, 281));
+        graphicsView = new QGraphicsView(camera);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(-5, 1, 591, 291));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 825, 27));
+        menuBar->setGeometry(QRect(0, 0, 825, 28));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -87,10 +92,10 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         object->setText(QString());
-        pushButton->setText(QApplication::translate("MainWindow", "Add New Zone", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Add New Object", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Add New Zone", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Add New Object", 0));
         label->setText(QString());
     } // retranslateUi
 

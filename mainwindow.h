@@ -21,8 +21,11 @@ private slots:
     
     void on_pushButton2_clicked();
     
+    
 private:
     Ui::MainWindow *ui;
+    void closeEvent(QCloseEvent* event);
+
 };
 
 #endif // MAINWINDOW_H
