@@ -4,6 +4,7 @@
 #include "ZonesCollection.h"
 #include "Session.h"
 #include "Client.h"
+#include "mainwindow.h"
 
 using namespace std;
 using namespace cv;
