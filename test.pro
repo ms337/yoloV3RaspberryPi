@@ -15,7 +15,9 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     objectlist.cpp \
-    zonelist.cpp
+    zonelist.cpp \
+    Client.cpp \
+    Main.cpp
 
 HEADERS  += mainwindow.h \
     objectlist.h \

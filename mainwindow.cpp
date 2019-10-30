@@ -39,9 +39,4 @@ void MainWindow::on_pushButton2_clicked()
     zonelist.exec();
 }
 
-void MainWindow::ton_pushButton_2_clicked()
-{
-    ;
-}
-
 //QCamera camera = new QCamera;
