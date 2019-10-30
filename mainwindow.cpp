@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
 
-    QPixmap image("/home/pi/Documents/test/akul.png");
+    QPixmap image("./akul.png");
 
     QPainter painter(&image);
     painter.setPen(QPen(Qt::cyan, 5));
