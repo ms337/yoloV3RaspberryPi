@@ -39,7 +39,7 @@ void MainWindow::on_pushButton2_clicked()
     zonelist.exec();
 }
 
-void on_pushButton_2_clicked()
+void MainWindow::ton_pushButton_2_clicked()
 {
     ;
 }
