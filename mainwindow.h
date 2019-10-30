@@ -1,7 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow.h>
+#include <QMainWindow>
+#include "ui_mainwindow.h"
+#include "objectlist.h"
+#include "zonelist.h"
+#include <QPixmap>
+#include <QPainter>
 
 namespace Ui
 {

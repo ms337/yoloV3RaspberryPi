@@ -18,6 +18,7 @@ Client::Client()
     if (!feedCV.open(0))
         exit(-1);
 
+    MainWindow();
     for (;;)
     {
         Mat frame;

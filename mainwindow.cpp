@@ -1,9 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "objectlist.h"
-#include "zonelist.h"
-#include <QPixmap>
-#include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
@@ -39,7 +34,7 @@ void MainWindow::on_pushButton2_clicked()
     zonelist.exec();
 }
 
-void on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked()
 {
     ;
 }
