@@ -1,9 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QMainWindow.h>
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
