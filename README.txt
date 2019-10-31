@@ -1,3 +1,5 @@
+Submission Code in branch Stage3SubmFinal, and also attached.
+
 Following are the steps to setup and build the program:
 
 0. Setup RaspberryPi VM. Ensure you have make and cmake installed. You can do so by running 'cmake' and 'make' respectively.  
@@ -41,7 +43,7 @@ Following are the steps to setup and build the program:
 
 3. Git clone the project repository.
     1. cd into the repository.
-    1.1 'git checkout GUI'
+    1.1 'git checkout Stage3SubmFinal'
     2. Run cmake . In all probability this will give your errors. Essentially these are errors about linking the library files.
         If you have no errors, skip ahead. 
 
