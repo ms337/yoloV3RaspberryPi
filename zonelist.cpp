@@ -40,12 +40,16 @@ ZoneList::~ZoneList()
 
 /**
  * @brief 
+ * Accepts the values of the text editor as the coordinates for a zone
  * 
  */
 void ZoneList::on_pushButton_clicked()
 {
+    //Get the array of numbers
     QString coords = ui->textEdit->toPlainText();
     QStringList crds = coords.split(",");
+
+    //If the input format is correct then set those coordinates
     if (crds.length() == 8) {
         for(int i=0; i<8; i++) {
             coordsArr[i] = crds[i];
@@ -53,6 +57,8 @@ void ZoneList::on_pushButton_clicked()
         }
         this->close();
     } else {
+
+        //If the input format is incorrect, display a messagebox
         QMessageBox::warning(
             this,
             tr("Application Name"),
