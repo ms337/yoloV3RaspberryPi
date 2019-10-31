@@ -26,28 +26,30 @@ void MainWindow::on_pushButton_clicked()
 {    
     QPixmap image("./akul.png");
 
-    ZoneList zonelist;
-    zonelist.exec();
     
-    QPainter painter(&image);
-    painter.setPen(QPen(Qt::cyan, 5));
-
-    QString *coordsArr;
-    coordsArr = zonelist.getCoords();
     
-    int intCoords[8];
+    for(int i=0;i<3;i++){
+        ZoneList zonelist;
+        zonelist.exec();
     
-    for (int i = 0; i < 8; i++) {
-        std::cout << coordsArr[i].toStdString() << std::endl;
-        bool ok;
-        intCoords[i] = coordsArr[i].toInt(&ok, 10);
-        //std::cout << intCoords[i] << std::endl;
+        QPainter painter(&image);
+        painter.setPen(QPen(Qt::cyan, 5));
+        QString *coordsArr;
+        coordsArr = zonelist.getCoords();
+        
+        int intCoords[8];
+        
+        for (int i = 0; i < 8; i++) {
+            std::cout << coordsArr[i].toStdString() << std::endl;
+            bool ok;
+            intCoords[i] = coordsArr[i].toInt(&ok, 10);
+            //std::cout << intCoords[i] << std::endl;
+        }
+        painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
+        painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
+        painter.drawLine(intCoords[6], intCoords[7], intCoords[4], intCoords[5]);
+        painter.drawLine(intCoords[4], intCoords[5], intCoords[0], intCoords[1]);
     }
-    painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
-    painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
-    painter.drawLine(intCoords[6], intCoords[7], intCoords[4], intCoords[5]);
-    painter.drawLine(intCoords[4], intCoords[5], intCoords[0], intCoords[1]);
-
     ui->label->setPixmap(image);
     ui->label->setScaledContents(true);
 }

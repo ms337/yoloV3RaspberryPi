@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.7
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -33,7 +33,7 @@ public:
     QListView *zonesList;
     QLabel *object;
     QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *pushButton2;
     QWidget *camera;
     QLabel *label;
     QMenuBar *menuBar;
@@ -59,9 +59,9 @@ public:
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(630, 0, 131, 31));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(230, 290, 131, 31));
+        pushButton2 = new QPushButton(centralWidget);
+        pushButton2->setObjectName(QStringLiteral("pushButton2"));
+        pushButton2->setGeometry(QRect(230, 290, 131, 31));
         camera = new QWidget(centralWidget);
         camera->setObjectName(QStringLiteral("camera"));
         camera->setGeometry(QRect(0, 0, 581, 291));
@@ -87,10 +87,10 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         object->setText(QString());
-        pushButton->setText(QApplication::translate("MainWindow", "Add New Zone", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Add New Object", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Add New Zone", 0));
+        pushButton2->setText(QApplication::translate("MainWindow", "Add New Object", 0));
         label->setText(QString());
     } // retranslateUi
 
