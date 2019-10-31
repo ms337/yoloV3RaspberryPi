@@ -1,4 +1,13 @@
-#include <iostream>
+/**
+ * @file mainwindow.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2019-10-31
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "objectlist.h"
@@ -6,6 +15,11 @@
 #include <QPixmap>
 #include <QPainter>
 
+/**
+ * @brief Construct a new Main Window:: Main Window object
+ * 
+ * @param parent 
+ */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
                                
@@ -17,11 +31,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->label->setScaledContents(true);
 }
 
+/**
+ * @brief Destroy the Main Window:: Main Window object
+ * 
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+/**
+ * @brief 
+ * 
+ */
 void MainWindow::on_pushButton_clicked()
 {    
     QPixmap image("./camera.png");
@@ -61,6 +83,10 @@ void MainWindow::on_pushButton_clicked()
     ui->label->setScaledContents(true);
 }
 
+/**
+ * @brief 
+ * 
+ */
 void MainWindow::on_pushButton2_clicked()
 {
     ObjectList objlist;

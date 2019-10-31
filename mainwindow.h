@@ -1,12 +1,29 @@
-#ifndef MAINWINDOW_H
+/**
+ * @file mainwindow.h
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2019-10-31
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #define MAINWINDOW_H
 #include <QMainWindow>
 
+/**
+ * @brief 
+ * 
+ */
 namespace Ui
 {
 class MainWindow;
 }
 
+/**
+ * @brief 
+ * 
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
