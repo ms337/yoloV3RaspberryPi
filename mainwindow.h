@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2019
  * 
  */
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
 
