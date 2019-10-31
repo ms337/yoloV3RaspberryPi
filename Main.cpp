@@ -1,5 +1,6 @@
+
 /**
- * @file Main.cpps
+ * @file Main.cpp
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -8,6 +9,7 @@
  * @copyright Copyright (c) 2019
  * 
  */
+#include "Client.h"
 #include <stdio.h>
 #include "mainwindow.h"
 #include <QApplication>
