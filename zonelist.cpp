@@ -3,7 +3,7 @@
 #include "ui_zonelist.h"
 #include <QDebug>
 
-QStringList strList;
+QString coordsArr[8];
 
 ZoneList::ZoneList(QWidget *parent) :
     QDialog(parent),
@@ -19,12 +19,15 @@ ZoneList::~ZoneList()
 
 void ZoneList::on_pushButton_clicked()
 {
-    QString coordsArr[8];
     QString coords = ui->textEdit->toPlainText();
     QStringList crds = coords.split(",");
-    for(int i=0; i<crds.length(); i++) {
-        ui->textBrowser->setText(crds[i]);
+    for(int i=0; i<8; i++) {
         coordsArr[i] = crds[i];
-        std::cout << coordsArr[i].toStdString() << std::endl;
+        ui->textBrowser->setText(coordsArr[i]);
     }
+    this->close();
+}
+
+QString* ZoneList::getCoords() {
+    return coordsArr;
 }

@@ -20,6 +20,9 @@ private slots:
 
 private:
     Ui::ZoneList *ui;
+    
+public:
+    QString* getCoords();
 };
 
 #endif // ZONELIST_H
