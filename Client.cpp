@@ -1,3 +1,14 @@
+/**
+ * @file Client.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2019-10-31
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "mainwindow.h"
@@ -10,10 +21,12 @@
 using namespace std;
 using namespace cv;
 
+/**
+ * @brief Construct a new Client:: Client object
+ * 
+ */
 Client::Client()
 {
-    // zonesCollection = ZonesCollection();
-    // objectsCollection = ObjectsCollection();
     VideoCapture feedCV;
 
     if (!feedCV.open(0))
@@ -32,18 +45,33 @@ Client::Client()
     }
 }
 
+
+/**
+ * @brief Destroy the Client:: Client object
+ * 
+ */
 Client::~Client()
 {
 }
 
+
+/**
+ * @brief 
+ * 
+ * @param zonesCollection 
+ * @param objectsCollection 
+ * @return Session 
+ */
 Session Client::createSession(ZonesCollection zonesCollection, ObjectsCollection objectsCollection)
 {
-    // if (zonesCollection.getCount() <= 0) || objectsCollection.getCount() <=0)
-    //     {
-    //         sess = Session(zonesCollection, objectsCollection);
-    //     }
+    
 }
 
+
+/**
+ * @brief 
+ * 
+ */
 void Client::render()
 {
 }
