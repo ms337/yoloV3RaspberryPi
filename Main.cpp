@@ -24,10 +24,13 @@
 
 int main(int argc, char *argv[])
 {
+
+    //Creates the gui
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     
+    //Creates the camera feed window
     Client client = Client();
     client.render();
 
