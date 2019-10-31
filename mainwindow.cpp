@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                 
 {
     ui->setupUi(this);
-    QPixmap image("./akul.png");
+    QPixmap image("./camera.png");
     ui->label->setPixmap(image);
     ui->label->setScaledContents(true);
 }
@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {    
-    QPixmap image("./akul.png");
+    QPixmap image("./camera.png");
 
     
     
