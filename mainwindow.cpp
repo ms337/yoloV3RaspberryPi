@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2019
  * 
  */
+#include <iostream>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "objectlist.h"
