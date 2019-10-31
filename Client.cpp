@@ -18,7 +18,7 @@ Client::Client()
 
     if (!feedCV.open(0))
         exit(-1);
-        
+
     for (;;)
     {
         Mat frame;
@@ -27,7 +27,7 @@ Client::Client()
             break; // end of video stream
         imshow("this is you, smile! :)", frame);
         if (waitKey(10) == 27)
-            break; // stop feedCVturing by pressing ESC
+            break; // stop feedCV by pressing ESC
     }
 }
 
