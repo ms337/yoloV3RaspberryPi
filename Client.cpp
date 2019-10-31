@@ -23,6 +23,7 @@ using namespace cv;
 
 /**
  * @brief Construct a new Client:: Client object
+ * Set up the camera feed
  * 
  */
 Client::Client()
@@ -38,10 +39,16 @@ Client::Client()
         feedCV >> frame;
         if (frame.empty())
             break; // end of video stream
-        imshow("this is you, smile! :)", frame);
+
+        //Shows each frame
+        imshow("Say Cheese!", frame);
+
+        //Saves the frame to a file that the gui can access
         imwrite("./camera.png",frame);
+
+        // stop feedCVturing by pressing ESC
         if (waitKey(10) == 27)
-            break; // stop feedCVturing by pressing ESC
+            break; 
     }
 }
 
