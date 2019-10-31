@@ -69,7 +69,7 @@ void ZoneList::on_pushButton_clicked()
 
 /**
  * @brief 
- * 
+ * returns the coordinates in the text box
  * @return QString* 
  */
 QString* ZoneList::getCoords() {
