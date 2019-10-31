@@ -19,17 +19,17 @@ Client::Client()
     if (!feedCV.open(0))
         exit(-1);
         
-    //for (;;)
-    //{
+    for (;;)
+    {
         Mat frame;
         feedCV >> frame;
-        //if (frame.empty())
-          //  break; // end of video stream
-        //imshow("this is you, smile! :)", frame);
+        if (frame.empty())
+            break; // end of video stream
+        imshow("this is you, smile! :)", frame);
         imwrite("./camera.png",frame);
-        //if (waitKey(10) == 27)
-          //  break; // stop feedCVturing by pressing ESC
-    //
+        if (waitKey(10) == 27)
+            break; // stop feedCVturing by pressing ESC
+    }
 }
 
 Client::~Client()

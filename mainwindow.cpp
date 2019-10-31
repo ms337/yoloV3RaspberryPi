@@ -26,9 +26,18 @@ void MainWindow::on_pushButton_clicked()
 {    
     QPixmap image("./camera.png");
 
-    
-    
-    for(int i=0;i<3;i++){
+    int loops = 3;
+    try {
+        QString qloops = ui->textEdit->toPlainText();
+        bool loopBool;
+        loops = qloops.toInt(&loopBool, 10);
+        if (loops==0){
+            loops=3;
+        }
+    }
+    catch(...) {}
+    std::cout << loops;
+    for(int i=0;i<loops && i<30;i++){
         ZoneList zonelist;
         zonelist.exec();
     
@@ -40,10 +49,8 @@ void MainWindow::on_pushButton_clicked()
         int intCoords[8];
         
         for (int i = 0; i < 8; i++) {
-            std::cout << coordsArr[i].toStdString() << std::endl;
             bool ok;
             intCoords[i] = coordsArr[i].toInt(&ok, 10);
-            //std::cout << intCoords[i] << std::endl;
         }
         painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
         painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
@@ -59,5 +66,3 @@ void MainWindow::on_pushButton2_clicked()
     ObjectList objlist;
     objlist.exec();
 }
-
-//QCamera camera = new QCamera;
