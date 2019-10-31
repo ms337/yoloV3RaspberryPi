@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,6 +20,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -36,6 +37,9 @@ public:
     QPushButton *pushButton2;
     QWidget *camera;
     QLabel *label;
+    QTextEdit *textEdit;
+    QLabel *label_2;
+    QLabel *label_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -68,6 +72,15 @@ public:
         label = new QLabel(camera);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 10, 571, 281));
+        textEdit = new QTextEdit(centralWidget);
+        textEdit->setObjectName(QStringLiteral("textEdit"));
+        textEdit->setGeometry(QRect(640, 100, 104, 31));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(610, 40, 171, 31));
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(620, 70, 151, 21));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -89,9 +102,11 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         object->setText(QString());
-        pushButton->setText(QApplication::translate("MainWindow", "Add New Zone", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "Add New Zones", 0));
         pushButton2->setText(QApplication::translate("MainWindow", "Add New Object", 0));
         label->setText(QString());
+        label_2->setText(QApplication::translate("MainWindow", "Set how many zones?", 0));
+        label_3->setText(QApplication::translate("MainWindow", "(Default: 3, Max 30)", 0));
     } // retranslateUi
 
 };
