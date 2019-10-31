@@ -1,5 +1,8 @@
 
-
+/**
+ * @brief 
+ * 
+ */
 class Session
 {
 private:
@@ -9,10 +12,18 @@ public:
     ~Session();
 };
 
+/**
+ * @brief Construct a new Session:: Session object
+ * 
+ */
 Session::Session()
 {
 }
 
+/**
+ * @brief Destroy the Session:: Session object
+ * 
+ */
 Session::~Session()
 {
 }
