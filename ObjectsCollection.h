@@ -1,6 +1,14 @@
+/**
+ * @brief 
+ * 
+ */
 #ifndef OBJECTSCOLLECTION
 #define OBJECTSCOLLECTION
 
+/**
+ * @brief 
+ * 
+ */
 class ObjectsCollection
 {
 private:
