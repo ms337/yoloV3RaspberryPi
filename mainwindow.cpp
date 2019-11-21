@@ -34,6 +34,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     painter.drawLine(50, 400, 50, 50);
     ui->label->setPixmap(image);
     ui->label->setScaledContents(true);
+    
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    //ObjectList objlist;
+    //objlist.exec();
+    QPixmap image("./akul.png");
     bool isCamera;
     int cameraIndex = 0;//ui->videoEdit->text().toInt(&isCamera);
     VideoCapture video;
@@ -73,17 +86,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
         }
         qApp->processEvents();
     }
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    ObjectList objlist;
-    objlist.exec();
 }
 
 void MainWindow::on_pushButton2_clicked()
