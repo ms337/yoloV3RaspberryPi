@@ -28,7 +28,7 @@ using namespace cv;
  */
 Client::Client()
 {
-    VideoCapture feedCV;
+    /*VideoCapture feedCV;
 
     if (!feedCV.open(0))
         exit(-1);
@@ -49,7 +49,7 @@ Client::Client()
         // stop feedCVturing by pressing ESC
         if (waitKey(10) == 27)
             break; 
-    }
+    }*/
 }
 
 
