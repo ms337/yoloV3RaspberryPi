@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->graphicsView->setScene(new QGraphicsScene(this));
+    //ui->graphicsView->setScene(new QGraphicsScene(this));
     QPixmap image("./akul.png");
-    QPixmap pixmap();
-    ui->graphicsView->scene()->addItem(&pixmap);
+    //QPixmap pixmap;
+    //ui->graphicsView->scene()->addItem(&image);
     
 
     QPainter painter(&image);
@@ -35,7 +35,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->label->setPixmap(image);
     ui->label->setScaledContents(true);
     bool isCamera;
-    int cameraIndex = ui->videoEdit->text().toInt(&isCamera);
+    int cameraIndex = 0;//ui->videoEdit->text().toInt(&isCamera);
+    VideoCapture video;
     if (isCamera)
     {   
         if (!video.open(cameraIndex))
@@ -49,14 +50,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     }
     else
     {
-        if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
+        /*if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
         {
             QMessageBox::critical(this,
                 "Video Error",
                 "Make sure you entered a correct and supported video file path,"
                 "<br>or a correct RTSP feed URL!");
             return;
-        }   
+        } */  
     }
     Mat frame;
     while (video.isOpened())
@@ -66,7 +67,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
         {
             
             QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
-            pixmap.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+            //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+            image = QPixmap::fromImage(qimg);
+            ui->label->setPixmap(image);
         }
         qApp->processEvents();
     }
@@ -91,7 +94,7 @@ void MainWindow::on_pushButton2_clicked()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-	if (video.isOpened())
+    /*if (video.isOpened())
 	{
 		QMessageBox::warning(this,
 			"Warning",
@@ -101,7 +104,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 	else
 	{
 		event->accept();
-	}
+    }*/
 }
 
 //QCamera camera = new QCamera;

@@ -22,6 +22,8 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+//#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QLineEdit>
 
 QT_BEGIN_NAMESPACE
 
@@ -36,9 +38,11 @@ public:
     QPushButton *pushButton_2;
     QWidget *camera;
     QLabel *label;
+    //QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QLineEdit *videoEdit;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -68,6 +72,9 @@ public:
         label = new QLabel(camera);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 10, 571, 281));
+        videoEdit = new QLineEdit(camera);
+        videoEdit->setObjectName(QStringLiteral("videoEdit"));
+        videoEdit->setGeometry(QRect(150, 20, 113, 32));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

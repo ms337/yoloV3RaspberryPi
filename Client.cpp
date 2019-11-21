@@ -14,7 +14,7 @@ Client::Client()
 {
     // zonesCollection = ZonesCollection();
     // objectsCollection = ObjectsCollection();
-    VideoCapture feedCV;
+    /*VideoCapture feedCV;
 
     if (!feedCV.open(0))
         exit(-1);
@@ -28,7 +28,7 @@ Client::Client()
         imshow("this is you, smile! :)", frame);
         if (waitKey(10) == 27)
             break; // stop feedCVturing by pressing ESC
-    }
+    }*/
 }
 
 Client::~Client()
