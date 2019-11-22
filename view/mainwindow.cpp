@@ -18,6 +18,7 @@
 #include <QMessageBox>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "../controller/FeedController.h"
 
 using namespace std;
 using namespace cv;
@@ -119,9 +120,9 @@ void MainWindow::on_pushButton2_clicked()
     //using namespace cv;
     QPixmap image("./camera.png");
     bool isCamera;
-    int cameraIndex = 0;//ui->videoEdit->text().toInt(&isCamera);
-    VideoCapture video;
-    if (isCamera)
+    //int cameraIndex = 0;//ui->videoEdit->text().toInt(&isCamera);
+    //VideoCapture video;
+    /*if (isCamera)
     {   
         if (!video.open(cameraIndex))
         {
@@ -131,9 +132,9 @@ void MainWindow::on_pushButton2_clicked()
                 "<br>or that the camera is not being accessed by another program!");
             return;
         }
-    }
-    else
-    {
+    }*/
+    //else
+    //{
         /*if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
         {
             QMessageBox::critical(this,
@@ -142,8 +143,8 @@ void MainWindow::on_pushButton2_clicked()
                 "<br>or a correct RTSP feed URL!");
             return;
         } */  
-    }
-    Mat frame;
+    //}
+    /*Mat frame;
     while (video.isOpened())
     {
         video >> frame;
@@ -155,6 +156,16 @@ void MainWindow::on_pushButton2_clicked()
             image = QPixmap::fromImage(qimg);
             ui->label->setPixmap(image);
         }
+        qApp->processEvents();
+    }*/
+    
+    while(true) {
+        Mat frame = imread("./test.png");
+        //imshow("Say Onion!", image);
+        QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+        //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+        image = QPixmap::fromImage(qimg);
+        ui->label->setPixmap(image);
         qApp->processEvents();
     }
 }

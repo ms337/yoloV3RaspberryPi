@@ -7,10 +7,11 @@ class FeedController
 private:
     cv::VideoCapture feedCV;
     std::thread *internalThread;
+    cv::Mat frame;
 
 public:
     FeedController(/* args */);
     ~FeedController();
-    void getFeed();
+    cv::Mat getFeed();
     void updateFeedThread();
 };

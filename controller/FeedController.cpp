@@ -22,6 +22,8 @@ using namespace cv;
 FeedController::FeedController()
 {
     VideoCapture feedCV;
+    Mat frame;
+    
     internalThread = new thread(&FeedController::updateFeedThread, this);
     
 }
@@ -33,8 +35,9 @@ FeedController::~FeedController()
     internalThread->join();
 }
 
-void FeedController::getFeed()
+cv::Mat FeedController::getFeed()
 {
+    return this->frame;
 }
 
 void FeedController::updateFeedThread()
@@ -46,20 +49,21 @@ void FeedController::updateFeedThread()
     for (;;)
     {
         
-        Mat frame;
-        feedCV >> frame;
+        
+        feedCV >> this->frame;
         //if (frame.empty()) {
           //  break; // end of video stream
         //}
         //Shows each frame
         //virtual double fps = feedCV.get(cv.CAP_PROP_FPS);
         //std::cout << fps<< std::endl;
-        imshow("Say Cheese!", frame);
+        //imshow("Say Cheese!", frame);
         
         
         
-        //imwrite("test.jpg", frame);
-        
+        imwrite("test.png", this->frame);
+        //Mat image = imread("./test.jpg");
+        //imshow("Say Onion!", image);
         
         
         // stop feedCVturing by pressing ESC
