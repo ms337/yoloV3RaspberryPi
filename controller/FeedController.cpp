@@ -61,7 +61,7 @@ void FeedController::updateFeedThread()
         
         
         
-        imwrite("test.png", this->frame);
+        imwrite("test.jpg", this->frame);
         //Mat image = imread("./test.jpg");
         //imshow("Say Onion!", image);
         

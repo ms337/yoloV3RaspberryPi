@@ -160,11 +160,23 @@ void MainWindow::on_pushButton2_clicked()
     }*/
     
     while(true) {
-        Mat frame = imread("./test.png");
+        std::chrono::milliseconds timespan(33); 
+        std::this_thread::sleep_for(timespan);
+        Mat frame = imread("./test.jpg");
         //imshow("Say Onion!", image);
         QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+        
+        /*for (int x = 0; x < 10; ++x) {
+            for (int y = 0; y < 10; ++y) {
+                qimg.setPixel(x, y, qRgb(0, 0, 0));
+            }
+        }*/
+        //QRgb value = qRgb(0, 0, 0);
+        //qimg.setPixel(i, j, value);
+        //cvtColor(qimg, qimg, cv::CV_BGR2RGB);
+        
+        image = QPixmap::fromImage(qimg.rgbSwapped());
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
-        image = QPixmap::fromImage(qimg);
         ui->label->setPixmap(image);
         qApp->processEvents();
     }
