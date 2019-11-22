@@ -26,13 +26,16 @@
 int main(int argc, char *argv[])
 {
 
+    
     //Creates the gui
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
 
+    
     //Creates the camera feed window
     FeedController client = FeedController();
+    std::cout << "hey"<< std::endl;
     // client.render();
 
     return a.exec();
