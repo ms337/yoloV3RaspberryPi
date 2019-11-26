@@ -48,7 +48,7 @@ ModelOutput::ModelOutput(/* args */)
             net.setInput(blob);
             vector<Mat> outs;
             net.forward(outs, getOutputNames(net));
-            postprocess(frame, outs);
+            ModelOutput::postprocess(frame, outs);
 
             vector<double> layersTimes;
             double freq = getTickFrequency() / 1000;
@@ -67,6 +67,8 @@ ModelOutput::~ModelOutput()
 {
 }
 
+//Credit goes to author of the below repository
+//from https://github.com/spmallick/learnopencv/blob/master/ObjectDetection-YOLO/object_detection_yolo.cpp?fbclid=IwAR0G5mEa0KPaGdlyCkHcrm9o1cfd1I6YfyOBurblL0CF52HP6ZmDxcFnAf8
 void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
 {
     vector<int> classIds;
@@ -101,3 +103,57 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
             }
         }
     }
+
+    // Perform non maximum suppression to eliminate redundant overlapping boxes with
+    // lower confidences
+    vector<int> indices;
+    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
+    for (size_t i = 0; i < indices.size(); ++i)
+    {
+        int idx = indices[i];
+        Rect box = boxes[idx];
+        drawPred(classIds[idx], confidences[idx], box.x, box.y,
+                 box.x + box.width, box.y + box.height, frame);
+    }
+}
+
+void drawPred(int classId, float conf, int left, int top, int right, int bottom, Mat &frame)
+{
+    //Draw a rectangle displaying the bounding box
+    rectangle(frame, Point(left, top), Point(right, bottom), Scalar(255, 178, 50), 3);
+
+    //Get the label for the class name and its confidence
+    string label = format("%.2f", conf);
+    if (!(this->classes).empty())
+    {
+        CV_Assert(classId < (int)(this->classes).size());
+        label = (this->classes)[classId] + ":" + label;
+    }
+
+    //Display the label at the top of the bounding box
+    int baseLine;
+    Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+    top = max(top, labelSize.height);
+    rectangle(frame, Point(left, top - round(1.5 * labelSize.height)), Point(left + round(1.5 * labelSize.width), top + baseLine), Scalar(255, 255, 255), FILLED);
+    putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
+}
+
+// Get the names of the output layers
+vector<String> getOutputsNames(const Net &net)
+{
+    static vector<String> names;
+    if (names.empty())
+    {
+        //Get the indices of the output layers, i.e. the layers with unconnected outputs
+        vector<int> outLayers = net.getUnconnectedOutLayers();
+
+        //get the names of all the layers in the network
+        vector<String> layersNames = net.getLayerNames();
+
+        // Get the names of the output layers in names
+        names.resize(outLayers.size());
+        for (size_t i = 0; i < outLayers.size(); ++i)
+            names[i] = layersNames[outLayers[i] - 1];
+    }
+    return names;
+}
