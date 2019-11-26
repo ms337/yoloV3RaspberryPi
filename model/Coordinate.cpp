@@ -1,31 +1,36 @@
 /**
  * @file Coordinate.cpp
  * @author your name (you@domain.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 #include "Coordinate.h"
 
 /**
  * @brief Construct a new Coordinate:: Coordinate object
- * 
- * @param x 
- * @param y 
+ *
+ * @param x
+ * @param y
  */
+Coordinate::Coordinate() {
+  xCoord = 0;
+  yCoord = 0;
+}
+
 Coordinate::Coordinate(float x, float y)
 {
   xCoord = x;
   yCoord = y;
 };
-
+Coordinate::~Coordinate(){}
 /**
- * @brief 
- * 
- * @return float 
+ * @brief
+ *
+ * @return float
  */
 float Coordinate::getx()
 {
@@ -33,9 +38,9 @@ float Coordinate::getx()
 }
 
 /**
- * @brief 
- * 
- * @return float 
+ * @brief
+ *
+ * @return float
  */
 float Coordinate::gety()
 {
@@ -43,9 +48,9 @@ float Coordinate::gety()
 }
 
 /**
- * @brief 
- * 
- * @param x 
+ * @brief
+ *
+ * @param x
  */
 void Coordinate::setX(float x)
 {
@@ -53,9 +58,9 @@ void Coordinate::setX(float x)
 }
 
 /**
- * @brief 
- * 
- * @param y 
+ * @brief
+ *
+ * @param y
  */
 void Coordinate::setY(float y)
 {

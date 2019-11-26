@@ -1,4 +1,10 @@
 #include "BoundingBox.h"
+BoundingBox::BoundingBox(){
+  topleft = Coordinate();
+  topright = Coordinate();
+  bottomright = Coordinate();
+  bottomleft = Coordinate();
+}
 BoundingBox::BoundingBox(Coordinate tl, Coordinate tr, Coordinate br, Coordinate bl){
   topleft = tl;
   topright = tr;
@@ -6,35 +12,35 @@ BoundingBox::BoundingBox(Coordinate tl, Coordinate tr, Coordinate br, Coordinate
   bottomleft = bl;
 }
 
-Coordinate getTopLeft(){
+BoundingBox::~BoundingBox()
+{
+}
+
+Coordinate BoundingBox::getTopLeft(){
   return topleft;
 }
 
-Coordinate getTopRight(){
-  return topright
+Coordinate BoundingBox::getTopRight(){
+  return topright;
 }
 
-Coordinate getBottomRight(){
+Coordinate BoundingBox::getBottomRight(){
   return bottomright;
 }
 
-Coordinate getBottomLeft(){
+Coordinate BoundingBox::getBottomLeft(){
   return bottomleft;
 }
 
-oid setTL(Coordinate tl){
+void BoundingBox::setTL(Coordinate tl){
   topleft = tl;
 }
-void setTR(Coordinate tr){
-  topright = tr
+void BoundingBox::setTR(Coordinate tr){
+  topright = tr;
 }
-void setBR(Coordinate br){
-  bottomright = br
+void BoundingBox::setBR(Coordinate br){
+  bottomright = br;
 }
-void setBL(Coordinate bl){
-  bottomleft = bl
-}
-
-BoundingBox::~BoundingBox()
-{
+void BoundingBox::setBL(Coordinate bl){
+  bottomleft = bl;
 }

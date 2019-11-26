@@ -27,6 +27,9 @@ private:
 
 
 public:
+  BoundingBox();
+  BoundingBox(Coordinate tl, Coordinate tr, Coordinate br, Coordinate bl);
+  ~BoundingBox();
   Coordinate getTopLeft();
   Coordinate getTopRight();
   Coordinate getBottomRight();
