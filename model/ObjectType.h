@@ -14,3 +14,5 @@ public:
   std::string getObject(std::string item);
   void addObject(std::string item);
 };
+
+#endif
