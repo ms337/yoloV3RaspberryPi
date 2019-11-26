@@ -24,6 +24,7 @@ private:
   std::string type;
 
 public:
+  Zone();
   Zone(BoundingBox box, std::string name);
   ~Zone();
   std::string getType();

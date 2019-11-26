@@ -1,5 +1,8 @@
 #include "Zone.h"
-
+Zone::Zone(){
+  coordsBox = BoundingBox();
+  type = "";
+}
 Zone::Zone(BoundingBox box, std::string name){
   coordsBox = box;
   type = name;

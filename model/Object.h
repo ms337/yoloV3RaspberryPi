@@ -1,0 +1,2 @@
+#ifndef OBJECT
+#define OBJECT
