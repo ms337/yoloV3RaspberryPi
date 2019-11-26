@@ -9,9 +9,9 @@
  * @copyright Copyright (c) 2019
  * 
  */
-#include "Client.h"
+#include "controller/Client.h"
 #include <stdio.h>
-#include "mainwindow.h"
+#include "view/mainwindow.h"
 #include <QApplication>
 
 /**
