@@ -12,9 +12,9 @@
 #define CLIENT
 
 #include <opencv2/opencv.hpp>
-#include "ZonesCollection.h"
-#include "ObjectsCollection.h"
-#include "Session.h"
+#include "../model/ZonesCollection.h"
+#include "../model/ObjectsCollection.h"
+#include "../model/Session.h"
 
 /**
  * @brief 
