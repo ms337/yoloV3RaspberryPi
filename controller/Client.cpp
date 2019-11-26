@@ -11,11 +11,9 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "mainwindow.h"
+#include "../view/mainwindow.h"
 #include <QApplication>
 
-#include "ZonesCollection.h"
-#include "Session.h"
 #include "Client.h"
 
 using namespace std;

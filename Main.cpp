@@ -9,9 +9,10 @@
  * @copyright Copyright (c) 2019
  * 
  */
-#include "Client.h"
+#include "controller/Client.h"
+#include "controller/FeedController.h"
 #include <stdio.h>
-#include "mainwindow.h"
+#include "view/mainwindow.h"
 #include <QApplication>
 
 /**
@@ -29,10 +30,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    
+
     //Creates the camera feed window
-    Client client = Client();
-    client.render();
+    FeedController client = FeedController();
+    // client.render();
 
     return a.exec();
 }
