@@ -1,12 +1,12 @@
 /**
  * @file Zone.h
  * @author your name (you@domain.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 #ifndef ZONE
 #define ZONE
@@ -14,18 +14,18 @@
 #include <iostream>
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class Zone
 {
 private:
-  BoundingBox coords;
+  BoundingBox coordsBox;
   std::string type;
 
 public:
   std::string getType();
   void setCoords(BoundingBox box);
-  void setType(std::string type);
+  void setType(std::string name);
 };
 #endif
