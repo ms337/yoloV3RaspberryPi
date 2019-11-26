@@ -1,12 +1,12 @@
 /**
  * @file Coordinate.h
  * @author your name (you@domain.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 #ifndef COORDINATE
 #define COORDINATE
@@ -14,8 +14,8 @@
 #include <math.h>
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class Coordinate
 {
@@ -24,7 +24,9 @@ private:
   float yCoord;
 
 public:
+  Coordinate();
   Coordinate(float x, float y);
+  ~Coordinate();
   float getx();
   float gety();
   void setX(float x);

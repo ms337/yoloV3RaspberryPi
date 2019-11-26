@@ -5,19 +5,18 @@ Zone::Zone(BoundingBox box, std::string name){
   type = name;
 }
 
+Zone::~Zone()
+{
+}
 
-std::string getType(){
+std::string Zone::getType(){
   return type;
 }
 
-void setCoords(BoundingBox box){
+void Zone::setCoords(BoundingBox box){
   coordsBox = box;
 }
 
-void setType(std::string name){
+void Zone::setType(std::string name){
   type = name;
-}
-
-Zone::~Zone()
-{
 }
