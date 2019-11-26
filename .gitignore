@@ -22,3 +22,9 @@ Main.out_automoc.dir
 
 #Swap files
 *.swp
+
+#Image
+test.jpg
+
+#Yolo Model Weights
+model/yolo/yolov3-tiny.weights
