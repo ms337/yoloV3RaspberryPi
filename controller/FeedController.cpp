@@ -49,9 +49,6 @@ void FeedController::updateFeedThread()
         //Shows each frame
         imshow("Say Cheese!", frame);
 
-        //Saves the frame to a file that the gui can access
-        imwrite("./camera.png", frame);
-
         // stop feedCVturing by pressing ESC
         if (waitKey(10) == 27)
             break;
