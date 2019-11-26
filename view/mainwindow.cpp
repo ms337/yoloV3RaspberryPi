@@ -13,6 +13,8 @@
 #include "ui_mainwindow.h"
 #include "objectlist.h"
 #include "zonelist.h"
+#include "histogram.h"
+#include "heatmap.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
@@ -157,4 +159,21 @@ void MainWindow::on_pushButton2_clicked()
         }
         qApp->processEvents();
     }
+}
+
+void MainWindow::on_histButton_clicked()
+{
+    Histogram histogram;
+    histogram.exec();
+}
+
+void MainWindow::on_heatmapButton_clicked()
+{
+    Heatmap heatmap;
+    heatmap.exec();
+}
+
+void MainWindow::on_startStopButton_clicked()
+{
+
 }

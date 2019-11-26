@@ -38,6 +38,12 @@ private slots:
     
     void on_pushButton2_clicked();
     
+    void on_histButton_clicked();
+
+    void on_startStopButton_clicked();
+
+    void on_heatmapButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
