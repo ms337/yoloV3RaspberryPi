@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "view/mainwindow.h"
 #include <QApplication>
+#include "model/ModelOutput.h"
 
 /**
  * @brief 
@@ -26,18 +27,18 @@
 int main(int argc, char *argv[])
 {
 
-    
     //Creates the gui
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
 
-    
     //Creates the camera feed window
     FeedController client = FeedController();
     client.getFeed();
-    std::cout << "hey"<< std::endl;
-    
+    ModelOutput model = ModelOutput();
+
+    std::cout << "hey" << std::endl;
+
     // client.render();
 
     return a.exec();

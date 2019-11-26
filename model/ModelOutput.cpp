@@ -1,12 +1,11 @@
 #include "ModelOutput.h"
 
-using namespace std;
 using namespace cv;
 using namespace dnn;
+using namespace std;
 
-class ModelOutput
+ModelOutput::ModelOutput(/* args */)
 {
-private:
     float confThreshold = 0.5;
     float nmsThreshold = 0.4;
     int inpWidth = 416;
@@ -14,21 +13,14 @@ private:
     string classesFile = "coco.names";
     vector<string> classes;
 
-public:
-    ModelOutput(/* args */);
-    ~ModelOutput();
-};
-
-ModelOutput::ModelOutput(/* args */)
-{
-    ifstream ifs((this->classesFile).c_str());
+    ifstream ifs(classesFile.c_str());
     string line;
     while (getline(ifs, line))
     {
-        (this->classes).push_back(line);
+        classes.push_back(line);
     }
     string modelConfiguration = "/yolo/yolov3-tiny.cfg";
-    string modelWeights = "yolov3-tiny.weights";
+    string modelWeights = "/yolo/yolov3-tiny.weights";
 
     //Network
     Net net = readNetFromDarknet(modelConfiguration, modelWeights);
@@ -38,33 +30,53 @@ ModelOutput::ModelOutput(/* args */)
     string str, outputFile;
     Mat frame, blob;
 
-    while (waitkey(1) < 0)
+    while (waitKey(1) < 0)
     {
         frame = imread("./test.jpg");
         if (!(frame.empty()))
         {
             outputFile = "outFile.jpg";
-            blobFromImage(frame, blob, 1 / 255.0, cvSize(this->inpWidth, this->Height), Scalar(0, 0, 0), true, false);
+            blobFromImage(frame, blob, 1 / 255.0, CvSize(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
             net.setInput(blob);
             vector<Mat> outs;
-            net.forward(outs, getOutputNames(net));
+            net.forward(outs, getOutputsNames(net));
             ModelOutput::postprocess(frame, outs);
 
             vector<double> layersTimes;
             double freq = getTickFrequency() / 1000;
             double t = net.getPerfProfile(layersTimes) / freq;
             string label = format("Inference time for a frame: %.2f ms", t);
-            putText(frame, label, Point(0, 15)), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
+            putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 
             Mat detectedFrame;
             frame.convertTo(detectedFrame, CV_8U);
             imwrite(outputFile, detectedFrame);
+            cout << "Wrote model output to file" << endl;
         }
     }
 }
 
 ModelOutput::~ModelOutput()
 {
+}
+
+vector<String> getOutputsNames(const Net &net)
+{
+    static vector<String> names;
+    if (names.empty())
+    {
+        //Get the indices of the output layers, i.e. the layers with unconnected outputs
+        vector<int> outLayers = net.getUnconnectedOutLayers();
+
+        //get the names of all the layers in the network
+        vector<String> layersNames = net.getLayerNames();
+
+        // Get the names of the output layers in names
+        names.resize(outLayers.size());
+        for (size_t i = 0; i < outLayers.size(); ++i)
+            names[i] = layersNames[outLayers[i] - 1];
+    }
+    return names;
 }
 
 //Credit goes to author of the below repository
@@ -117,17 +129,17 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
     }
 }
 
-void drawPred(int classId, float conf, int left, int top, int right, int bottom, Mat &frame)
+void ModelOutput::drawPred(int classId, float conf, int left, int top, int right, int bottom, Mat &frame)
 {
     //Draw a rectangle displaying the bounding box
     rectangle(frame, Point(left, top), Point(right, bottom), Scalar(255, 178, 50), 3);
 
     //Get the label for the class name and its confidence
     string label = format("%.2f", conf);
-    if (!(this->classes).empty())
+    if (!classes.empty())
     {
-        CV_Assert(classId < (int)(this->classes).size());
-        label = (this->classes)[classId] + ":" + label;
+        CV_Assert(classId < (int)classes.size());
+        label = classes[classId] + ":" + label;
     }
 
     //Display the label at the top of the bounding box
@@ -139,21 +151,3 @@ void drawPred(int classId, float conf, int left, int top, int right, int bottom,
 }
 
 // Get the names of the output layers
-vector<String> getOutputsNames(const Net &net)
-{
-    static vector<String> names;
-    if (names.empty())
-    {
-        //Get the indices of the output layers, i.e. the layers with unconnected outputs
-        vector<int> outLayers = net.getUnconnectedOutLayers();
-
-        //get the names of all the layers in the network
-        vector<String> layersNames = net.getLayerNames();
-
-        // Get the names of the output layers in names
-        names.resize(outLayers.size());
-        for (size_t i = 0; i < outLayers.size(); ++i)
-            names[i] = layersNames[outLayers[i] - 1];
-    }
-    return names;
-}
