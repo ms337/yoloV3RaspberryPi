@@ -23,14 +23,14 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     objectlist.h \
     ui_mainwindow.h \
-    ui_objectlist.h \
     ui_zonelist.h \
     zonelist.h \
     histogram.h \
     heatmap.h \
     qcustomplot.h \
     ui_heatmap.h \
-    ui_histogram.h
+    ui_histogram.h \
+    ui_objectlist.h
 
 FORMS    += mainwindow.ui \
     objectlist.ui \

@@ -13,25 +13,25 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QListWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_ObjectList
 {
 public:
-    QComboBox *comboBox;
+    QListWidget *listWidget;
 
     void setupUi(QDialog *ObjectList)
     {
         if (ObjectList->objectName().isEmpty())
             ObjectList->setObjectName(QStringLiteral("ObjectList"));
         ObjectList->resize(400, 300);
-        comboBox = new QComboBox(ObjectList);
-        comboBox->setObjectName(QStringLiteral("comboBox"));
-        comboBox->setGeometry(QRect(160, 20, 85, 31));
+        listWidget = new QListWidget(ObjectList);
+        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setGeometry(QRect(0, 0, 401, 301));
 
         retranslateUi(ObjectList);
 
@@ -41,12 +41,6 @@ public:
     void retranslateUi(QDialog *ObjectList)
     {
         ObjectList->setWindowTitle(QApplication::translate("ObjectList", "Dialog", Q_NULLPTR));
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
-         << QApplication::translate("ObjectList", "Object 1", Q_NULLPTR)
-         << QApplication::translate("ObjectList", "Object 2", Q_NULLPTR)
-         << QApplication::translate("ObjectList", "Object 3", Q_NULLPTR)
-        );
     } // retranslateUi
 
 };

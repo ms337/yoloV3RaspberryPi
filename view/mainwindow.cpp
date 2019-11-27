@@ -114,10 +114,9 @@ void MainWindow::on_pushButton_clicked()
  * @brief 
  * 
  */
-void MainWindow::on_pushButton2_clicked()
+void MainWindow::on_startStopButton_clicked()
 {
-    //ObjectList objlist;
-    //objlist.exec();
+
     //using namespace cv;
     QPixmap image("./camera.png");
     bool isCamera;
@@ -173,7 +172,8 @@ void MainWindow::on_heatmapButton_clicked()
     heatmap.exec();
 }
 
-void MainWindow::on_startStopButton_clicked()
+void MainWindow::on_pushButton2_clicked()
 {
-
+    ObjectList objlist;
+    objlist.exec();
 }

@@ -14,13 +14,15 @@ Heatmap::Heatmap(QWidget *parent) :
     **/
 
     int nZones = 4;
-    int nObjects = 3;
+    int nObjects = 5;
     int maxOccurrences = 10; //set this to largest number in the hash table
 
     QVector<QString> objects(nObjects);
     objects[0] = "Person";
     objects[1] = "Banana";
     objects[2] = "Poo";
+    objects[3] = "Butt";
+    objects[4] = "Fart";
 
     QVector<double> datax(nZones);
     for (int i = 0; i < nZones; i++) {
@@ -30,20 +32,23 @@ Heatmap::Heatmap(QWidget *parent) :
     for (int i = 0; i < nObjects; i++) {
         QVector<double> datay(nZones);
         for (int j = 0; j < nZones; j++) {
-            datay[j] = i+j+20;//rand()%10;
+            datay[j] = rand()%10;
         }
         dataArr[i] = datay;
     }
 
     QCPColorMap *colorMap = new QCPColorMap(ui->widget->xAxis, ui->widget->yAxis);
+    colorMap->setInterpolate(false);
 
     colorMap->data()->setSize(nObjects, nZones);
-    colorMap->data()->setRange(QCPRange(0, nObjects), QCPRange(1, nZones));
-    for (int x=0; x<nObjects; x++)
-      for (int y=0; y<nZones; y++)
+    colorMap->data()->setRange(QCPRange(0, nObjects), QCPRange(0, nZones));
+    colorMap->setDataRange(QCPRange(0,maxOccurrences));
+    for (int x=0; x<nObjects; x++) {
+      for (int y=0; y<nZones; y++) {
         colorMap->data()->setCell(x+0.5, y+0.5, dataArr[x][y]); //rand()%255
+      }
+    }
     colorMap->setGradient(QCPColorGradient::gpHot);
-    //colorMap->rescaleDataRange(true);
     ui->widget->xAxis->setLabel("Objects");
     ui->widget->yAxis->setLabel("Zones");
 
