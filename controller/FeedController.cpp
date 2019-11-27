@@ -14,7 +14,7 @@
 
 #include <thread>
 #include "FeedController.h"
-
+// #include "../model/ModelOutput.h"
 
 using namespace std;
 using namespace cv;
@@ -23,15 +23,14 @@ FeedController::FeedController()
 {
     VideoCapture feedCV;
     Mat frame;
-    
+
     internalThread = new thread(&FeedController::updateFeedThread, this);
-    
 }
 
 FeedController::~FeedController()
 {
     // internalThread->interrupt();
-    std::cout << "hey"<< std::endl;
+    std::cout << "hey" << std::endl;
     internalThread->join();
 }
 
@@ -42,32 +41,30 @@ cv::Mat FeedController::getFeed()
 
 void FeedController::updateFeedThread()
 {
-    
+
     if (!feedCV.open(0))
         exit(-1);
 
     for (;;)
     {
-        
-        
+
         feedCV >> this->frame;
         //if (frame.empty()) {
-          //  break; // end of video stream
+        //  break; // end of video stream
         //}
         //Shows each frame
         //virtual double fps = feedCV.get(cv.CAP_PROP_FPS);
         //std::cout << fps<< std::endl;
         //imshow("Say Cheese!", frame);
-        
-        
-        
+
         imwrite("test.jpg", this->frame);
+        // ModelOutput model = ModelOutput();
+
         //Mat image = imread("./test.jpg");
         //imshow("Say Onion!", image);
-        
-        
+
         // stop feedCVturing by pressing ESC
         //if (waitKey(10) == 27)
-          //  break;
+        //  break;
     }
 }

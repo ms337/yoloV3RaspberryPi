@@ -30,8 +30,7 @@ using namespace cv;
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
-                               
-                
+
 {
     //Sets up gui
     ui->setupUi(this);
@@ -57,42 +56,48 @@ MainWindow::~MainWindow()
  * 
  */
 void MainWindow::on_pushButton_clicked()
-{    
+{
     //Refreshes the camera
     QPixmap image("./camera.png");
 
-    //Try/Catch block tries to get the number of the 
+    //Try/Catch block tries to get the number of the
     //the user wishes to create
     int loops = 3;
-    try {
+    try
+    {
         QString qloops = ui->textEdit->toPlainText();
         bool loopBool;
         loops = qloops.toInt(&loopBool, 10);
 
         //If the text box is empty, use the default number of zones (3)
-        if (loops==0){
-            loops=3;
+        if (loops == 0)
+        {
+            loops = 3;
         }
     }
-    catch(...) {}
+    catch (...)
+    {
+    }
 
     //Runs n number of times depending on how many zones the user wanted to create
-    for(int i=0;i<loops && i<30;i++){
+    for (int i = 0; i < loops && i < 30; i++)
+    {
 
         //Opens the window
         ZoneList zonelist;
         zonelist.exec();
-    
+
         QPainter painter(&image);
         painter.setPen(QPen(Qt::cyan, 5));
-        
+
         //Gets the coordinates from the text box
         QString *coordsArr;
         coordsArr = zonelist.getCoords();
-        
+
         int intCoords[8];
-        
-        for (int i = 0; i < 8; i++) {
+
+        for (int i = 0; i < 8; i++)
+        {
             bool ok;
             intCoords[i] = coordsArr[i].toInt(&ok, 10);
         }
@@ -135,14 +140,14 @@ void MainWindow::on_pushButton2_clicked()
     }*/
     //else
     //{
-        /*if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
+    /*if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
         {
             QMessageBox::critical(this,
                 "Video Error",
                 "Make sure you entered a correct and supported video file path,"
                 "<br>or a correct RTSP feed URL!");
             return;
-        } */  
+        } */
     //}
     /*Mat frame;
     while (video.isOpened())
@@ -158,14 +163,15 @@ void MainWindow::on_pushButton2_clicked()
         }
         qApp->processEvents();
     }*/
-    
-    while(true) {
-        std::chrono::milliseconds timespan(33); 
+
+    while (true)
+    {
+        std::chrono::milliseconds timespan(33);
         std::this_thread::sleep_for(timespan);
-        Mat frame = imread("./test.jpg");
+        Mat frame = imread("/Users/msinghal/team9/outFile.jpg");
         //imshow("Say Onion!", image);
         QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
-        
+
         /*for (int x = 0; x < 10; ++x) {
             for (int y = 0; y < 10; ++y) {
                 qimg.setPixel(x, y, qRgb(0, 0, 0));
@@ -174,7 +180,7 @@ void MainWindow::on_pushButton2_clicked()
         //QRgb value = qRgb(0, 0, 0);
         //qimg.setPixel(i, j, value);
         //cvtColor(qimg, qimg, cv::CV_BGR2RGB);
-        
+
         image = QPixmap::fromImage(qimg.rgbSwapped());
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
         ui->label->setPixmap(image);

@@ -10,7 +10,7 @@ ModelOutput::ModelOutput(/* args */)
     float nmsThreshold = 0.4;
     int inpWidth = 416;
     int inpHeight = 416;
-    string classesFile = "coco.names";
+    string classesFile = "./yolo/coco.names";
     vector<string> classes;
 
     ifstream ifs(classesFile.c_str());
@@ -19,8 +19,8 @@ ModelOutput::ModelOutput(/* args */)
     {
         classes.push_back(line);
     }
-    string modelConfiguration = "/yolo/yolov3-tiny.cfg";
-    string modelWeights = "/yolo/yolov3-tiny.weights";
+    string modelConfiguration = "/Users/msinghal/team9/model/yolo/yolov3-tiny.cfg";
+    string modelWeights = "/Users/msinghal/team9/model/yolo/yolov3-tiny.weights";
 
     //Network
     Net net = readNetFromDarknet(modelConfiguration, modelWeights);
@@ -39,7 +39,8 @@ ModelOutput::ModelOutput(/* args */)
             blobFromImage(frame, blob, 1 / 255.0, CvSize(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
             net.setInput(blob);
             vector<Mat> outs;
-            net.forward(outs, getOutputsNames(net));
+            net.forward(outs, ModelOutput::getOutputsNames(net));
+
             ModelOutput::postprocess(frame, outs);
 
             vector<double> layersTimes;
@@ -60,7 +61,7 @@ ModelOutput::~ModelOutput()
 {
 }
 
-vector<String> getOutputsNames(const Net &net)
+vector<String> ModelOutput::getOutputsNames(const Net &net)
 {
     static vector<String> names;
     if (names.empty())
