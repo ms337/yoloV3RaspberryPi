@@ -30,36 +30,40 @@ ModelOutput::ModelOutput(/* args */)
     string str, outputFile;
     Mat frame, blob;
 
-    while (waitKey(1) < 0)
+    // while (waitKey(1) < 0)
+    // {
+    frame = imread("./test.jpg");
+    if (!(frame.empty()))
     {
-        frame = imread("./test.jpg");
-        if (!(frame.empty()))
-        {
-            outputFile = "outFile.jpg";
-            blobFromImage(frame, blob, 1 / 255.0, CvSize(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
-            net.setInput(blob);
-            vector<Mat> outs;
-            net.forward(outs, ModelOutput::getOutputsNames(net));
+        outputFile = "outFile.jpg";
+        blobFromImage(frame, blob, 1 / 255.0, CvSize(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
+        net.setInput(blob);
+        vector<Mat> outs;
+        net.forward(outs, ModelOutput::getOutputsNames(net));
 
-            ModelOutput::postprocess(frame, outs);
+        ModelOutput::postprocess(frame, outs);
 
-            vector<double> layersTimes;
-            double freq = getTickFrequency() / 1000;
-            double t = net.getPerfProfile(layersTimes) / freq;
-            string label = format("Inference time for a frame: %.2f ms", t);
-            putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
+        vector<double> layersTimes;
+        double freq = getTickFrequency() / 1000;
+        double t = net.getPerfProfile(layersTimes) / freq;
+        string label = format("Inference time for a frame: %.2f ms", t);
+        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 
-            Mat detectedFrame;
-            frame.convertTo(detectedFrame, CV_8U);
-            imwrite(outputFile, detectedFrame);
-            cout << "Wrote model output to file" << endl;
-        }
+        Mat detectedFrame;
+        frame.convertTo(detectedFrame, CV_8U);
+        imwrite(outputFile, detectedFrame);
+        cout << "Wrote model output to file" << endl;
     }
+    // }
 }
 
 ModelOutput::~ModelOutput()
 {
 }
+
+// ModelOutput::run()
+// {
+// }
 
 vector<String> ModelOutput::getOutputsNames(const Net &net)
 {

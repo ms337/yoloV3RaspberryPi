@@ -14,7 +14,7 @@
 
 #include <thread>
 #include "FeedController.h"
-// #include "../model/ModelOutput.h"
+#include "../model/ModelOutput.h"
 
 using namespace std;
 using namespace cv;
@@ -58,7 +58,7 @@ void FeedController::updateFeedThread()
         //imshow("Say Cheese!", frame);
 
         imwrite("test.jpg", this->frame);
-        // ModelOutput model = ModelOutput();
+        ModelOutput model = ModelOutput();
 
         //Mat image = imread("./test.jpg");
         //imshow("Say Onion!", image);
