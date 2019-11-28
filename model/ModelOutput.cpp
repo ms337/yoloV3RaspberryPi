@@ -19,8 +19,8 @@ ModelOutput::ModelOutput(/* args */)
     {
         classes.push_back(line);
     }
-    modelConfiguration = "/Users/msinghal/team9/model/yolo/yolov3-tiny.cfg";
-    modelWeights = "/Users/msinghal/team9/model/yolo/yolov3-tiny.weights";
+    modelConfiguration = "/home/pi/team9/model/yolo/yolov3-tiny.cfg";
+    modelWeights = "/home/pi/team9/model/yolo/yolov3-tiny.weights";
 
     //Network
     net = readNetFromDarknet(modelConfiguration, modelWeights);
