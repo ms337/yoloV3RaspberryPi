@@ -27,7 +27,7 @@ std::string Zone::getType()
 
 int *Zone::getZoneArray()
 {
-  return zoneArray;
+  return this->zoneArray;
 }
 
 void Zone::setType(std::string name)

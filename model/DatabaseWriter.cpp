@@ -4,23 +4,17 @@ using namespace std;
 
 int MAX_ZONES = 30;
 
-
-
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
 	return 0;
 }
 
-DatabaseWriter::DatabaseWriter(Zone zones[30])
+DatabaseWriter::DatabaseWriter()
 {
 	curTime = 0;
 	char *zErrMsg;
 	char *sql;
 
-	for (int i = 0; i < 30; i++)
-	{
-		this->zones[i] = zones[i];
-	}
 
 	int rc = sqlite3_open("test.db", &db);
 	if (rc)
@@ -94,8 +88,11 @@ DatabaseWriter::~DatabaseWriter()
 	sqlite3_close(this->db);
 }
 
-void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
+void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone zones[30])
 {
+	for (int i= 0; i < 8; i++){
+		cout << "ZONE 1: " << zones[0].getZoneArray()[i] <<endl;
+	}
 	this->curTime++;
 
 	int rc;
@@ -108,7 +105,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
 
 	char hello[100];
 	sprintf(hello, "INSERT INTO trackingData (time) VALUES (%d);", this->curTime);
-	cout << hello << endl;
+	// cout << hello << endl;
 
 	rc = sqlite3_exec(this->db, hello, callback, 0, &zErrMsg);
 	cout << "hi" << endl;
@@ -122,7 +119,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
 	}
 	else
 	{
-		cout << "added records" << endl;
+		// cout << "added records" << endl;
 		int i = 1;
 
 		while (i <= MAX_ZONES)
@@ -132,12 +129,13 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
 			memset(dataEntry, 0, 100);
 			for (vector<tuple<int, int, int>>::iterator it = listOfClassesFound.begin(); it != listOfClassesFound.end(); ++it)
 			{ // for each object
-				cout << "im here" << endl;
-				if (inZone(this->zones[i], get<1>(*it), get<2>(*it)))
+
+				if (inZone(zones[i], get<1>(*it), get<2>(*it)))
 				{ // if it is in the zone have to create inZone and zones[]
 					char arr1[7];
 					sprintf(arr1, "%d", get<0>(*it));
 					strcat(arr1, " ");
+					// cout << "Array of Individuals Object ids: " << arr1 << endl;
 
 					/*
 							int length = strlen(arr1) + strlen(arr2);
@@ -155,7 +153,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
 			}
 
 			sprintf(parseArray, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d;", i, dataEntry, this->curTime);
-			cout << parseArray << endl;
+			// cout << parseArray << endl;
 			rc = sqlite3_exec(this->db, parseArray, callback, 0, &zErrMsg);
 
 			memset(parseArray, 0, 300);
@@ -172,12 +170,23 @@ int DatabaseWriter::inZone(Zone zone, int x, int y)
 	int bottomRightY = zone.getZoneArray()[5];
 	int topLeftY = zone.getZoneArray()[1];
 
+
+
+	cout << "Vars " << topLeftX << endl;
+	cout << "Vars " << bottomRightX << endl;
+	cout << "Vars " << bottomRightY << endl;
+	cout << "Vars " << topLeftY << endl;
+	// cout << "Int X " << x << endl;
+	// cout << "Int Y" << y << endl;
+
 	if ((topLeftX < x && x <= bottomRightX) && (topLeftY < y && y <= bottomRightY))
-	{
-		//cout << "c: " << c << endl;
-		//cout << "ztl: " << z.tl.x << endl;
-		//cout << "zbr: " << z.br.x << endl;
-		return 1;
-	}
+		if ((topLeftX < x && x <= bottomRightX) && (topLeftY < y && y <= bottomRightY))
+			if ((topLeftX < x && x <= bottomRightX) && (topLeftY < y && y <= bottomRightY))
+			{
+				//cout << "c: " << c << endl;
+				//cout << "ztl: " << z.tl.x << endl;
+				//cout << "zbr: " << z.br.x << endl;
+				return 1;
+			}
 	return 0;
 }

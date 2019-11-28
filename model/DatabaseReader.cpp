@@ -2,12 +2,6 @@
 #include "DatabaseReader.h"
 using namespace std;
 
-struct myObj
-{
-   string name;
-   int zones[30];
-};
-
 DatabaseReader::DatabaseReader()
 {
    sqlite3 *db;
@@ -66,7 +60,7 @@ int DatabaseReader::callback(void *data, int argc, char **argv, char **azColName
 
 int DatabaseReader::read()
 {
-   string inputObjs[] = {"111", "112", "114"};
+   string inputObjs[] = {"111", "112", "114"}; // this should get a list of all of the objects. This line and the for each loop should belong in the constructor
 
    for (string i : inputObjs)
    {

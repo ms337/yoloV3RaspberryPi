@@ -1,3 +1,5 @@
+#ifndef FEED_CONTROLLER
+#define FEED_CONTROLLER
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <thread>
@@ -21,3 +23,4 @@ public:
     void updateFeedThread();
     void createZones(int array[8]);
 };
+#endif

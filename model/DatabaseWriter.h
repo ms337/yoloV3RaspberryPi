@@ -13,11 +13,11 @@ class DatabaseWriter
 private:
     sqlite3 *db;
     int curTime; // this is super important
-    Zone zones[30];
+
 
 public:
-    DatabaseWriter(Zone zones[30]);
+    DatabaseWriter();
     ~DatabaseWriter();
     int inZone(Zone zone, int x, int y);
-    void write(std::vector<std::tuple<int, int, int>> listOfClassesFound);
+    void write(std::vector<std::tuple<int, int, int>> listOfClassesFound, Zone zones[30]);
 };

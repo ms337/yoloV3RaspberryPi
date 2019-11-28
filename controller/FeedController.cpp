@@ -48,10 +48,10 @@ void FeedController::updateFeedThread()
         exit(-1);
 
     ModelOutput model = ModelOutput();
-    DatabaseWriter dbWriter = DatabaseWriter(this->zones);
+    DatabaseWriter dbWriter = DatabaseWriter();
+    int frameCount = 0;
     for (;;)
     {
-
         feedCV >> this->frame;
         //if (frame.empty()) {
         //  break; // end of video stream
@@ -64,31 +64,35 @@ void FeedController::updateFeedThread()
         // imwrite("test.jpg", this->frame);
         model.run(this->frame, &(this->outFrame));
 
-        vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
-        dbWriter.write(listOfClassesFound);
-        cout << "----------" << endl;
-        for (auto x : listOfClassesFound)
+        if (frameCount == 30)
         {
-            cout << "tuples:" << endl;
-            cout << "Id: " << get<0>(x) << "X, Y: " << get<1>(x) << ", " << get<2>(x) << endl;
+            vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
+            dbWriter.write(listOfClassesFound, this->zones);
+            // cout << "----------" << endl;
+            // for (auto x : listOfClassesFound)
+            // {
+            //     cout << "tuples:" << endl;
+            //     cout << "Id: " << get<0>(x) << "X, Y: " << get<1>(x) << ", " << get<2>(x) << endl;
+            // }
+            // cout << "----------" << endl;
+            frameCount = 0;
         }
-        cout << "----------" << endl;
-        //Mat image = imread("./test.jpg");
-        //imshow("Say Onion!", image);
 
-        // stop feedCVturing by pressing ESC
-        //if (waitKey(10) == 27)
-        //  break;
+        frameCount++;
     }
 }
 
 void FeedController::createZones(int array[8])
 {
-    currentZoneIndex++;
-    Zone zone = Zone(array, to_string(currentZoneIndex));
-    if (currentZoneIndex >= 30)
+    this->currentZoneIndex++;
+    Zone zone = Zone(array, to_string(this->currentZoneIndex + 1));
+    if (this->currentZoneIndex >= 30)
     {
         cerr << "Max limit of 30 Zones reached. Cannot add any more zones." << endl;
     }
-    this->zones[currentZoneIndex] = zone;
+    this->zones[this->currentZoneIndex] = zone;
+    cout << "XXXXxXXXXXXXX" << endl;
+	for (int i = 0;  i < 8 ; i++){
+		cout << " " << this->zones[0].getZoneArray()[i] << endl;
+	}
 }

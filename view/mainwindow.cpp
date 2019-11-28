@@ -27,7 +27,8 @@ using namespace std;
 using namespace cv;
 
 int fourCoords[30][4];
-int allCoords[30][4];
+int allCoords[30][8];
+FeedController client = FeedController();
 int nZones = 1; //default number of zones
 
 /**
@@ -82,8 +83,6 @@ void MainWindow::on_pushButton_clicked()
     {
     }
 
-    ZonesController zoneController = ZonesController();
-
     //Runs n number of times depending on how many zones the user wanted to create
     for (int i = 0; i < nZones && i < 30; i++)
     {
@@ -102,7 +101,8 @@ void MainWindow::on_pushButton_clicked()
             fourCoords[i][j] = coordsArr[j].toInt(&ok, 10);
         }
 
-        for (int k = 0; k < nZones; k++) {
+        for (int k = 0; k < nZones; k++)
+        {
             allCoords[k][0] = fourCoords[k][0];
             allCoords[k][1] = fourCoords[k][1];
             allCoords[k][2] = fourCoords[k][2];
@@ -112,7 +112,8 @@ void MainWindow::on_pushButton_clicked()
             allCoords[k][6] = fourCoords[k][0];
             allCoords[k][7] = fourCoords[k][3];
         }
-        zoneController.createZones(allCoords[i]);
+        cout << "Zones Created: added zones to FeedController" << endl;
+        client.createZones(allCoords[i]);
     }
 }
 
@@ -122,7 +123,7 @@ void MainWindow::on_pushButton_clicked()
  */
 void MainWindow::on_startButton_clicked()
 {
-    FeedController client = FeedController();
+    // FeedController client = FeedController();
 
     while (true)
     {
