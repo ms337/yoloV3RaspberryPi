@@ -15,6 +15,7 @@
 #include "zonelist.h"
 #include "histogram.h"
 #include "heatmap.h"
+#include "../controller/ZonesController.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
@@ -83,6 +84,8 @@ void MainWindow::on_pushButton_clicked()
     {
     }
 
+    ZonesController zoneController = ZonesController();
+
     //Runs n number of times depending on how many zones the user wanted to create
     for (int i = 0; i < nZones && i < 30; i++)
     {
@@ -100,6 +103,7 @@ void MainWindow::on_pushButton_clicked()
             bool ok;
             allCoords[i][j] = coordsArr[j].toInt(&ok, 10);
         }
+        zoneController.createZones(allCoords[i]);
     }
 }
 
