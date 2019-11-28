@@ -20,7 +20,7 @@
 class Zone
 {
 private:
-  BoundingBox coordsBox;
+  BoundingBox bBox;
   std::string type;
 
 public:
@@ -28,7 +28,8 @@ public:
   Zone(BoundingBox box, std::string name);
   ~Zone();
   std::string getType();
-  void setCoords(BoundingBox box);
+  void setBbox(BoundingBox box);
+  BoundingBox getBbox();
   void setType(std::string name);
 };
 #endif
