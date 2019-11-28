@@ -14,7 +14,9 @@ private:
     cv::Mat frame;
     cv::Mat outFrame;
     Zone zones[30];
+    int classesOfObjsSelected[10];
     int currentZoneIndex;
+    string objects[80];
 
 public:
     FeedController(/* args */);
@@ -22,5 +24,7 @@ public:
     cv::Mat getFeed();
     void updateFeedThread();
     void createZones(int array[8]);
+    void getObjectsSelected(int objectsSelected[10]);
+    std::string[80] getObjectsAvailable();
 };
 #endif

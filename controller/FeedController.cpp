@@ -25,8 +25,20 @@ FeedController::FeedController()
     Mat frame;
     Mat outFrame;
     Zone zones[30];
+
+    for (int i = 0; i < 10; i++)
+    {
+        this->classesOfObjsSelected[i] = -1;
+    }
+
+    //REMOVE THIS LATER
+    classesOfObjsSelected[0] = 56;
+    classesOfObjsSelected[1] = 0;
+    classesOfObjsSelected[2] = 66;
+    //
     internalThread = new thread(&FeedController::updateFeedThread, this);
     currentZoneIndex = -1;
+    string objects[80] = {"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop_sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "doughnut", "cake", "chair", "couch", "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair dryer", "toothbrush"};
 }
 
 FeedController::~FeedController()
@@ -67,7 +79,7 @@ void FeedController::updateFeedThread()
         if (frameCount == 30)
         {
             vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
-            dbWriter.write(listOfClassesFound, this->zones);
+            dbWriter.write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
             // cout << "----------" << endl;
             // for (auto x : listOfClassesFound)
             // {
@@ -92,7 +104,21 @@ void FeedController::createZones(int array[8])
     }
     this->zones[this->currentZoneIndex] = zone;
     cout << "XXXXxXXXXXXXX" << endl;
-	for (int i = 0;  i < 8 ; i++){
-		cout << " " << this->zones[0].getZoneArray()[i] << endl;
-	}
+    for (int i = 0; i < 8; i++)
+    {
+        cout << " " << this->zones[0].getZoneArray()[i] << endl;
+    }
+}
+
+void FeedController::getObjectsSelected(int objectsSelected[10])
+{
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     this->classesOfObjsSelected[i];
+    // }
+}
+
+string[80] FeedController::getObjectsAvailable()
+{
+    return this->objects;
 }
