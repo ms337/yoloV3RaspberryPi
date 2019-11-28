@@ -35,10 +35,10 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    
+
     void on_pushButton2_clicked();
-    
-    void drawZones(QPixmap image, int intCoords[8]);
+
+    QPixmap drawZones(QPixmap image, int intCoords[8]);
 
     void on_histButton_clicked();
 

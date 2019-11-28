@@ -55,8 +55,6 @@ void ModelOutput::run(Mat inpFrame, Mat *outFrame)
 
         // Mat detectedFrame;
         frame.convertTo(*outFrame, CV_8U);
-        // imwrite(outputFile, *outFrame);
-        cout << "Wrote model output to file" << endl;
     }
 }
 

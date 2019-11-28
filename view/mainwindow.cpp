@@ -124,8 +124,9 @@ void MainWindow::on_startButton_clicked()
 
         QPixmap image = QPixmap::fromImage(qimg.rgbSwapped());
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
-        for (int i = 0; i < nZones; i++) {
-            drawZones(image, allCoords[i]);
+        for (int i = 0; i < nZones; i++)
+        {
+            image = drawZones(image, allCoords[i]);
         }
         ui->label->setPixmap(image);
         qApp->processEvents();
@@ -134,19 +135,21 @@ void MainWindow::on_startButton_clicked()
     }
 }
 
-void MainWindow::drawZones(QPixmap image, int intCoords[8]) {
+QPixmap MainWindow::drawZones(QPixmap image, int intCoords[8])
+{
     QPainter painter(&image);
-    painter.setPen(QPen(Qt::cyan, 5));
+    painter.setPen(QPen(Qt::red, 5));
 
     //Draws lines based on the 4 coordinates to make a zone
     painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
-    painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
-    painter.drawLine(intCoords[6], intCoords[7], intCoords[4], intCoords[5]);
-    painter.drawLine(intCoords[4], intCoords[5], intCoords[0], intCoords[1]);
+    painter.drawLine(intCoords[2], intCoords[3], intCoords[4], intCoords[5]);
+    painter.drawLine(intCoords[4], intCoords[5], intCoords[6], intCoords[7]);
+    painter.drawLine(intCoords[6], intCoords[7], intCoords[0], intCoords[1]);
 
     //Paint the lines on top of the image
     ui->label->setPixmap(image);
     ui->label->setScaledContents(true);
+    return image;
 }
 
 void MainWindow::on_histButton_clicked()
