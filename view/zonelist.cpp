@@ -53,7 +53,6 @@ void ZoneList::on_pushButton_clicked()
     if (crds.length() == 8) {
         for(int i=0; i<8; i++) {
             coordsArr[i] = crds[i];
-            ui->textBrowser->setText(coordsArr[i]);
         }
         this->close();
     } else {

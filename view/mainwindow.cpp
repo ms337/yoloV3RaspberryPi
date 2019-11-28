@@ -13,6 +13,8 @@
 #include "ui_mainwindow.h"
 #include "objectlist.h"
 #include "zonelist.h"
+#include "histogram.h"
+#include "heatmap.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
@@ -118,10 +120,9 @@ void MainWindow::on_pushButton_clicked()
  * @brief 
  * 
  */
-void MainWindow::on_pushButton2_clicked()
+void MainWindow::on_startStopButton_clicked()
 {
-    //ObjectList objlist;
-    //objlist.exec();
+
     //using namespace cv;
     QPixmap image("./camera.png");
     bool isCamera;
@@ -189,4 +190,22 @@ void MainWindow::on_pushButton2_clicked()
         std::chrono::milliseconds timespan(33);
         std::this_thread::sleep_for(timespan);
     }
+}
+
+void MainWindow::on_histButton_clicked()
+{
+    Histogram histogram;
+    histogram.exec();
+}
+
+void MainWindow::on_heatmapButton_clicked()
+{
+    Heatmap heatmap;
+    heatmap.exec();
+}
+
+void MainWindow::on_pushButton2_clicked()
+{
+    ObjectList objlist;
+    objlist.exec();
 }
