@@ -26,9 +26,11 @@ private:
   int maxZonesAllowed;
 
 public:
+  ZonesCollection();
+  ~ZonesCollection();
   Zone *getListOfZones();
   int getCurrentZoneIndex();
-  int addZone();
-  int removeZone();
+  int addZone(Zone zoneToAdd);
+  int removeZone(Zone zoneToAdd);
 };
 #endif

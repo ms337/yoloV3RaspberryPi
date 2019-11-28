@@ -25,5 +25,5 @@ void ZonesController::createZones(int array[8])
 
     Zone zone = Zone(bBox, to_string(zoneNo));
     zoneNo++;
-    puts("Works");
+    zonesColl.addZone(zone);
 }
