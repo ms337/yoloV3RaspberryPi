@@ -13,6 +13,9 @@
 #include <string>
 #include <iostream>
 
+QString qObjList[80];
+std::string sObjList[10];
+
 /**
  * @brief Construct a new Object List:: Object List object
  * 
@@ -26,7 +29,7 @@ ObjectList::ObjectList(QWidget *parent) :
     makeObjList();
 
     QVBoxLayout* viewLayout = new QVBoxLayout;
-    viewBox = new QGroupBox("Objects");
+    viewBox = new QGroupBox("Objects - select max 10");
     viewLayout->addWidget(widget);
     viewBox->setLayout(viewLayout);
 
@@ -63,8 +66,16 @@ void ObjectList::makeObjList(){
 }
 
 void ObjectList::save(){
+    int j = 0;
     for (int i = 0; i < widget->count(); i++) {
-        if (widget->item(i)->checkState() == Qt::Checked) std::cout << widget->item(i)->text().toStdString() << std::endl;
+        if (widget->item(i)->checkState() == Qt::Checked) {
+            qObjList[j] = widget->item(i)->text();
+            sObjList[j] = qObjList[j].toStdString();
+            j++;
+        }
     }
+}
 
+std::string ObjectList::getObjs(int i) {
+    return sObjList[i];
 }

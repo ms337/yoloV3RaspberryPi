@@ -42,6 +42,7 @@ class ObjectList : public QDialog
 public:
     explicit ObjectList(QWidget *parent = 0);
     ~ObjectList();
+    std::string getObjs(int i);
 
 public slots:
     void save();

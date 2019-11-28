@@ -1,6 +1,7 @@
 #include "histogram.h"
 #include "ui_histogram.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 Histogram::Histogram(QWidget *parent) :
@@ -8,6 +9,17 @@ Histogram::Histogram(QWidget *parent) :
     ui(new Ui::Histogram)
 {
     ui->setupUi(this);
+
+    std::string line;
+    std::ifstream inFile;
+    inFile.open("stats.txt", std::ifstream::in);
+    std::cout << "HULLO" << std::endl;
+    if (inFile.is_open()) {
+        while(getline(inFile, line)) {
+            std::cout << line << '\n' << std::endl;
+        }
+        inFile.close();
+    } else std::cout<<"lol didnt open"<<std::endl;
 
     /**
      * Input: hash table where key is object and value is an array of ints
