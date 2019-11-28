@@ -124,6 +124,7 @@ void MainWindow::on_startButton_clicked()
 
         QPixmap image = QPixmap::fromImage(qimg.rgbSwapped());
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+
         for (int i = 0; i < nZones; i++)
         {
             image = drawZones(image, allCoords[i]);
