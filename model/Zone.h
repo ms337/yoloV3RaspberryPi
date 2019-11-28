@@ -1,22 +1,8 @@
-/**
- * @file Zone.h
- * @author your name (you@domain.com)
- * @brief
- * @version 0.1
- * @date 2019-10-31
- *
- * @copyright Copyright (c) 2019
- *
- */
 #ifndef ZONE
 #define ZONE
-
 #include <iostream>
+//header file for zone.cpp
 
-/**
- * @brief
- *
- */
 class Zone
 {
 private:

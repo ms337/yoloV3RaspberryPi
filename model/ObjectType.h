@@ -2,6 +2,7 @@
 #define OBJECTTYPE
 #include <iostream>
 #include <string>
+//header file for object type
 class ObjectType
 {
 private:

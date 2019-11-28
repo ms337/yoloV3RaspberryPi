@@ -3,13 +3,15 @@
 using namespace cv;
 using namespace dnn;
 using namespace std;
-
+//constructor
 ModelOutput::ModelOutput(/* args */)
 {
+  //initialize the parameters
     confThreshold = 0.3;
     nmsThreshold = 0.3;
     inpWidth = 416;
     inpHeight = 416;
+    //loads name of classes
     classesFile = "/Users/msinghal/team9/model/yolo/coco.names";
     classes;
 
@@ -21,15 +23,17 @@ ModelOutput::ModelOutput(/* args */)
     {
         classes.push_back(line);
     }
+
+    //give configuration and weight files of the model
     modelConfiguration = "/Users/msinghal/team9/model/yolo/yolov3-tiny.cfg";
     modelWeights = "/Users/msinghal/team9/model/yolo/yolov3-tiny.weights";
 
-    //Network
+    //load the Network using the configuration files
     net = readNetFromDarknet(modelConfiguration, modelWeights);
     net.setPreferableBackend(DNN_BACKEND_OPENCV);
     net.setPreferableTarget(DNN_TARGET_CPU);
 }
-
+//destructor
 ModelOutput::~ModelOutput()
 {
 }
@@ -39,25 +43,28 @@ void ModelOutput::run(Mat inpFrame, Mat *outFrame)
     string str, outputFile;
     Mat frame, blob;
     frame = inpFrame;
-
+    //check to make sure frame is not empty
     if (!(frame.empty()))
     {
-        // outputFile = "outFile.jpg";
         this->classesAndMidpoints.clear();
+        //create a 4d blob form the frame passed
         blobFromImage(frame, blob, 1 / 255.0, CvSize(this->inpWidth, this->inpHeight), Scalar(0, 0, 0), true, false);
+        //set the input blob to the network
         net.setInput(blob);
+        // forward pass the vector outs to get output of the output layers
         vector<Mat> outs;
         net.forward(outs, ModelOutput::getOutputsNames(this->net));
-
+        //remove incorrect bounding boxes due to their low confidence on object detection
         ModelOutput::postprocess(frame, outs);
-
+        // create vector of type double to hold layers Times
         vector<double> layersTimes;
+        //get overall time for inference and timings for each of the layers
         double freq = getTickFrequency() / 1000;
         double t = (this->net).getPerfProfile(layersTimes) / freq;
+        //wirte the frame with detection boxes
         string label = format("Inference time for a frame: %.2f ms", t);
         putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 
-        // Mat detectedFrame;
         frame.convertTo(*outFrame, CV_8U);
     }
 }
@@ -122,8 +129,7 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
         }
     }
 
-    // Perform non maximum suppression to eliminate redundant overlapping boxes with
-    // lower confidences
+    // Perform non maximum suppression to eliminate redundant overlapping boxes with lower confidences
     vector<int> indices;
     NMSBoxes(boxes, confidences, this->confThreshold, this->nmsThreshold, indices);
     for (size_t i = 0; i < indices.size(); ++i)
