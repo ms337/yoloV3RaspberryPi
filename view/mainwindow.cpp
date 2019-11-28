@@ -126,7 +126,6 @@ void MainWindow::on_startButton_clicked()
 
     while (true)
     {
-
         Mat frame = client.getFeed();
         //imshow("Say Onion!", image);
         QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);

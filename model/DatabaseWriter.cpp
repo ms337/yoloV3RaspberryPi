@@ -4,23 +4,7 @@ using namespace std;
 
 int MAX_ZONES = 30;
 
-int inZone(Zone zone, int x, int y)
-{
-	// zone.getZoneArray();
-	int topLeftX = zone.getZoneArray()[0];
-	int bottomRightX = zone.getZoneArray()[4];
-	int bottomRightY = zone.getZoneArray()[5];
-	int topLeftY = zone.getZoneArray()[1];
 
-	if ((topLeftX < x && x <= bottomRightX) && (topLeftY < y && y <= bottomRightY))
-	{
-		//cout << "c: " << c << endl;
-		//cout << "ztl: " << z.tl.x << endl;
-		//cout << "zbr: " << z.br.x << endl;
-		return 1;
-	}
-	return 0;
-}
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
@@ -84,6 +68,18 @@ DatabaseWriter::DatabaseWriter(Zone zones[30])
 
 		/* Execute SQL statement */
 		rc = sqlite3_exec(this->db, sql, callback, 0, &zErrMsg);
+
+		if (rc != SQLITE_OK)
+		{
+			fprintf(stderr, "SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+		}
+		char hello[100];
+		sprintf(hello, "DELETE FROM trackingData;", this->curTime);
+
+		rc = sqlite3_exec(this->db, hello, callback, 0, &zErrMsg);
+
+		memset(hello, 0, 100);
 
 		if (rc != SQLITE_OK)
 		{
@@ -166,4 +162,22 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound)
 			i++;
 		}
 	}
+}
+
+int DatabaseWriter::inZone(Zone zone, int x, int y)
+{
+	// zone.getZoneArray();
+	int topLeftX = zone.getZoneArray()[0];
+	int bottomRightX = zone.getZoneArray()[4];
+	int bottomRightY = zone.getZoneArray()[5];
+	int topLeftY = zone.getZoneArray()[1];
+
+	if ((topLeftX < x && x <= bottomRightX) && (topLeftY < y && y <= bottomRightY))
+	{
+		//cout << "c: " << c << endl;
+		//cout << "ztl: " << z.tl.x << endl;
+		//cout << "zbr: " << z.br.x << endl;
+		return 1;
+	}
+	return 0;
 }
