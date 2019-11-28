@@ -50,8 +50,8 @@ void ZoneList::on_pushButton_clicked()
     QStringList crds = coords.split(",");
 
     //If the input format is correct then set those coordinates
-    if (crds.length() == 8) {
-        for(int i=0; i<8; i++) {
+    if (crds.length() == 4) {
+        for(int i=0; i<4; i++) {
             coordsArr[i] = crds[i];
         }
         this->close();

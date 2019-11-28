@@ -1,12 +1,12 @@
 /**
  * @file mainwindow.cpp
  * @author your name (you@domain.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 #include <iostream>
 #include "mainwindow.h"
@@ -26,16 +26,14 @@
 using namespace std;
 using namespace cv;
 
-int allCoords[30][8];
+int fourCoords[30][4];
+int allCoords[30][4];
 int nZones = 1; //default number of zones
 
-//2D array[30] of all coords that stores intCoords[8] as a global var, add new coords to this array once zones are added in pushButton
-//num of zones as another global var, this is how many times the drawZones function will loop
-//call drawZones function from startButton, which gives it QPixmap image
 /**
  * @brief Construct a new Main Window:: Main Window object
- * 
- * @param parent 
+ *
+ * @param parent
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
@@ -52,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 /**
  * @brief Destroy the Main Window:: Main Window object
- * 
+ *
  */
 MainWindow::~MainWindow()
 {
@@ -60,9 +58,9 @@ MainWindow::~MainWindow()
 }
 
 /**
- * @brief 
+ * @brief
  * Button Opens a window that allows zones to be entered
- * 
+ *
  */
 void MainWindow::on_pushButton_clicked()
 {
@@ -98,18 +96,29 @@ void MainWindow::on_pushButton_clicked()
         QString *coordsArr;
         coordsArr = zonelist.getCoords();
 
-        for (int j = 0; j < 8; j++)
+        for (int j = 0; j < 4; j++)
         {
             bool ok;
-            allCoords[i][j] = coordsArr[j].toInt(&ok, 10);
+            fourCoords[i][j] = coordsArr[j].toInt(&ok, 10);
+        }
+
+        for (int k = 0; k < nZones; k++) {
+            allCoords[k][0] = fourCoords[k][0];
+            allCoords[k][1] = fourCoords[k][1];
+            allCoords[k][2] = fourCoords[k][2];
+            allCoords[k][3] = fourCoords[k][1];
+            allCoords[k][4] = fourCoords[k][2];
+            allCoords[k][5] = fourCoords[k][3];
+            allCoords[k][6] = fourCoords[k][0];
+            allCoords[k][7] = fourCoords[k][3];
         }
         zoneController.createZones(allCoords[i]);
     }
 }
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 void MainWindow::on_startButton_clicked()
 {
@@ -127,7 +136,7 @@ void MainWindow::on_startButton_clicked()
 
         for (int i = 0; i < nZones; i++)
         {
-            image = drawZones(image, allCoords[i]);
+            image = drawZones(image, fourCoords[i]);
         }
         ui->label->setPixmap(image);
         qApp->processEvents();
@@ -141,11 +150,12 @@ QPixmap MainWindow::drawZones(QPixmap image, int intCoords[8])
     QPainter painter(&image);
     painter.setPen(QPen(Qt::red, 5));
 
-    //Draws lines based on the 4 coordinates to make a zone
-    painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
-    painter.drawLine(intCoords[2], intCoords[3], intCoords[4], intCoords[5]);
-    painter.drawLine(intCoords[4], intCoords[5], intCoords[6], intCoords[7]);
-    painter.drawLine(intCoords[6], intCoords[7], intCoords[0], intCoords[1]);
+    //Draws lines based on the coordinates to make a zone
+
+    painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[1]);
+    painter.drawLine(intCoords[2], intCoords[1], intCoords[2], intCoords[3]);
+    painter.drawLine(intCoords[2], intCoords[3], intCoords[0], intCoords[3]);
+    painter.drawLine(intCoords[0], intCoords[3], intCoords[0], intCoords[1]);
 
     //Paint the lines on top of the image
     ui->label->setPixmap(image);
