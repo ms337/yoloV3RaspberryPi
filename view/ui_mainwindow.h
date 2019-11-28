@@ -40,7 +40,7 @@ public:
     QTextEdit *textEdit;
     QLabel *label_2;
     QLabel *label_3;
-    QPushButton *startStopButton;
+    QPushButton *startButton;
     QPushButton *histButton;
     QPushButton *heatmapButton;
     QMenuBar *menuBar;
@@ -84,9 +84,9 @@ public:
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(620, 70, 151, 21));
-        startStopButton = new QPushButton(centralWidget);
-        startStopButton->setObjectName(QStringLiteral("startStopButton"));
-        startStopButton->setGeometry(QRect(50, 380, 101, 31));
+        startButton = new QPushButton(centralWidget);
+        startButton->setObjectName(QStringLiteral("startButton"));
+        startButton->setGeometry(QRect(50, 380, 101, 31));
         histButton = new QPushButton(centralWidget);
         histButton->setObjectName(QStringLiteral("histButton"));
         histButton->setGeometry(QRect(250, 380, 101, 31));
@@ -118,8 +118,8 @@ public:
         pushButton2->setText(QApplication::translate("MainWindow", "Add New Object", Q_NULLPTR));
         label->setText(QString());
         label_2->setText(QApplication::translate("MainWindow", "Set how many zones?", Q_NULLPTR));
-        label_3->setText(QApplication::translate("MainWindow", "(Default: 3, Max 30)", Q_NULLPTR));
-        startStopButton->setText(QApplication::translate("MainWindow", "Start/Stop", Q_NULLPTR));
+        label_3->setText(QApplication::translate("MainWindow", "(Default: 1, Max 30)", Q_NULLPTR));
+        startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         histButton->setText(QApplication::translate("MainWindow", "Histogram", Q_NULLPTR));
         heatmapButton->setText(QApplication::translate("MainWindow", "Heatmap", Q_NULLPTR));
     } // retranslateUi

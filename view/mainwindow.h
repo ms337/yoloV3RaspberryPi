@@ -38,9 +38,11 @@ private slots:
     
     void on_pushButton2_clicked();
     
+    void drawZones(QPixmap image, int intCoords[8]);
+
     void on_histButton_clicked();
 
-    void on_startStopButton_clicked();
+    void on_startButton_clicked();
 
     void on_heatmapButton_clicked();
 

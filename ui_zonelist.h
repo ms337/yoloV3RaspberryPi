@@ -28,24 +28,32 @@ public:
     QPushButton *pushButton;
     QTextEdit *textEdit;
     QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_4;
 
     void setupUi(QDialog *ZoneList)
     {
         if (ZoneList->objectName().isEmpty())
             ZoneList->setObjectName(QStringLiteral("ZoneList"));
-        ZoneList->resize(239, 185);
+        ZoneList->resize(333, 221);
         label = new QLabel(ZoneList);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(20, 10, 201, 61));
+        label->setGeometry(QRect(60, 10, 231, 61));
         pushButton = new QPushButton(ZoneList);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(80, 120, 101, 31));
+        pushButton->setGeometry(QRect(110, 180, 101, 31));
         textEdit = new QTextEdit(ZoneList);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(30, 90, 181, 31));
+        textEdit->setGeometry(QRect(10, 140, 311, 31));
         label_2 = new QLabel(ZoneList);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(50, 50, 181, 41));
+        label_2->setGeometry(QRect(30, 60, 271, 31));
+        label_3 = new QLabel(ZoneList);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(20, 90, 291, 21));
+        label_4 = new QLabel(ZoneList);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(70, 110, 191, 21));
 
         retranslateUi(ZoneList);
 
@@ -55,9 +63,11 @@ public:
     void retranslateUi(QDialog *ZoneList)
     {
         ZoneList->setWindowTitle(QApplication::translate("ZoneList", "Dialog", Q_NULLPTR));
-        label->setText(QApplication::translate("ZoneList", "Enter 4 pairs of coordinates", Q_NULLPTR));
+        label->setText(QApplication::translate("ZoneList", "Enter 4 pairs of coordinates (int)", Q_NULLPTR));
         pushButton->setText(QApplication::translate("ZoneList", "Submit", Q_NULLPTR));
-        label_2->setText(QApplication::translate("ZoneList", "Format: 1,2,3,4,5,6,7,8", Q_NULLPTR));
+        label_2->setText(QApplication::translate("ZoneList", "Format: TopLeftX, TopLeftY, TopRightX,", Q_NULLPTR));
+        label_3->setText(QApplication::translate("ZoneList", "TopRightY, BottomRightX, BottomRightY, ", Q_NULLPTR));
+        label_4->setText(QApplication::translate("ZoneList", "BottomLeftX, BottomLeftY", Q_NULLPTR));
     } // retranslateUi
 
 };
