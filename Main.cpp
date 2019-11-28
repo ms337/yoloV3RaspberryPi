@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
     w.show();
 
     //Creates the camera feed window
-    FeedController client = FeedController();
-    client.getFeed();
+
     // ModelOutput model = ModelOutput();
 
     std::cout << "hey" << std::endl;

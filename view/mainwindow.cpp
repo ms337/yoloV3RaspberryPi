@@ -164,11 +164,12 @@ void MainWindow::on_pushButton2_clicked()
         qApp->processEvents();
     }*/
 
+    FeedController client = FeedController();
+
     while (true)
     {
-        std::chrono::milliseconds timespan(33);
-        std::this_thread::sleep_for(timespan);
-        Mat frame = imread("/Users/msinghal/team9/outFile.jpg");
+
+        Mat frame = client.getFeed();
         //imshow("Say Onion!", image);
         QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
 
@@ -185,5 +186,7 @@ void MainWindow::on_pushButton2_clicked()
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
         ui->label->setPixmap(image);
         qApp->processEvents();
+        std::chrono::milliseconds timespan(33);
+        std::this_thread::sleep_for(timespan);
     }
 }

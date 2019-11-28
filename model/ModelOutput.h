@@ -25,9 +25,18 @@ private:
   std::string classesFile;
   std::vector<std::string> classes;
 
+  std::string line;
+
+  std::string modelConfiguration;
+  std::string modelWeights;
+
+  //Network
+  cv::dnn::Net net;
+
 public:
   ModelOutput();
   ~ModelOutput();
+  void run(cv::Mat inpFrame, cv::Mat *outFrame);
   std::vector<std::string> getOutputsNames(const cv::dnn::Net &net);
   void postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs);
   void drawPred(int classId, float conf, int left, int top, int right, int bottom, cv::Mat &frame);

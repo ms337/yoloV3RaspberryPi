@@ -23,6 +23,7 @@ FeedController::FeedController()
 {
     VideoCapture feedCV;
     Mat frame;
+    Mat outFrame;
 
     internalThread = new thread(&FeedController::updateFeedThread, this);
 }
@@ -36,7 +37,7 @@ FeedController::~FeedController()
 
 cv::Mat FeedController::getFeed()
 {
-    return this->frame;
+    return this->outFrame;
 }
 
 void FeedController::updateFeedThread()
@@ -45,6 +46,7 @@ void FeedController::updateFeedThread()
     if (!feedCV.open(0))
         exit(-1);
 
+    ModelOutput model = ModelOutput();
     for (;;)
     {
 
@@ -57,9 +59,8 @@ void FeedController::updateFeedThread()
         //std::cout << fps<< std::endl;
         //imshow("Say Cheese!", frame);
 
-        imwrite("test.jpg", this->frame);
-        ModelOutput model = ModelOutput();
-
+        // imwrite("test.jpg", this->frame);
+        model.run(this->frame, &(this->outFrame));
         //Mat image = imread("./test.jpg");
         //imshow("Say Onion!", image);
 

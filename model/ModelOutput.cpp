@@ -6,64 +6,59 @@ using namespace std;
 
 ModelOutput::ModelOutput(/* args */)
 {
-    float confThreshold = 0.5;
-    float nmsThreshold = 0.4;
-    int inpWidth = 416;
-    int inpHeight = 416;
-    string classesFile = "./yolo/coco.names";
-    vector<string> classes;
+    confThreshold = 0.3;
+    nmsThreshold = 0.3;
+    inpWidth = 416;
+    inpHeight = 416;
+    classesFile = "/Users/msinghal/team9/model/yolo/coco.names";
+    classes;
 
     ifstream ifs(classesFile.c_str());
-    string line;
+    line;
     while (getline(ifs, line))
     {
         classes.push_back(line);
     }
-    string modelConfiguration = "/Users/msinghal/team9/model/yolo/yolov3-tiny.cfg";
-    string modelWeights = "/Users/msinghal/team9/model/yolo/yolov3-tiny.weights";
+    modelConfiguration = "/Users/msinghal/team9/model/yolo/yolov3-tiny.cfg";
+    modelWeights = "/Users/msinghal/team9/model/yolo/yolov3-tiny.weights";
 
     //Network
-    Net net = readNetFromDarknet(modelConfiguration, modelWeights);
+    net = readNetFromDarknet(modelConfiguration, modelWeights);
     net.setPreferableBackend(DNN_BACKEND_OPENCV);
     net.setPreferableTarget(DNN_TARGET_CPU);
-
-    string str, outputFile;
-    Mat frame, blob;
-
-    // while (waitKey(1) < 0)
-    // {
-    frame = imread("./test.jpg");
-    if (!(frame.empty()))
-    {
-        outputFile = "outFile.jpg";
-        blobFromImage(frame, blob, 1 / 255.0, CvSize(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
-        net.setInput(blob);
-        vector<Mat> outs;
-        net.forward(outs, ModelOutput::getOutputsNames(net));
-
-        ModelOutput::postprocess(frame, outs);
-
-        vector<double> layersTimes;
-        double freq = getTickFrequency() / 1000;
-        double t = net.getPerfProfile(layersTimes) / freq;
-        string label = format("Inference time for a frame: %.2f ms", t);
-        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
-
-        Mat detectedFrame;
-        frame.convertTo(detectedFrame, CV_8U);
-        imwrite(outputFile, detectedFrame);
-        cout << "Wrote model output to file" << endl;
-    }
-    // }
 }
 
 ModelOutput::~ModelOutput()
 {
 }
 
-// ModelOutput::run()
-// {
-// }
+void ModelOutput::run(Mat inpFrame, Mat *outFrame)
+{
+    string str, outputFile;
+    Mat frame, blob;
+    frame = inpFrame;
+    if (!(frame.empty()))
+    {
+        // outputFile = "outFile.jpg";
+        blobFromImage(frame, blob, 1 / 255.0, CvSize(this->inpWidth, this->inpHeight), Scalar(0, 0, 0), true, false);
+        net.setInput(blob);
+        vector<Mat> outs;
+        net.forward(outs, ModelOutput::getOutputsNames(this->net));
+
+        ModelOutput::postprocess(frame, outs);
+
+        vector<double> layersTimes;
+        double freq = getTickFrequency() / 1000;
+        double t = (this->net).getPerfProfile(layersTimes) / freq;
+        string label = format("Inference time for a frame: %.2f ms", t);
+        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
+
+        // Mat detectedFrame;
+        frame.convertTo(*outFrame, CV_8U);
+        // imwrite(outputFile, *outFrame);
+        cout << "Wrote model output to file" << endl;
+    }
+}
 
 vector<String> ModelOutput::getOutputsNames(const Net &net)
 {
@@ -71,10 +66,10 @@ vector<String> ModelOutput::getOutputsNames(const Net &net)
     if (names.empty())
     {
         //Get the indices of the output layers, i.e. the layers with unconnected outputs
-        vector<int> outLayers = net.getUnconnectedOutLayers();
+        vector<int> outLayers = (this->net).getUnconnectedOutLayers();
 
         //get the names of all the layers in the network
-        vector<String> layersNames = net.getLayerNames();
+        vector<string> layersNames = (this->net).getLayerNames();
 
         // Get the names of the output layers in names
         names.resize(outLayers.size());
@@ -105,7 +100,7 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
             double confidence;
             // Get the value and location of the maximum score
             minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
-            if (confidence > confThreshold)
+            if (confidence > this->confThreshold)
             {
                 int centerX = (int)(data[0] * frame.cols);
                 int centerY = (int)(data[1] * frame.rows);
@@ -124,7 +119,7 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
     // Perform non maximum suppression to eliminate redundant overlapping boxes with
     // lower confidences
     vector<int> indices;
-    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
+    NMSBoxes(boxes, confidences, this->confThreshold, this->nmsThreshold, indices);
     for (size_t i = 0; i < indices.size(); ++i)
     {
         int idx = indices[i];
@@ -141,10 +136,10 @@ void ModelOutput::drawPred(int classId, float conf, int left, int top, int right
 
     //Get the label for the class name and its confidence
     string label = format("%.2f", conf);
-    if (!classes.empty())
+    if (!(this->classes).empty())
     {
-        CV_Assert(classId < (int)classes.size());
-        label = classes[classId] + ":" + label;
+        CV_Assert(classId < (int)(this->classes).size());
+        label = (this->classes)[classId] + ":" + label;
     }
 
     //Display the label at the top of the bounding box

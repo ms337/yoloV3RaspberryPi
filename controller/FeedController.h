@@ -8,6 +8,7 @@ private:
     cv::VideoCapture feedCV;
     std::thread *internalThread;
     cv::Mat frame;
+    cv::Mat outFrame;
 
 public:
     FeedController(/* args */);
