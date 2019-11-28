@@ -1,13 +1,10 @@
 #ifndef MODEL_OUTPUT
 #define MODEL_OUTPUT
-
+//header file for ModelOutput
 #include <string>
-
 #include <vector>
-
 #include <fstream>
 #include <sstream>
-
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn/dnn.hpp>

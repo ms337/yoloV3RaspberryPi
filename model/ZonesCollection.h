@@ -1,13 +1,4 @@
-/**
- * @file ZonesCollection.h
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2019-10-31
- * 
- * @copyright Copyright (c) 2019
- * 
- */
+//header file for ZonesCollection.cpp
 #ifndef ZONESCOLLECTION
 #define ZONESCOLLECTION
 
@@ -15,8 +6,8 @@
 #include "Zone.h"
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class ZonesCollection
 {
