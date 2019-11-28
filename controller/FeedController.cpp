@@ -31,10 +31,6 @@ FeedController::FeedController()
         this->classesOfObjsSelected[i] = -1;
     }
 
-    //REMOVE THIS LATER
-    classesOfObjsSelected[0] = 56;
-    classesOfObjsSelected[1] = 0;
-    classesOfObjsSelected[2] = 66;
     //
     internalThread = new thread(&FeedController::updateFeedThread, this);
     currentZoneIndex = -1;
@@ -110,15 +106,30 @@ void FeedController::createZones(int array[8])
     }
 }
 
-void FeedController::getObjectsSelected(int objectsSelected[10])
+void FeedController::getObjectsSelected(string objectsSelected[10])
 {
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     this->classesOfObjsSelected[i];
-    // }
+    for (int j = 0; j < 10; j++)
+    {
+        if (!(objectsSelected[j].empty()))
+        {
+            for (int x = 0; x < 80; x++)
+            {
+                cout << "this is object selected: " << objectsSelected[j] << endl;
+                if (objectsSelected[j].compare(this->objects[x]) == 0)
+                {
+                    cout << "this is x: " << x << endl;
+                    this->classesOfObjsSelected[j] = x;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        cout << this->classesOfObjsSelected[i] << endl;
+    }
 }
 
-string[80] FeedController::getObjectsAvailable()
+string *FeedController::getObjectsAvailable()
 {
     return this->objects;
 }

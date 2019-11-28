@@ -27,7 +27,8 @@
  * @brief 
  * 
  */
-namespace Ui {
+namespace Ui
+{
 class ObjectList;
 }
 
@@ -42,17 +43,17 @@ class ObjectList : public QDialog
 public:
     explicit ObjectList(QWidget *parent = 0);
     ~ObjectList();
-    std::string getObjs(int i);
+    int getObjs(int i);
 
 public slots:
     void save();
 
 private:
     Ui::ObjectList *ui;
-    QListWidget* widget;
-    QDialogButtonBox* buttonBox;
-    QGroupBox* viewBox;
-    QPushButton* saveButton;
+    QListWidget *widget;
+    QDialogButtonBox *buttonBox;
+    QGroupBox *viewBox;
+    QPushButton *saveButton;
 
     void makeObjList();
 };

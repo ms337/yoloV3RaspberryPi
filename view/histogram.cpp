@@ -4,22 +4,26 @@
 #include <fstream>
 #include <string>
 
-Histogram::Histogram(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Histogram)
+Histogram::Histogram(QWidget *parent) : QDialog(parent),
+                                        ui(new Ui::Histogram)
 {
     ui->setupUi(this);
 
     std::string line;
     std::ifstream inFile;
-    inFile.open("stats.txt", std::ifstream::in);
-    std::cout << "HULLO" << std::endl;
-    if (inFile.is_open()) {
-        while(getline(inFile, line)) {
-            std::cout << line << '\n' << std::endl;
+    inFile.open("./stats.txt", std::ifstream::in);
+
+    if (inFile.is_open())
+    {
+        while (getline(inFile, line))
+        {
+            std::cout << line << '\n'
+                      << std::endl;
         }
         inFile.close();
-    } else std::cout<<"lol didnt open"<<std::endl;
+    }
+    else
+        std::cout << "lol didnt open" << std::endl;
 
     /**
      * Input: hash table where key is object and value is an array of ints
@@ -40,38 +44,41 @@ Histogram::Histogram(QWidget *parent) :
     objects[5] = "Dick";
 
     QVector<double> datax(nZones);
-    for (int i = 0; i < nZones; i++) {
-        datax[i] = i+1;
+    for (int i = 0; i < nZones; i++)
+    {
+        datax[i] = i + 1;
     }
     QVector<double> dataArr[nObjects];
-    for (int i = 0; i < nObjects; i++) {
+    for (int i = 0; i < nObjects; i++)
+    {
         QVector<double> datay(nZones);
-        for (int j = 0; j < nZones; j++) {
-            datay[j] = rand()%10;
+        for (int j = 0; j < nZones; j++)
+        {
+            datay[j] = rand() % 10;
         }
         dataArr[i] = datay;
     }
 
     QCPBarsGroup *group = new QCPBarsGroup(ui->widget);
 
-    for (int i = 0; i < nObjects; i++) {
+    for (int i = 0; i < nObjects; i++)
+    {
         QCPBars *bars = new QCPBars(ui->widget->xAxis, ui->widget->yAxis);
         bars->setData(datax, dataArr[i]);
-        bars->setBrush(QColor(rand()%255, rand()%255, rand()%255, 50));
-        bars->setPen(QColor(rand()%255, rand()%255, rand()%255));
-        bars->setWidth(1/nObjects);
+        bars->setBrush(QColor(rand() % 255, rand() % 255, rand() % 255, 50));
+        bars->setPen(QColor(rand() % 255, rand() % 255, rand() % 255));
+        bars->setWidth(1 / nObjects);
         bars->setBarsGroup(group);
         bars->setName(objects[i]);
     }
 
     ui->widget->legend->setVisible(true);
-    ui->widget->xAxis->setRange(0, nZones+1);
+    ui->widget->xAxis->setRange(0, nZones + 1);
     ui->widget->xAxis->setLabel("Zone");
-    ui->widget->yAxis->setRange(0, maxOccurrences+1);
+    ui->widget->yAxis->setRange(0, maxOccurrences + 1);
     ui->widget->yAxis->setLabel("Number of occurrences");
     //ui->widget->rescaleAxes();
     ui->widget->replot();
-
 }
 
 Histogram::~Histogram()

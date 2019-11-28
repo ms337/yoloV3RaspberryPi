@@ -13,22 +13,24 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 QString qObjList[80];
-std::string sObjList[10];
+int sObjList[10];
+QStringList strList = {"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop_sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "doughnut", "cake", "chair", "couch", "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair dryer", "toothbrush"};
 
 /**
  * @brief Construct a new Object List:: Object List object
  * 
  * @param parent 
  */
-ObjectList::ObjectList(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ObjectList)
+ObjectList::ObjectList(QWidget *parent) : QDialog(parent),
+                                          ui(new Ui::ObjectList)
 {
     ui->setupUi(this);
     makeObjList();
 
-    QVBoxLayout* viewLayout = new QVBoxLayout;
+    QVBoxLayout *viewLayout = new QVBoxLayout;
     viewBox = new QGroupBox("Objects - select max 10");
     viewLayout->addWidget(widget);
     viewBox->setLayout(viewLayout);
@@ -36,7 +38,7 @@ ObjectList::ObjectList(QWidget *parent) :
     buttonBox = new QDialogButtonBox;
     saveButton = buttonBox->addButton(QDialogButtonBox::Save);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(viewBox);
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
@@ -53,29 +55,38 @@ ObjectList::~ObjectList()
     delete ui;
 }
 
-void ObjectList::makeObjList(){
-    QStringList strList;
-    strList << "Person" << "Banana" << "Laptop" << "Butt";
-
+void ObjectList::makeObjList()
+{
     widget = new QListWidget;
     widget->addItems(strList);
-    for(int i = 0; i < widget->count(); ++i){
+    for (int i = 0; i < widget->count(); ++i)
+    {
         widget->item(i)->setFlags(widget->item(i)->flags() | Qt::ItemIsUserCheckable);
         widget->item(i)->setCheckState(Qt::Unchecked);
     }
 }
 
-void ObjectList::save(){
+void ObjectList::save()
+{
     int j = 0;
-    for (int i = 0; i < widget->count(); i++) {
-        if (widget->item(i)->checkState() == Qt::Checked) {
+    for (int i = 0; i < widget->count(); i++)
+    {
+        if (widget->item(i)->checkState() == Qt::Checked)
+        {
             qObjList[j] = widget->item(i)->text();
-            sObjList[j] = qObjList[j].toStdString();
-            j++;
+            for (int k = 0; k < 80; k++)
+            {
+                if (qObjList[j].toStdString().compare(strList[k].toStdString()) == 0)
+                {
+                    sObjList[j] = k;
+                    j++;
+                }
+            }
         }
     }
 }
 
-std::string ObjectList::getObjs(int i) {
+int ObjectList::getObjs(int i)
+{
     return sObjList[i];
 }

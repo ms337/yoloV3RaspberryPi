@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdio>
 #include <fstream>
+
 struct myObj
 {
     std::string name;
