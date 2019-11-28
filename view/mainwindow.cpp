@@ -19,6 +19,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
+#include <string>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "../controller/FeedController.h"
@@ -27,8 +28,10 @@ using namespace std;
 using namespace cv;
 
 int fourCoords[30][4];
-int allCoords[30][4];
-int nZones = 1; //default number of zones
+int allCoords[30][8];
+int nZones = 0; //default number of zones
+std::string allObjects[80];
+std::string chosenObjects[10];
 
 /**
  * @brief Construct a new Main Window:: Main Window object
@@ -82,13 +85,11 @@ void MainWindow::on_pushButton_clicked()
     {
     }
 
-    ZonesController zoneController = ZonesController();
-
     //Runs n number of times depending on how many zones the user wanted to create
     for (int i = 0; i < nZones && i < 30; i++)
     {
 
-        //Opens the window
+        //Opens the windowb
         ZoneList zonelist;
         zonelist.exec();
 
@@ -101,18 +102,6 @@ void MainWindow::on_pushButton_clicked()
             bool ok;
             fourCoords[i][j] = coordsArr[j].toInt(&ok, 10);
         }
-
-        for (int k = 0; k < nZones; k++) {
-            allCoords[k][0] = fourCoords[k][0];
-            allCoords[k][1] = fourCoords[k][1];
-            allCoords[k][2] = fourCoords[k][2];
-            allCoords[k][3] = fourCoords[k][1];
-            allCoords[k][4] = fourCoords[k][2];
-            allCoords[k][5] = fourCoords[k][3];
-            allCoords[k][6] = fourCoords[k][0];
-            allCoords[k][7] = fourCoords[k][3];
-        }
-        zoneController.createZones(allCoords[i]);
     }
 }
 
@@ -122,25 +111,38 @@ void MainWindow::on_pushButton_clicked()
  */
 void MainWindow::on_startButton_clicked()
 {
-    FeedController client = FeedController();
+    if (nZones > 0) {
+        FeedController client = FeedController();
 
-    while (true)
-    {
-        Mat frame = client.getFeed();
-        //imshow("Say Onion!", image);
-        QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
-
-        QPixmap image = QPixmap::fromImage(qimg.rgbSwapped());
-        //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
-
-        for (int i = 0; i < nZones; i++)
+        while (true)
         {
-            image = drawZones(image, fourCoords[i]);
+            Mat frame = client.getFeed();
+            //imshow("Say Onion!", image);
+            QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+
+            QPixmap image = QPixmap::fromImage(qimg.rgbSwapped());
+            //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+
+            for (int i = 0; i < nZones; i++)
+            {
+                image = drawZones(image, fourCoords[i]);
+            }
+            ui->label->setPixmap(image);
+            qApp->processEvents();
+            std::chrono::milliseconds timespan(33);
+            std::this_thread::sleep_for(timespan);
         }
-        ui->label->setPixmap(image);
-        qApp->processEvents();
-        std::chrono::milliseconds timespan(33);
-        std::this_thread::sleep_for(timespan);
+        for (int k = 0; k < nZones; k++) {
+            allCoords[k][0] = fourCoords[k][0];
+            allCoords[k][1] = fourCoords[k][1];
+            allCoords[k][2] = fourCoords[k][2];
+            allCoords[k][3] = fourCoords[k][1];
+            allCoords[k][4] = fourCoords[k][2];
+            allCoords[k][5] = fourCoords[k][3];
+            allCoords[k][6] = fourCoords[k][0];
+            allCoords[k][7] = fourCoords[k][3];
+            client.createZones(allCoords[k]);
+        }
     }
 }
 
@@ -174,8 +176,14 @@ void MainWindow::on_heatmapButton_clicked()
     heatmap.exec();
 }
 
-void MainWindow::on_pushButton2_clicked()
+void MainWindow::on_pushButton2_clicked() //Calls object list
 {
     ObjectList objlist;
     objlist.exec();
+    for (int i = 0; i < 10; i++) {
+        chosenObjects[i] = objlist.getObjs(i);
+    }
+    //Pass chosenObjects to controller here
 }
+
+
