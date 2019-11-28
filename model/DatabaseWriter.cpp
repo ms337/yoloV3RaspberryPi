@@ -74,6 +74,18 @@ DatabaseWriter::DatabaseWriter(Zone zones[30])
 			fprintf(stderr, "SQL error: %s\n", zErrMsg);
 			sqlite3_free(zErrMsg);
 		}
+		char hello[100];
+		sprintf(hello, "DELETE FROM trackingData;", this->curTime);
+
+		rc = sqlite3_exec(this->db, hello, callback, 0, &zErrMsg);
+
+		memset(hello, 0, 100);
+
+		if (rc != SQLITE_OK)
+		{
+			fprintf(stderr, "SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+		}
 	}
 }
 
