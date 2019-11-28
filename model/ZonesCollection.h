@@ -10,8 +10,9 @@
  */
 #ifndef ZONESCOLLECTION
 #define ZONESCOLLECTION
-#include "ZonesCollectionEntry.h"
+
 #include <iostream>
+#include "Zone.h"
 
 /**
  * @brief 
@@ -20,12 +21,14 @@
 class ZonesCollection
 {
 private:
-  ZonesCollectionEntry *listOfZone;
+  Zone zones[30];
+  int currentZoneIndex;
   int maxZonesAllowed;
 
 public:
-  ZonesCollectionEntry *getListOfZones();
-  int createZonePaneEntry();
-  int removeZonePaneEntry();
+  Zone *getListOfZones();
+  int getCurrentZoneIndex();
+  int addZone();
+  int removeZone();
 };
 #endif

@@ -15,6 +15,7 @@
 #include "zonelist.h"
 #include "histogram.h"
 #include "heatmap.h"
+#include "../controller/ZonesController.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
@@ -104,6 +105,9 @@ void MainWindow::on_pushButton_clicked()
             intCoords[i] = coordsArr[i].toInt(&ok, 10);
         }
 
+        ZonesController zoneController = ZonesController();
+        zoneController.createZones(intCoords);
+
         //Draws lines based on the 4 coordinates to make a zone
         painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
         painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
@@ -126,44 +130,6 @@ void MainWindow::on_startStopButton_clicked()
     //using namespace cv;
     QPixmap image("./camera.png");
     bool isCamera;
-    //int cameraIndex = 0;//ui->videoEdit->text().toInt(&isCamera);
-    //VideoCapture video;
-    /*if (isCamera)
-    {   
-        if (!video.open(cameraIndex))
-        {
-            QMessageBox::critical(this,
-                "Camera Error",
-                "Make sure you entered a correct camera index,"
-                "<br>or that the camera is not being accessed by another program!");
-            return;
-        }
-    }*/
-    //else
-    //{
-    /*if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
-        {
-            QMessageBox::critical(this,
-                "Video Error",
-                "Make sure you entered a correct and supported video file path,"
-                "<br>or a correct RTSP feed URL!");
-            return;
-        } */
-    //}
-    /*Mat frame;
-    while (video.isOpened())
-    {
-        video >> frame;
-        if (!frame.empty())
-        {
-            
-            QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
-            //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
-            image = QPixmap::fromImage(qimg);
-            ui->label->setPixmap(image);
-        }
-        qApp->processEvents();
-    }*/
 
     FeedController client = FeedController();
 
