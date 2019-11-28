@@ -24,8 +24,9 @@ FeedController::FeedController()
     VideoCapture feedCV;
     Mat frame;
     Mat outFrame;
-
+    Zone zones[30];
     internalThread = new thread(&FeedController::updateFeedThread, this);
+    currentZoneIndex = -1;
 }
 
 FeedController::~FeedController()
@@ -47,6 +48,7 @@ void FeedController::updateFeedThread()
         exit(-1);
 
     ModelOutput model = ModelOutput();
+    DatabaseWriter dbWriter = DatabaseWriter(this->zones);
     for (;;)
     {
 
@@ -61,6 +63,16 @@ void FeedController::updateFeedThread()
 
         // imwrite("test.jpg", this->frame);
         model.run(this->frame, &(this->outFrame));
+
+        vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
+        dbWriter.write(listOfClassesFound);
+        cout << "----------" << endl;
+        for (auto x : listOfClassesFound)
+        {
+            cout << "tuples:" << endl;
+            cout << "Id: " << get<0>(x) << "X, Y: " << get<1>(x) << ", " << get<2>(x) << endl;
+        }
+        cout << "----------" << endl;
         //Mat image = imread("./test.jpg");
         //imshow("Say Onion!", image);
 
@@ -68,4 +80,15 @@ void FeedController::updateFeedThread()
         //if (waitKey(10) == 27)
         //  break;
     }
+}
+
+void FeedController::createZones(int array[8])
+{
+    currentZoneIndex++;
+    Zone zone = Zone(array, to_string(currentZoneIndex));
+    if (currentZoneIndex >= 30)
+    {
+        cerr << "Max limit of 30 Zones reached. Cannot add any more zones." << endl;
+    }
+    this->zones[currentZoneIndex] = zone;
 }

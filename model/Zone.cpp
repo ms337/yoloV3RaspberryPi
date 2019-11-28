@@ -1,12 +1,18 @@
 #include "Zone.h"
+
 Zone::Zone()
 {
-  bBox = BoundingBox();
+  zoneArray;
   type = "";
 }
-Zone::Zone(BoundingBox box, std::string name)
+
+Zone::Zone(int array[8], std::string name)
 {
-  bBox = box;
+  for (int i = 0; i < 8; i++)
+  {
+    zoneArray[i] = array[i];
+  }
+
   type = name;
 }
 
@@ -19,13 +25,9 @@ std::string Zone::getType()
   return type;
 }
 
-void Zone::setBbox(BoundingBox box)
+int *Zone::getZoneArray()
 {
-  bBox = box;
-}
-
-BoundingBox Zone::getBbox(){
-  return bBox;
+  return zoneArray;
 }
 
 void Zone::setType(std::string name)

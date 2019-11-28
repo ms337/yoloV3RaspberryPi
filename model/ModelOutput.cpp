@@ -13,6 +13,8 @@ ModelOutput::ModelOutput(/* args */)
     classesFile = "/Users/msinghal/team9/model/yolo/coco.names";
     classes;
 
+    classesAndMidpoints;
+
     ifstream ifs(classesFile.c_str());
     line;
     while (getline(ifs, line))
@@ -37,9 +39,11 @@ void ModelOutput::run(Mat inpFrame, Mat *outFrame)
     string str, outputFile;
     Mat frame, blob;
     frame = inpFrame;
+
     if (!(frame.empty()))
     {
         // outputFile = "outFile.jpg";
+        this->classesAndMidpoints.clear();
         blobFromImage(frame, blob, 1 / 255.0, CvSize(this->inpWidth, this->inpHeight), Scalar(0, 0, 0), true, false);
         net.setInput(blob);
         vector<Mat> outs;
@@ -100,6 +104,7 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
             minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
             if (confidence > this->confThreshold)
             {
+                //Midpoint
                 int centerX = (int)(data[0] * frame.cols);
                 int centerY = (int)(data[1] * frame.rows);
                 int width = (int)(data[2] * frame.cols);
@@ -110,6 +115,9 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
                 classIds.push_back(classIdPoint.x);
                 confidences.push_back((float)confidence);
                 boxes.push_back(Rect(left, top, width, height));
+                tuple<int, int, int> entry;
+                entry = make_tuple(classIdPoint.x, centerX, centerY);
+                this->classesAndMidpoints.push_back(entry);
             }
         }
     }
@@ -148,4 +156,7 @@ void ModelOutput::drawPred(int classId, float conf, int left, int top, int right
     putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
 }
 
-// Get the names of the output layers
+vector<tuple<int, int, int>> ModelOutput::getClassesAndMidpoints()
+{
+    return this->classesAndMidpoints;
+}

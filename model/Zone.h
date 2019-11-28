@@ -10,7 +10,7 @@
  */
 #ifndef ZONE
 #define ZONE
-#include "BoundingBox.h"
+
 #include <iostream>
 
 /**
@@ -20,16 +20,15 @@
 class Zone
 {
 private:
-  BoundingBox bBox;
+  int zoneArray[8];
   std::string type;
 
 public:
   Zone();
-  Zone(BoundingBox box, std::string name);
+  Zone(int zoneArray[8], std::string name);
   ~Zone();
   std::string getType();
-  void setBbox(BoundingBox box);
-  BoundingBox getBbox();
+  int *getZoneArray();
   void setType(std::string name);
 };
 #endif

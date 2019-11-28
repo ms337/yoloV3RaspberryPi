@@ -14,6 +14,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/types_c.h>
+#include <tuple>
 
 class ModelOutput
 {
@@ -24,6 +25,7 @@ private:
   int inpHeight;
   std::string classesFile;
   std::vector<std::string> classes;
+  std::vector<std::tuple<int, int, int>> classesAndMidpoints;
 
   std::string line;
 
@@ -40,6 +42,7 @@ public:
   std::vector<std::string> getOutputsNames(const cv::dnn::Net &net);
   void postprocess(cv::Mat &frame, const std::vector<cv::Mat> &outs);
   void drawPred(int classId, float conf, int left, int top, int right, int bottom, cv::Mat &frame);
+  std::vector<std::tuple<int, int, int>> getClassesAndMidpoints();
 };
 
 #endif
