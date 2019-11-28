@@ -26,6 +26,12 @@
 using namespace std;
 using namespace cv;
 
+int allCoords[30][8];
+int nZones = 1; //default number of zones
+
+//2D array[30] of all coords that stores intCoords[8] as a global var, add new coords to this array once zones are added in pushButton
+//num of zones as another global var, this is how many times the drawZones function will loop
+//call drawZones function from startButton, which gives it QPixmap image
 /**
  * @brief Construct a new Main Window:: Main Window object
  * 
@@ -60,77 +66,53 @@ MainWindow::~MainWindow()
  */
 void MainWindow::on_pushButton_clicked()
 {
-    //Refreshes the camera
-    QPixmap image("./camera.png");
-
     //Try/Catch block tries to get the number of the
     //the user wishes to create
-    int loops = 3;
     try
     {
         QString qloops = ui->textEdit->toPlainText();
         bool loopBool;
-        loops = qloops.toInt(&loopBool, 10);
+        nZones = qloops.toInt(&loopBool, 10);
 
-        //If the text box is empty, use the default number of zones (3)
-        if (loops == 0)
+        //If the text box is empty, use the default number of zones (1)
+        if (nZones == 0)
         {
-            loops = 3;
+            nZones = 1;
         }
     }
     catch (...)
     {
     }
 
+    ZonesController zoneController = ZonesController();
+
     //Runs n number of times depending on how many zones the user wanted to create
-    for (int i = 0; i < loops && i < 30; i++)
+    for (int i = 0; i < nZones && i < 30; i++)
     {
 
         //Opens the window
         ZoneList zonelist;
         zonelist.exec();
 
-        QPainter painter(&image);
-        painter.setPen(QPen(Qt::cyan, 5));
-
         //Gets the coordinates from the text box
         QString *coordsArr;
         coordsArr = zonelist.getCoords();
 
-        int intCoords[8];
-
-        for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
         {
             bool ok;
-            intCoords[i] = coordsArr[i].toInt(&ok, 10);
+            allCoords[i][j] = coordsArr[j].toInt(&ok, 10);
         }
-
-        ZonesController zoneController = ZonesController();
-        zoneController.createZones(intCoords);
-
-        //Draws lines based on the 4 coordinates to make a zone
-        painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
-        painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
-        painter.drawLine(intCoords[6], intCoords[7], intCoords[4], intCoords[5]);
-        painter.drawLine(intCoords[4], intCoords[5], intCoords[0], intCoords[1]);
+        zoneController.createZones(allCoords[i]);
     }
-
-    //Paint the lines on top of the image
-    ui->label->setPixmap(image);
-    ui->label->setScaledContents(true);
 }
 
 /**
  * @brief 
  * 
  */
-void MainWindow::on_startStopButton_clicked()
+void MainWindow::on_startButton_clicked()
 {
-
-    //using namespace cv;
-    QPixmap image("./camera.png");
-    bool isCamera;
-
     FeedController client = FeedController();
 
     while (true)
@@ -140,22 +122,31 @@ void MainWindow::on_startStopButton_clicked()
         //imshow("Say Onion!", image);
         QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
 
-        /*for (int x = 0; x < 10; ++x) {
-            for (int y = 0; y < 10; ++y) {
-                qimg.setPixel(x, y, qRgb(0, 0, 0));
-            }
-        }*/
-        //QRgb value = qRgb(0, 0, 0);
-        //qimg.setPixel(i, j, value);
-        //cvtColor(qimg, qimg, cv::CV_BGR2RGB);
-
-        image = QPixmap::fromImage(qimg.rgbSwapped());
+        QPixmap image = QPixmap::fromImage(qimg.rgbSwapped());
         //image.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+        for (int i = 0; i < nZones; i++) {
+            drawZones(image, allCoords[i]);
+        }
         ui->label->setPixmap(image);
         qApp->processEvents();
         std::chrono::milliseconds timespan(33);
         std::this_thread::sleep_for(timespan);
     }
+}
+
+void MainWindow::drawZones(QPixmap image, int intCoords[8]) {
+    QPainter painter(&image);
+    painter.setPen(QPen(Qt::cyan, 5));
+
+    //Draws lines based on the 4 coordinates to make a zone
+    painter.drawLine(intCoords[0], intCoords[1], intCoords[2], intCoords[3]);
+    painter.drawLine(intCoords[2], intCoords[3], intCoords[6], intCoords[7]);
+    painter.drawLine(intCoords[6], intCoords[7], intCoords[4], intCoords[5]);
+    painter.drawLine(intCoords[4], intCoords[5], intCoords[0], intCoords[1]);
+
+    //Paint the lines on top of the image
+    ui->label->setPixmap(image);
+    ui->label->setScaledContents(true);
 }
 
 void MainWindow::on_histButton_clicked()
