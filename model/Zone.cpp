@@ -1,12 +1,12 @@
 #include "Zone.h"
 Zone::Zone()
 {
-  coordsBox = BoundingBox();
+  bBox = BoundingBox();
   type = "";
 }
 Zone::Zone(BoundingBox box, std::string name)
 {
-  coordsBox = box;
+  bBox = box;
   type = name;
 }
 
@@ -19,9 +19,13 @@ std::string Zone::getType()
   return type;
 }
 
-void Zone::setCoords(BoundingBox box)
+void Zone::setBbox(BoundingBox box)
 {
-  coordsBox = box;
+  bBox = box;
+}
+
+BoundingBox Zone::getBbox(){
+  return bBox;
 }
 
 void Zone::setType(std::string name)
