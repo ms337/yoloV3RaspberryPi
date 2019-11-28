@@ -1,14 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sqlite3.h>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <cstring>
-#include <cstdio>
-#include <fstream>
 
+#include "DatabaseReader.h"
 using namespace std;
 
 struct myObj
@@ -17,10 +8,27 @@ struct myObj
    int zones[30];
 };
 
-struct myObj structArr[10];
-int structArrCounter = 0;
+DatabaseReader::DatabaseReader()
+{
+   sqlite3 *db;
+   char *zErrMsg;
+   struct myObj structArr[10];
+   int structArrCounter = 0;
+   int rc = sqlite3_open("test.db", &db);
+   if (rc)
+   {
 
-static int addToList(string comp, int position)
+      cerr << "Can't open database: " << sqlite3_errmsg(this->db) << endl;
+      exit(-1);
+   }
+}
+
+DatabaseReader::~DatabaseReader()
+{
+   sqlite3_close(this->db);
+}
+
+int DatabaseReader::addToList(string comp, int position)
 {
    for (int i = 0; i < structArrCounter; i++)
    {
@@ -34,7 +42,7 @@ static int addToList(string comp, int position)
    }
 }
 
-static int callback(void *data, int argc, char **argv, char **azColName)
+int DatabaseReader::callback(void *data, int argc, char **argv, char **azColName)
 {
    int i;
    int zonePos = 0;
@@ -56,7 +64,7 @@ static int callback(void *data, int argc, char **argv, char **azColName)
    return 0;
 }
 
-int main(int argc, char *argv[])
+int DatabaseReader::read()
 {
    string inputObjs[] = {"111", "112", "114"};
 
