@@ -277,7 +277,10 @@ vector<struct myObj> DatabaseWriter::getVector()
 
 void DatabaseWriter::setNZones(int nZones)
 {
+	cout << "PARAM Z: " << nZones << endl;
 	this->nZones = nZones;
+	cout << "SETTING: " << endl;
+	cout << this->nZones << endl;
 }
 
 int DatabaseWriter::getZones()

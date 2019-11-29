@@ -120,6 +120,7 @@ void MainWindow::on_pushButton_clicked()
         cout << "Zones Created: added zones to FeedController" << endl;
         client.createZones(allCoords[i]);
     }
+    cout << "GUI NZONES: " << nZones << endl;
     client.setZonesCount(nZones);
 }
 

@@ -31,7 +31,9 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     **/
 
     int nZones = dbWriter->getZones(); //get this through a getter function in mainwindow
-    int nObjects = vObj.size();        //this is the number of structs
+    cout << "NZONES" << endl;
+    cout << nZones << endl;
+    int nObjects = vObj.size(); //this is the number of structs
     int maxOccurrences = 10;
 
     QVector<QString> objects(nObjects);

@@ -57,7 +57,7 @@ void FeedController::updateFeedThread()
         exit(-1);
 
     ModelOutput model = ModelOutput();
-    DatabaseWriter *dbWriter = DatabaseWriter::getInstance();
+    this->dbWriter = DatabaseWriter::getInstance();
 
     int frameCount = 0;
     for (;;)
@@ -101,36 +101,10 @@ void FeedController::createZones(int array[8])
         cerr << "Max limit of 30 Zones reached. Cannot add any more zones." << endl;
     }
     this->zones[this->currentZoneIndex] = zone;
-    cout << "XXXXxXXXXXXXX" << endl;
-    for (int i = 0; i < 8; i++)
-    {
-        cout << " " << this->zones[0].getZoneArray()[i] << endl;
-    }
 }
 
 void FeedController::getObjectsSelected(int objectsSelected[10])
 {
-    // cout << "objects chosen: " << endl;
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     cout << objectsSelected[i] << endl;
-    // }
-
-    // for (int j = 0; j < 10; j++)
-    // {
-    //     if (objectsSelected[j] > -1)
-    //     {
-    //         for (int x = 0; x < 80; x++)
-    //         {
-    //             cout << "this is object selected: " << objectsSelected[j] << endl;
-    //             if (objectsSelected[j].compare(this->objects[x]) == 0)
-    //             {
-    //                 cout << "this is x: " << x << endl;
-    //                 this->classesOfObjsSelected[j] = x;
-    //             }
-    //         }
-    //     }
-    // }
 
     for (int i = 0; i < 10; i++)
     {
@@ -147,4 +121,7 @@ string *FeedController::getObjectsAvailable()
 void FeedController::setZonesCount(int zoneCount)
 {
     this->zonesDefinedCount = zoneCount;
+    cout << "FEEDC NZOMES: " << endl;
+    cout << this->zonesDefinedCount << endl;
+    this->dbWriter->setNZones(zoneCount);
 }
