@@ -11,11 +11,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
 {
     ui->setupUi(this);
 
-    DatabaseReader dbReader = DatabaseReader();
-
-    vector<struct myObj> vObj = dbReader.read();
-
-    cout << 'WOOOORKKKKKS' << endl;
+    vector<struct myObj> vObj = ;
 
     cout << "PRINTING VECTOR: " << endl;
     for (struct myObj x : vObj)

@@ -11,6 +11,8 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 
 DatabaseWriter::DatabaseWriter()
 {
+
+	vObj;
 	curTime = 0; // used as the keyid for the entire database. Auto increments each time write() is called
 	char *zErrMsg;
 	char *sql;
@@ -135,47 +137,64 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 				{
 					if (objectInZone(objectFound, zones[colZone - 1]))
 					{
-
+						for (auto objInV : this->vObj)
+						{
+							if (objInV.name.compare(to_string(get<0>(objectFound))) == 0)
+							{
+								objInV.zones[colZone]++;
+							}
+							else
+							{
+								struct myObj objInvNew;
+								objInvNew.name = to_string(get<0>(objectFound));
+								for (int x = 0; x < 30; x++)
+								{
+									objInvNew.zones[x] = 0;
+								}
+								objInvNew.zones[colZone]++;
+								this->vObj.push_back(objInvNew);
+								break;
+							}
+						}
 						objectsFoundString = objectsFoundString + to_string(get<0>(objectFound)) + " ";
 					}
 				}
+				sprintf(updateQuery, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d", colZone, objectsFoundString.c_str(), this->curTime);
+				rc = sqlite3_exec(this->db, updateQuery, callback, 0, &zErrMsg);
+				memset(updateQuery, 0, 300);
 			}
-			sprintf(updateQuery, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d", colZone, objectsFoundString.c_str(), this->curTime);
-			rc = sqlite3_exec(this->db, updateQuery, callback, 0, &zErrMsg);
-			memset(updateQuery, 0, 300);
+
+			// int i = 1; // starts at 1 because array at 0 is the keyID column, which we do not need
+
+			// while (i <= MAX_ZONES) // up until 30 as we begin at 1, rather than less than
+			// {
+			// 	char parseArray[300]; // Used for the entire update statement
+			// 	char dataEntry[100];  // used for the current objeccts detected for the given zone
+
+			// 	for (vector<tuple<int, int, int>>::iterator it = listOfClassesFound.begin(); it != listOfClassesFound.end(); ++it)
+			// 	{ // for each object
+
+			// 		if (inZone(zones[i - 1], get<1>(*it), get<2>(*it)))
+			// 		{ // if it is in the current zone. i-1 as the columns begin at i=1 in the database but begins at 0 in the array
+			// 			char arr1[7];
+			// 			sprintf(arr1, "%d ", get<0>(*it));
+
+			// 			strcat(dataEntry, arr1);
+			// 		}
+			// 	}
+			// 	cout << "DATA ENTRY: " << dataEntry << endl;
+			// 	sprintf(parseArray, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d;", i, dataEntry, this->curTime); // after looking through all the objects, we want to update the current column with all of the detected objects
+			// 	// cout << parseArray << endl;
+			// 	rc = sqlite3_exec(this->db, parseArray, callback, 0, &zErrMsg);
+
+			// 	memset(parseArray, 0, 300);
+
+			// 	memset(dataEntry, 0, 100);
+			// 	i++;
+			// }
 		}
-
-		// int i = 1; // starts at 1 because array at 0 is the keyID column, which we do not need
-
-		// while (i <= MAX_ZONES) // up until 30 as we begin at 1, rather than less than
-		// {
-		// 	char parseArray[300]; // Used for the entire update statement
-		// 	char dataEntry[100];  // used for the current objeccts detected for the given zone
-
-		// 	for (vector<tuple<int, int, int>>::iterator it = listOfClassesFound.begin(); it != listOfClassesFound.end(); ++it)
-		// 	{ // for each object
-
-		// 		if (inZone(zones[i - 1], get<1>(*it), get<2>(*it)))
-		// 		{ // if it is in the current zone. i-1 as the columns begin at i=1 in the database but begins at 0 in the array
-		// 			char arr1[7];
-		// 			sprintf(arr1, "%d ", get<0>(*it));
-
-		// 			strcat(dataEntry, arr1);
-		// 		}
-		// 	}
-		// 	cout << "DATA ENTRY: " << dataEntry << endl;
-		// 	sprintf(parseArray, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d;", i, dataEntry, this->curTime); // after looking through all the objects, we want to update the current column with all of the detected objects
-		// 	// cout << parseArray << endl;
-		// 	rc = sqlite3_exec(this->db, parseArray, callback, 0, &zErrMsg);
-
-		// 	memset(parseArray, 0, 300);
-
-		// 	memset(dataEntry, 0, 100);
-		// 	i++;
-		// }
 	}
 }
-
 int DatabaseWriter::inZone(Zone zone, int x, int y)
 {
 
@@ -235,4 +254,9 @@ int DatabaseWriter::objectInZone(tuple<int, int, int> objectFound, Zone zone)
 		return 1;
 	}
 	return 0;
+}
+
+vector<struct myObj> DatabaseWriter::getVector()
+{
+	return this->vObj;
 }

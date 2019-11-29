@@ -8,11 +8,18 @@
 #include <tuple>
 #include "Zone.h"
 
+struct myObj
+{
+    std::string name;
+    int zones[30];
+};
+
 class DatabaseWriter
 {
 private:
     sqlite3 *db;
     int curTime; // this is super important
+    std::vector<struct myObj> vObj;
 
 public:
     DatabaseWriter();
@@ -22,4 +29,5 @@ public:
 
     int checkIfObjSelected(int objClassNo, int objsSel[10]);
     int objectInZone(std::tuple<int, int, int> objectFound, Zone zone);
+    std::vector<struct myObj> getVector();
 };
