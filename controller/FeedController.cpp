@@ -74,18 +74,8 @@ void FeedController::updateFeedThread()
         if (frameCount == 30)
         {
             vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
-<<<<<<< HEAD
-            dbWriter.write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
-=======
             dbWriter->write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
-            // cout << "----------" << endl;
-            // for (auto x : listOfClassesFound)
-            // {
-            //     cout << "tuples:" << endl;
-            //     cout << "Id: " << get<0>(x) << "X, Y: " << get<1>(x) << ", " << get<2>(x) << endl;
-            // }
-            // cout << "----------" << endl;
->>>>>>> 2dab7a878cb3e4981dea2138bdd0e3cd8a0be885
+
             frameCount = 0;
         }
         frameCount++;
