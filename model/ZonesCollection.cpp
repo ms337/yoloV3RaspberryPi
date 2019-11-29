@@ -1,3 +1,8 @@
+/*!
+   \file ZonesCollection.cpp
+   \brief used to manage the collection of Zones via ZonesController
+   \author team9  
+*/
 #include "ZonesCollection.h"
 
 using namespace std;

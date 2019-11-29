@@ -1,3 +1,8 @@
+/*!
+   \file ZonesCollection.h
+   \brief header file for zones collection.cpp
+   \author tema9
+*/
 //header file for ZonesCollection.cpp
 #ifndef ZONESCOLLECTION
 #define ZONESCOLLECTION

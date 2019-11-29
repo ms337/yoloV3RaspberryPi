@@ -1,3 +1,8 @@
+/*!
+   \file ModelOutput.h
+   \brief header file for modelouput.cpp
+   \author team9
+*/
 #ifndef MODEL_OUTPUT
 #define MODEL_OUTPUT
 //header file for ModelOutput

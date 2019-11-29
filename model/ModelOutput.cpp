@@ -1,10 +1,17 @@
+/*!
+   \file ModelOutput.cpp
+   \brief Runs tiny yolov3 model
+   \author team9
+*/
 #include "ModelOutput.h"
 
 using namespace cv;
 using namespace dnn;
 using namespace std;
-//constructor
-ModelOutput::ModelOutput(/* args */)
+/*!
+   \brief constructor for the model
+*/
+ModelOutput::ModelOutput()
 {
   //initialize the parameters
     confThreshold = 0.3;
@@ -33,11 +40,16 @@ ModelOutput::ModelOutput(/* args */)
     net.setPreferableBackend(DNN_BACKEND_OPENCV);
     net.setPreferableTarget(DNN_TARGET_CPU);
 }
-//destructor
+/*!
+   \brief deconstructor for the model
+*/
 ModelOutput::~ModelOutput()
 {
 }
-
+/*!
+   \brief runs the model
+   \param input frame is a stillframe of what is displayed on the webcam, and converts to something readable by model
+*/
 void ModelOutput::run(Mat inpFrame, Mat *outFrame)
 {
     string str, outputFile;
@@ -68,7 +80,11 @@ void ModelOutput::run(Mat inpFrame, Mat *outFrame)
         frame.convertTo(*outFrame, CV_8U);
     }
 }
-
+/*!
+   \brief converts numberical values of objects into names
+   \param a layer of all objects on a frame
+   \return a vector of the string values of the names of objects
+*/
 vector<String> ModelOutput::getOutputsNames(const Net &net)
 {
     static vector<String> names;
@@ -90,6 +106,10 @@ vector<String> ModelOutput::getOutputsNames(const Net &net)
 
 //Credit goes to author of the below repository
 //from https://github.com/spmallick/learnopencv/blob/master/ObjectDetection-YOLO/object_detection_yolo.cpp?fbclid=IwAR0G5mEa0KPaGdlyCkHcrm9o1cfd1I6YfyOBurblL0CF52HP6ZmDxcFnAf8
+/*!
+   \brief processes the various outputs of the model
+   \param takes a frame that allows it to later draw on a prediction box, and the output of all the detected objects
+*/
 void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
 {
     vector<int> classIds;
@@ -140,7 +160,10 @@ void ModelOutput::postprocess(Mat &frame, const vector<Mat> &outs)
                  box.x + box.width, box.y + box.height, frame);
     }
 }
-
+/*!
+   \brief draws a bounding box for a prediction
+   \param classID, conf, left, top, right, and bottom are used to determine dimensions of the boudning box. bounding box drawn on the frame
+*/
 void ModelOutput::drawPred(int classId, float conf, int left, int top, int right, int bottom, Mat &frame)
 {
     //Draw a rectangle displaying the bounding box
@@ -161,7 +184,10 @@ void ModelOutput::drawPred(int classId, float conf, int left, int top, int right
     rectangle(frame, Point(left, top - round(1.5 * labelSize.height)), Point(left + round(1.5 * labelSize.width), top + baseLine), Scalar(255, 255, 255), FILLED);
     putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
 }
-
+/*!
+   \brief creates a vector to be saved into the database
+   \return vector of type tuple. the 3 parts of the tuple are classID, x, y
+*/
 vector<tuple<int, int, int>> ModelOutput::getClassesAndMidpoints()
 {
     return this->classesAndMidpoints;

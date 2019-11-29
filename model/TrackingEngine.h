@@ -1,4 +1,0 @@
-#ifndef TRACKINGENGINE
-#define TRACKINGENGINE
-
-#endif

@@ -1,12 +1,21 @@
+/*!
+   \file Zone.cpp
+   \brief base class for Zones
+   \author team9
+*/
 #include "Zone.h"
-//default contructor for zone
+/*!
+   \brief consturctor default
+*/
 Zone::Zone()
 {
   zoneArray;
   type = "";
 }
 
-//constructor for zone that take into input array of 8 integers as well as a name for the zone
+/*!
+   \brief constructor that creates a full zone with the four endpoints and a name for the zone
+*/
 Zone::Zone(int array[8], std::string name)
 {
   //copy the array to zone array
@@ -17,21 +26,32 @@ Zone::Zone(int array[8], std::string name)
   //set zone type with name given in parameter
   type = name;
 }
-//deconstructor for the zone
+/*!
+   \brief deconstructor
+*/
 Zone::~Zone()
 {
 }
-//getter method for type of zone
+/*!
+   \brief gets the type for the zone
+   \return string for the "type" of zone
+*/
 std::string Zone::getType()
 {
   return type;
 }
-//getter method to return zone array
+/*!
+   \brief gets a list of all zones
+   \return pointer to the array of int zones
+*/
 int *Zone::getZoneArray()
 {
   return this->zoneArray;
 }
-//setter method  to rename zone type 
+/*!
+   \brief sets the type for a zone
+   \param string name for the zone
+*/
 void Zone::setType(std::string name)
 {
   type = name;

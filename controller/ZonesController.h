@@ -1,3 +1,8 @@
+/*!
+   \file ZonesController.h
+   \brief manages the set of all zones
+   \author team9    
+*/
 #ifndef ZONE_CONTROLLER
 #define ZONE_CONTROLLER
 #include "../model/Zone.h"

@@ -1,12 +1,12 @@
 /**
  * @file objectlist.cpp
  * @author your name (you@domain.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 #include "objectlist.h"
 #include "ui_objectlist.h"
@@ -21,8 +21,8 @@ QStringList strList = {"person", "bicycle", "car", "motorcycle", "airplane", "bu
 
 /**
  * @brief Construct a new Object List:: Object List object
- * 
- * @param parent 
+ *
+ * @param parent
  */
 ObjectList::ObjectList(QWidget *parent) : QDialog(parent),
                                           ui(new Ui::ObjectList)
@@ -48,13 +48,15 @@ ObjectList::ObjectList(QWidget *parent) : QDialog(parent),
 
 /**
  * @brief Destroy the Object List:: Object List object
- * 
+ *
  */
 ObjectList::~ObjectList()
 {
     delete ui;
 }
-
+/*!
+   \brief used in the ui to list all the selectable objects to be tracked
+*/
 void ObjectList::makeObjList()
 {
     widget = new QListWidget;
@@ -65,7 +67,9 @@ void ObjectList::makeObjList()
         widget->item(i)->setCheckState(Qt::Unchecked);
     }
 }
-
+/*!
+   \brief "saves the selected objects in the object list displayed in the ui
+*/
 void ObjectList::save()
 {
     int j = 0;
@@ -85,7 +89,11 @@ void ObjectList::save()
         }
     }
 }
-
+/*!
+   \brief used to return the numerical representation of an object
+   \param object value in the object list
+   \return numerical representation of the object
+*/
 int ObjectList::getObjs(int i)
 {
     return sObjList[i];

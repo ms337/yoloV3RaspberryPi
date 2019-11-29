@@ -1,12 +1,7 @@
 /**
  * @file mainwindow.h
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2019-10-31
- * 
- * @copyright Copyright (c) 2019
- * 
+ * @author author
+ * @brief header for mainwindow.cpp
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -14,8 +9,8 @@
 #include "../controller/FeedController.h"
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 namespace Ui
 {
@@ -23,8 +18,8 @@ class MainWindow;
 }
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class MainWindow : public QMainWindow
 {

@@ -1,13 +1,13 @@
 
 /**
  * @file Main.cpp
- * @author your name (you@domain.com)
- * @brief 
+ * @author team9
+ * @brief main function for the application
  * @version 0.1
  * @date 2019-10-31
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 
 #include "controller/FeedController.h"
@@ -18,11 +18,11 @@
 #include <sqlite3.h>
 
 /**
- * @brief 
- * 
- * @param argc 
- * @param argv 
- * @return int 
+ * @brief
+ *
+ * @param argc
+ * @param argv
+ * @return int
  */
 
 int main(int argc, char *argv[])

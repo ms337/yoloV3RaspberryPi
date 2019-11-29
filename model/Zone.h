@@ -1,3 +1,8 @@
+/*!
+   \file Zone.h
+   \brief header file to zone.cpp
+   \author team9
+*/
 #ifndef ZONE
 #define ZONE
 #include <iostream>

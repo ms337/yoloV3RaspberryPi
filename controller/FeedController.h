@@ -1,3 +1,8 @@
+/*!
+   \file FeedController.h
+   \brief "Description"
+   \author team9
+*/
 #ifndef FEED_CONTROLLER
 #define FEED_CONTROLLER
 #include <opencv2/opencv.hpp>
