@@ -57,6 +57,7 @@ void FeedController::updateFeedThread()
 
     ModelOutput model = ModelOutput();
     DatabaseWriter dbWriter = DatabaseWriter();
+
     int frameCount = 0;
     for (;;)
     {
@@ -106,26 +107,34 @@ void FeedController::createZones(int array[8])
     }
 }
 
-void FeedController::getObjectsSelected(string objectsSelected[10])
+void FeedController::getObjectsSelected(int objectsSelected[10])
 {
-    for (int j = 0; j < 10; j++)
-    {
-        if (!(objectsSelected[j].empty()))
-        {
-            for (int x = 0; x < 80; x++)
-            {
-                cout << "this is object selected: " << objectsSelected[j] << endl;
-                if (objectsSelected[j].compare(this->objects[x]) == 0)
-                {
-                    cout << "this is x: " << x << endl;
-                    this->classesOfObjsSelected[j] = x;
-                }
-            }
-        }
-    }
+    // cout << "objects chosen: " << endl;
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     cout << objectsSelected[i] << endl;
+    // }
+
+    // for (int j = 0; j < 10; j++)
+    // {
+    //     if (objectsSelected[j] > -1)
+    //     {
+    //         for (int x = 0; x < 80; x++)
+    //         {
+    //             cout << "this is object selected: " << objectsSelected[j] << endl;
+    //             if (objectsSelected[j].compare(this->objects[x]) == 0)
+    //             {
+    //                 cout << "this is x: " << x << endl;
+    //                 this->classesOfObjsSelected[j] = x;
+    //             }
+    //         }
+    //     }
+    // }
+
     for (int i = 0; i < 10; i++)
     {
-        cout << this->classesOfObjsSelected[i] << endl;
+        cout << "ObjectLabelNo: " << objectsSelected[i] << endl;
+        this->classesOfObjsSelected[i] = objectsSelected[i];
     }
 }
 

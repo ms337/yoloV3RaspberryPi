@@ -24,7 +24,7 @@ public:
     cv::Mat getFeed();
     void updateFeedThread();
     void createZones(int array[8]);
-    void getObjectsSelected(std::string objectsSelected[10]);
+    void getObjectsSelected(int objectsSelected[10]);
     std::string *getObjectsAvailable();
 };
 #endif

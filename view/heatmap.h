@@ -2,8 +2,10 @@
 #define HEATMAP_H
 
 #include <QDialog>
+#include "../model/DatabaseReader.h"
 
-namespace Ui {
+namespace Ui
+{
 class Heatmap;
 }
 

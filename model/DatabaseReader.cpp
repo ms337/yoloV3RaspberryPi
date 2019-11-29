@@ -5,9 +5,8 @@ using namespace std;
 DatabaseReader::DatabaseReader()
 {
    sqlite3 *db;
-   char *zErrMsg;
    struct myObj structArr[10];
-   int structArrCounter = 0;
+   structArrCounter = 0;
    int rc = sqlite3_open("test.db", &db);
    if (rc)
    {
@@ -24,19 +23,39 @@ DatabaseReader::~DatabaseReader()
 
 int DatabaseReader::addToList(string comp, int position)
 {
-   for (int i = 0; i < structArrCounter; i++)
+   for (int i = 0; i < this->structArrCounter; i++)
    {
-      if (structArr[i].name == comp)
+      if (this->structArr[i].name == comp)
       {
-         cout << structArr[i].zones[position] << " ";
-         structArr[i].zones[position]++;
-         cout << structArr[i].name << " ";
-         cout << structArr[i].zones[position] << endl;
+         cout << this->structArr[i].zones[position] << " ";
+         this->structArr[i].zones[position]++;
+         cout << this->structArr[i].name << " ";
+         cout << this->structArr[i].zones[position] << endl;
+      }
+      else
+      {
+         struct myObj thing;
+         thing.name = comp;
+         for (int j = 0; j < 30; j++)
+         {
+            thing.zones[j] = 0;
+         }
+         thing.zones[position] = 1;
+         this->structArr[structArrCounter] = thing;
+         this->structArrCounter++;
       }
    }
 }
-
-int DatabaseReader::callback(void *data, int argc, char **argv, char **azColName)
+/**
+ * @brief Parses the entry to work on it one at a time.
+ * 
+ * @param data 
+ * @param argc 
+ * @param argv 
+ * @param azColName 
+ * @return int 
+ */
+static int callback(void *data, int argc, char **argv, char **azColName)
 {
    int i;
    int zonePos = 0;
@@ -48,9 +67,33 @@ int DatabaseReader::callback(void *data, int argc, char **argv, char **azColName
       size_t pos = 0;
       string token;
       while ((pos = s.find(delimiter)) != std::string::npos)
-      {                             // iterate over the string of objects
-         token = s.substr(0, pos);  // 111
-         addToList(token, zonePos); // increment the counter
+      {                            // iterate over the string of objects
+         token = s.substr(0, pos); // 111
+         struct callbackArgs *args = (struct callbackArgs *)data;
+
+         for (int i = 0; i < (args)->structArrCounter; i++)
+         {
+            if (args->structArr[i].name == token)
+            {
+               // cout << args->structArr[i].zones[zonePos] << " ";
+               args->structArr[i].zones[zonePos]++;
+               // cout << structArr[i].name << " ";
+               // cout << structArr[i].zones[zonePos] << endl;
+            }
+            else
+            {
+               struct myObj thing;
+               thing.name = token;
+               for (int j = 0; j < 30; j++)
+               {
+                  thing.zones[j] = 0;
+               }
+               thing.zones[zonePos] = 1;
+               args->structArr[args->structArrCounter] = thing;
+               args->structArrCounter++;
+            }
+         }
+
          s.erase(0, pos + delimiter.length());
       }
       zonePos++;
@@ -58,9 +101,12 @@ int DatabaseReader::callback(void *data, int argc, char **argv, char **azColName
    return 0;
 }
 
-int DatabaseReader::read()
+vector<myObj> DatabaseReader::read()
 {
-   string inputObjs[] = {"111", "112", "114"}; // this should get a list of all of the objects. This line and the for each loop should belong in the constructor
+   //this->db
+
+   /*
+   string inputObjs[10] = {}; // this should get a list of all of the objects. This line and the for each loop should belong in the constructor
 
    for (string i : inputObjs)
    {
@@ -72,31 +118,26 @@ int DatabaseReader::read()
       }
       structArr[structArrCounter] = thing;
       structArrCounter++;
-   }
+   }*/
+   //this should be creating a new zone every time it encounters a new object
 
-   sqlite3 *db;
    char *zErrMsg = 0;
    int rc;
    char *sql;
-
-   /* Open database */
-   rc = sqlite3_open("test.db", &db);
-
-   if (rc)
-   {
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      return (0);
-   }
-   else
-   {
-      fprintf(stderr, "Opened database successfully\n");
-   }
 
    /* Create SQL statement */
    sql = "SELECT * from trackingData";
 
    /* Execute SQL statement */
-   rc = sqlite3_exec(db, sql, callback, NULL, &zErrMsg);
+
+   struct callbackArgs args;
+   args.structArrCounter = this->structArrCounter;
+   for (int i = 0; i < 10; i++)
+   {
+      args.structArr[i] = this->structArr[i];
+   }
+
+   rc = sqlite3_exec(this->db, sql, callback, &args, &zErrMsg);
 
    if (rc != SQLITE_OK)
    {
@@ -107,8 +148,15 @@ int DatabaseReader::read()
    {
       fprintf(stdout, "Operation done successfully\n");
    }
-   sqlite3_close(db);
 
+   // for structarrcounter, pushback(structarr[i])
+
+   vector<myObj> myVec;
+   for (int i = 0; i < this->structArrCounter; i++)
+   {
+      myVec.push_back(this->structArr[i]);
+   }
+   /*
    ofstream myfile;
    myfile.open("test.txt");
 
@@ -124,6 +172,6 @@ int DatabaseReader::read()
       }
       cout << endl;
       myfile << endl;
-   }
-   return 0;
+   }*/
+   return myVec;
 }

@@ -18,6 +18,12 @@ struct myObj
     int zones[30];
 };
 
+struct callbackArgs
+{
+    int structArrCounter;
+    struct myObj structArr[10];
+};
+
 class DatabaseReader
 {
 private:
@@ -29,8 +35,8 @@ public:
     DatabaseReader();
     ~DatabaseReader();
     int addToList(std::string comp, int position);
-    int callback(void *data, int argc, char **argv, char **azColName);
-    int read();
+    // int callback(void *data, int argc, char **argv, char **azColName);
+    std::vector<myObj> read();
 };
 
 #endif

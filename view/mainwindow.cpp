@@ -34,7 +34,7 @@ FeedController client = FeedController();
 
 int nZones = 0; //default number of zones
 std::string allObjects[80];
-std::string chosenObjects[10];
+int chosenObjects[10];
 
 /**
  * @brief Construct a new Main Window:: Main Window object
@@ -203,10 +203,18 @@ void MainWindow::on_pushButton2_clicked() //Calls object list
 {
     ObjectList objlist;
     objlist.exec();
+    cout << "Objects Selected From GUI: " << endl;
     for (int i = 0; i < 10; i++)
     {
         chosenObjects[i] = objlist.getObjs(i);
+        cout << chosenObjects[i] << endl;
     }
     //Pass chosenObjects to controller here
     client.getObjectsSelected(chosenObjects);
+}
+
+// FUNCTION HERE TO GET nZONES(its already a global variable lol)
+int MainWindow::getZoneCount()
+{
+    return nZones;
 }

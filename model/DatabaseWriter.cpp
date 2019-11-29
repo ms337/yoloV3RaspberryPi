@@ -87,10 +87,10 @@ DatabaseWriter::~DatabaseWriter()
 
 void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone zones[30], int objsSel[10])
 {
-	for (int i = 0; i < 8; i++)
-	{
-		cout << "ZONE 1: " << zones[0].getZoneArray()[i] << endl;
-	}
+	// for (int i = 0; i < 8; i++)
+	// {
+	// 	cout << "ZONE 1: " << zones[0].getZoneArray()[i] << endl;
+	// }
 	(this->curTime)++;
 
 	int rc;
@@ -103,7 +103,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 
 	char query[100];
 	sprintf(query, "INSERT INTO trackingData (time) VALUES (%d);", this->curTime); //creates a new entry into the database with the current keyID. Has nothing in the zones at this point
-	cout << query << endl;
+	// cout << query << endl;
 
 	//Inserts new row
 	rc = sqlite3_exec(this->db, query, callback, 0, &zErrMsg);
@@ -135,6 +135,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 				{
 					if (objectInZone(objectFound, zones[colZone - 1]))
 					{
+
 						objectsFoundString = objectsFoundString + to_string(get<0>(objectFound)) + " ";
 					}
 				}
@@ -183,18 +184,18 @@ int DatabaseWriter::inZone(Zone zone, int x, int y)
 	int trY = zone.getZoneArray()[5];
 	int blY = zone.getZoneArray()[1];
 
-	cout << "------" << endl;
-	cout << "blX: " << blX << endl;
-	cout << "trX:  " << trX << endl;
-	cout << "trY: " << trY << endl;
-	cout << "blY: " << blY << endl;
-	cout << "Midpoint X " << x << endl;
-	cout << "Midpoint Y" << y << endl;
-	cout << "------" << endl;
+	// cout << "------" << endl;
+	// cout << "blX: " << blX << endl;
+	// cout << "trX:  " << trX << endl;
+	// cout << "trY: " << trY << endl;
+	// cout << "blY: " << blY << endl;
+	// cout << "Midpoint X " << x << endl;
+	// cout << "Midpoint Y" << y << endl;
+	// cout << "------" << endl;
 
 	if ((blX < x && x <= trX) && (trY < y && y <= blY))
 	{
-		cout << "234567890" << endl;
+		// cout << "234567890" << endl;
 		//cout << "c: " << c << endl;
 		//cout << "ztl: " << z.tl.x << endl;
 		//cout << "zbr: " << z.br.x << endl;
@@ -227,7 +228,7 @@ int DatabaseWriter::objectInZone(tuple<int, int, int> objectFound, Zone zone)
 
 	if ((blX < midX && midX <= trX) && (trY < midY && midY <= blY))
 	{
-		cout << "234567890" << endl;
+		// cout << "234567890" << endl;
 		//cout << "c: " << c << endl;
 		//cout << "ztl: " << z.tl.x << endl;
 		//cout << "zbr: " << z.br.x << endl;

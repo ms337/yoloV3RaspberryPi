@@ -4,26 +4,48 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 Histogram::Histogram(QWidget *parent) : QDialog(parent),
                                         ui(new Ui::Histogram)
 {
     ui->setupUi(this);
 
-    std::string line;
-    std::ifstream inFile;
-    inFile.open("./stats.txt", std::ifstream::in);
+    DatabaseReader dbReader = DatabaseReader();
+
+    vector<struct myObj> vObj = dbReader.read();
+
+    cout << 'WOOOORKKKKKS' << endl;
+
+    cout << "PRINTING VECTOR: " << endl;
+    for (struct myObj x : vObj)
+    {
+        cout << x.name << endl;
+    }
+    struct myObj obj;
+    obj.name = "apple";
+    for (int x = 0; x < 30; x++)
+    {
+        obj.zones[x] = x + 4;
+    }
+
+    vObj.push_back(obj);
+
+    string line;
+    ifstream inFile;
+    inFile.open("./stats.txt", ifstream::in);
 
     if (inFile.is_open())
     {
         while (getline(inFile, line))
         {
-            std::cout << line << '\n'
-                      << std::endl;
+            cout << line << '\n'
+                 << endl;
         }
         inFile.close();
     }
     else
-        std::cout << "lol didnt open" << std::endl;
+        cout << "lol didnt open" << endl;
 
     /**
      * Input: hash table where key is object and value is an array of ints
@@ -31,18 +53,25 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
      * Length of hash table is nObjects
     **/
 
-    int nZones = 5;
-    int nObjects = 6;
-    int maxOccurrences = 10; //set this to largest number in the hash table
+    int nZones = 5;             //get this through a getter function in mainwindow
+    int nObjects = vObj.size(); //this is the number of structs
+    int maxOccurrences = 10;
 
     QVector<QString> objects(nObjects);
-    objects[0] = "Person";
+
+    int countObjIndex = 0;
+    for (auto found : vObj) //iterate over vector of structs
+    {
+        objects[countObjIndex] = QString::fromStdString(found.name);
+        countObjIndex++;
+    }
+    /**objects[0] = "Person";
     objects[1] = "Banana";
     objects[2] = "Poo";
     objects[3] = "Butt";
     objects[4] = "Fart";
-    objects[5] = "Dick";
-
+    objects[5] = "Dick";**/
+    //nZones is the number that you get when you specify how many zones you want in mainwindow
     QVector<double> datax(nZones);
     for (int i = 0; i < nZones; i++)
     {
@@ -54,7 +83,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         QVector<double> datay(nZones);
         for (int j = 0; j < nZones; j++)
         {
-            datay[j] = rand() % 10;
+            datay[j] = obj.zones[j]; //rand() % 10;
         }
         dataArr[i] = datay;
     }
