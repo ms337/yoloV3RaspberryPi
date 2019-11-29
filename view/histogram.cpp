@@ -16,10 +16,13 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     vector<struct myObj> vObj = dbWriter->getVector();
     cout << vObj.size() << endl;
     cout << "PRINTING VECTOR: " << endl;
-    for (struct myObj x : vObj)
-    {
-        cout << x.name << endl;
-    }
+    // for (struct myObj x : vObj)
+    // {
+    //     for (int z = 0; z < 30; z++)
+    //     {
+    //         cout << x.zones[z] << endl;
+    //     }
+    // }
 
     // string line;
     // ifstream inFile;
@@ -55,7 +58,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         objects[countObjIndex] = QString::fromStdString(found.name);
         countObjIndex++;
     }
-  
+
     //nZones is the number that you get when you specify how many zones you want in mainwindow
     QVector<double> datax(nZones);
     for (int i = 0; i < nZones; i++)
@@ -68,11 +71,13 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         QVector<double> datay(nZones);
         for (int j = 0; j < nZones; j++)
         {
-            datay[j] = obj.zones[j]; //rand() % 10;
+
+            datay[j] = (double)vObj[i].zones[j]; //rand() % 10;
         }
         dataArr[i] = datay;
     }
 
+    // cout << dataArr.first();
     QCPBarsGroup *group = new QCPBarsGroup(ui->widget);
 
     for (int i = 0; i < nObjects; i++)

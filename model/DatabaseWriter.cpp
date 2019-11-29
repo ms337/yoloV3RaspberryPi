@@ -154,7 +154,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 							if (objInV.name.compare(to_string(get<0>(objectFound))) == 0)
 							{
 								flag = 0;
-								objInV.zones[colZone]++;
+								objInV.zones[colZone - 1]++;
 							}
 						}
 						if (flag)
@@ -165,7 +165,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 							{
 								objInvNew.zones[x] = 0;
 							}
-							objInvNew.zones[colZone]++;
+							objInvNew.zones[colZone - 1]++;
 							this->vObj.push_back(objInvNew);
 							break;
 						}
