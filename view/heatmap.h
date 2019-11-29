@@ -2,7 +2,8 @@
 #define HEATMAP_H
 
 #include <QDialog>
-#include "../model/DatabaseReader.h"
+#include <iostream>
+#include "../model/DatabaseWriter.h"
 
 namespace Ui
 {

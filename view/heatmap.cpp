@@ -7,11 +7,15 @@ Heatmap::Heatmap(QWidget *parent) : QDialog(parent),
                                     ui(new Ui::Heatmap)
 {
     ui->setupUi(this);
-    DatabaseReader dbReader = DatabaseReader();
+    DatabaseWriter *dbWriter = DatabaseWriter::getInstance();
 
-    vector<struct myObj> vObj = dbReader.read();
-    cout << 'WOOOORKKKKKS' << endl;
+    vector<struct myObj> vObj = dbWriter->getVector();
 
+    cout << "PRINTING VECTOR: " << endl;
+    for (struct myObj x : vObj)
+    {
+        cout << x.name << endl;
+    }
     struct myObj obj;
     obj.name = "apple";
     for (int x = 0; x < 30; x++)
@@ -21,21 +25,21 @@ Heatmap::Heatmap(QWidget *parent) : QDialog(parent),
 
     vObj.push_back(obj);
 
-    string line;
-    ifstream inFile;
-    inFile.open("./stats.txt", ifstream::in);
+    // string line;
+    // ifstream inFile;
+    // inFile.open("./stats.txt", ifstream::in);
 
-    if (inFile.is_open())
-    {
-        while (getline(inFile, line))
-        {
-            cout << line << '\n'
-                 << endl;
-        }
-        inFile.close();
-    }
-    else
-        cout << "lol didnt open" << endl;
+    // if (inFile.is_open())
+    // {
+    //     while (getline(inFile, line))
+    //     {
+    //         cout << line << '\n'
+    //              << endl;
+    //     }
+    //     inFile.close();
+    // }
+    // else
+    //     cout << "lol didnt open" << endl;
 
     /**
      * Input: hash table where key is object and value is an array of ints

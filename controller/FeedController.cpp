@@ -25,6 +25,7 @@ FeedController::FeedController()
     Mat frame;
     Mat outFrame;
     Zone zones[30];
+    zonesDefinedCount;
 
     for (int i = 0; i < 10; i++)
     {
@@ -56,7 +57,7 @@ void FeedController::updateFeedThread()
         exit(-1);
 
     ModelOutput model = ModelOutput();
-    DatabaseWriter dbWriter = DatabaseWriter();
+    DatabaseWriter *dbWriter = DatabaseWriter::getInstance();
 
     int frameCount = 0;
     for (;;)
@@ -76,7 +77,7 @@ void FeedController::updateFeedThread()
         if (frameCount == 30)
         {
             vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
-            dbWriter.write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
+            dbWriter->write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
             // cout << "----------" << endl;
             // for (auto x : listOfClassesFound)
             // {
@@ -141,4 +142,9 @@ void FeedController::getObjectsSelected(int objectsSelected[10])
 string *FeedController::getObjectsAvailable()
 {
     return this->objects;
+}
+
+void FeedController::setZonesCount(int zoneCount)
+{
+    this->zonesDefinedCount = zoneCount;
 }

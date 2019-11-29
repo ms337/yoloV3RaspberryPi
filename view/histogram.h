@@ -2,9 +2,10 @@
 #define HISTOGRAM_H
 
 #include <QDialog>
-#include "../model/DatabaseReader.h"
+#include "../model/DatabaseWriter.h"
 
-namespace Ui {
+namespace Ui
+{
 class Histogram;
 }
 

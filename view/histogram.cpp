@@ -11,37 +11,31 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
 {
     ui->setupUi(this);
 
-    vector<struct myObj> vObj = ;
+    DatabaseWriter *dbWriter = DatabaseWriter::getInstance();
 
+    vector<struct myObj> vObj = dbWriter->getVector();
+    cout << vObj.size() << endl;
     cout << "PRINTING VECTOR: " << endl;
     for (struct myObj x : vObj)
     {
         cout << x.name << endl;
     }
-    struct myObj obj;
-    obj.name = "apple";
-    for (int x = 0; x < 30; x++)
-    {
-        obj.zones[x] = x + 4;
-    }
 
-    vObj.push_back(obj);
+    // string line;
+    // ifstream inFile;
+    // inFile.open("./stats.txt", ifstream::in);
 
-    string line;
-    ifstream inFile;
-    inFile.open("./stats.txt", ifstream::in);
-
-    if (inFile.is_open())
-    {
-        while (getline(inFile, line))
-        {
-            cout << line << '\n'
-                 << endl;
-        }
-        inFile.close();
-    }
-    else
-        cout << "lol didnt open" << endl;
+    // if (inFile.is_open())
+    // {
+    //     while (getline(inFile, line))
+    //     {
+    //         cout << line << '\n'
+    //              << endl;
+    //     }
+    //     inFile.close();
+    // }
+    // else
+    //     cout << "lol didnt open" << endl;
 
     /**
      * Input: hash table where key is object and value is an array of ints
@@ -49,8 +43,8 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
      * Length of hash table is nObjects
     **/
 
-    int nZones = 5;             //get this through a getter function in mainwindow
-    int nObjects = vObj.size(); //this is the number of structs
+    int nZones = dbWriter->getZones(); //get this through a getter function in mainwindow
+    int nObjects = vObj.size();        //this is the number of structs
     int maxOccurrences = 10;
 
     QVector<QString> objects(nObjects);

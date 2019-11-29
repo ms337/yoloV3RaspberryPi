@@ -9,9 +9,11 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 	return 0;
 }
 
+DatabaseWriter *DatabaseWriter::instance = 0;
+
 DatabaseWriter::DatabaseWriter()
 {
-
+	nZones = 0;
 	vObj;
 	curTime = 0; // used as the keyid for the entire database. Auto increments each time write() is called
 	char *zErrMsg;
@@ -87,6 +89,15 @@ DatabaseWriter::~DatabaseWriter()
 	sqlite3_close(this->db); // closes the database to preserve data
 }
 
+DatabaseWriter *DatabaseWriter::getInstance()
+{
+	if (instance == 0)
+	{
+		instance = new DatabaseWriter();
+	}
+	return instance;
+}
+
 void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone zones[30], int objsSel[10])
 {
 	// for (int i = 0; i < 8; i++)
@@ -130,7 +141,7 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 			// {
 			// 	cout << objsSel[obj] << " ";
 			// }
-
+			int flag = 1;
 			for (auto objectFound : listOfClassesFound)
 			{
 				if (checkIfObjSelected(get<0>(objectFound), objsSel))
@@ -139,23 +150,26 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 					{
 						for (auto objInV : this->vObj)
 						{
+
 							if (objInV.name.compare(to_string(get<0>(objectFound))) == 0)
 							{
+								flag = 0;
 								objInV.zones[colZone]++;
 							}
-							else
-							{
-								struct myObj objInvNew;
-								objInvNew.name = to_string(get<0>(objectFound));
-								for (int x = 0; x < 30; x++)
-								{
-									objInvNew.zones[x] = 0;
-								}
-								objInvNew.zones[colZone]++;
-								this->vObj.push_back(objInvNew);
-								break;
-							}
 						}
+						if (flag)
+						{
+							struct myObj objInvNew;
+							objInvNew.name = to_string(get<0>(objectFound));
+							for (int x = 0; x < 30; x++)
+							{
+								objInvNew.zones[x] = 0;
+							}
+							objInvNew.zones[colZone]++;
+							this->vObj.push_back(objInvNew);
+							break;
+						}
+
 						objectsFoundString = objectsFoundString + to_string(get<0>(objectFound)) + " ";
 					}
 				}
@@ -259,4 +273,14 @@ int DatabaseWriter::objectInZone(tuple<int, int, int> objectFound, Zone zone)
 vector<struct myObj> DatabaseWriter::getVector()
 {
 	return this->vObj;
+}
+
+void DatabaseWriter::setNZones(int nZones)
+{
+	this->nZones = nZones;
+}
+
+int DatabaseWriter::getZones()
+{
+	return this->nZones;
 }
