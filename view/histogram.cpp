@@ -55,12 +55,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         objects[countObjIndex] = QString::fromStdString(found.name);
         countObjIndex++;
     }
-    /**objects[0] = "Person";
-    objects[1] = "Banana";
-    objects[2] = "Poo";
-    objects[3] = "Butt";
-    objects[4] = "Fart";
-    objects[5] = "Dick";**/
+  
     //nZones is the number that you get when you specify how many zones you want in mainwindow
     QVector<double> datax(nZones);
     for (int i = 0; i < nZones; i++)
