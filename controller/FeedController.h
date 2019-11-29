@@ -22,6 +22,8 @@ private:
     int classesOfObjsSelected[10];
     int currentZoneIndex;
     std::string objects[80];
+    int zonesDefinedCount;
+    DatabaseWriter * dbWriter;
 
 public:
     FeedController(/* args */);
@@ -31,5 +33,7 @@ public:
     void createZones(int array[8]);
     void getObjectsSelected(int objectsSelected[10]);
     std::string *getObjectsAvailable();
+
+    void setZonesCount(int zoneCount);
 };
 #endif

@@ -22,6 +22,7 @@ FeedController::FeedController()
     Mat frame;
     Mat outFrame;
     Zone zones[30];
+    zonesDefinedCount;
 
     for (int i = 0; i < 10; i++)
     {
@@ -60,7 +61,7 @@ void FeedController::updateFeedThread()
         exit(-1);
 
     ModelOutput model = ModelOutput();
-    DatabaseWriter dbWriter = DatabaseWriter();
+    this->dbWriter = DatabaseWriter::getInstance();
 
     int frameCount = 0;
     //threaded to output the webcam, hence the infinite loop
@@ -73,7 +74,18 @@ void FeedController::updateFeedThread()
         if (frameCount == 30)
         {
             vector<tuple<int, int, int>> listOfClassesFound = model.getClassesAndMidpoints();
+<<<<<<< HEAD
             dbWriter.write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
+=======
+            dbWriter->write(listOfClassesFound, this->zones, this->classesOfObjsSelected);
+            // cout << "----------" << endl;
+            // for (auto x : listOfClassesFound)
+            // {
+            //     cout << "tuples:" << endl;
+            //     cout << "Id: " << get<0>(x) << "X, Y: " << get<1>(x) << ", " << get<2>(x) << endl;
+            // }
+            // cout << "----------" << endl;
+>>>>>>> 2dab7a878cb3e4981dea2138bdd0e3cd8a0be885
             frameCount = 0;
         }
         frameCount++;
@@ -114,4 +126,12 @@ void FeedController::getObjectsSelected(int objectsSelected[10])
 string *FeedController::getObjectsAvailable()
 {
     return this->objects;
+}
+
+void FeedController::setZonesCount(int zoneCount)
+{
+    this->zonesDefinedCount = zoneCount;
+    cout << "FEEDC NZOMES: " << endl;
+    cout << this->zonesDefinedCount << endl;
+    this->dbWriter->setNZones(zoneCount);
 }
