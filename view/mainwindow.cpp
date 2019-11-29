@@ -10,7 +10,6 @@
 #include "zonelist.h"
 #include "histogram.h"
 #include "heatmap.h"
-#include "../controller/ZonesController.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>

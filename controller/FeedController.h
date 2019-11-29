@@ -23,7 +23,7 @@ private:
     int currentZoneIndex;
     std::string objects[80];
     int zonesDefinedCount;
-    DatabaseWriter * dbWriter;
+    DatabaseWriter *dbWriter;
 
 public:
     FeedController(/* args */);

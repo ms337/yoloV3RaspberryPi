@@ -13,7 +13,7 @@ using namespace std;
 */
 ModelOutput::ModelOutput()
 {
-  //initialize the parameters
+    //initialize the parameters
     confThreshold = 0.3;
     nmsThreshold = 0.3;
     inpWidth = 416;

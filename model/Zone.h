@@ -1,8 +1,14 @@
-/*!
-   \file Zone.h
-   \brief header file to zone.cpp
-   \author team9
-*/
+/**
+ * @file Zone.h
+ * @author team9
+ * @brief header file to zone.cpp
+ * @version 0.1
+ * @date 2019-11-28
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #ifndef ZONE
 #define ZONE
 #include <iostream>
