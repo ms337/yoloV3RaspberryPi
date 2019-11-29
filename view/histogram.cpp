@@ -24,22 +24,6 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     //     }
     // }
 
-    // string line;
-    // ifstream inFile;
-    // inFile.open("./stats.txt", ifstream::in);
-
-    // if (inFile.is_open())
-    // {
-    //     while (getline(inFile, line))
-    //     {
-    //         cout << line << '\n'
-    //              << endl;
-    //     }
-    //     inFile.close();
-    // }
-    // else
-    //     cout << "lol didnt open" << endl;
-
     /**
      * Input: hash table where key is object and value is an array of ints
      * Each array will be of length nZones (array index refers to which zone, content of array is occurences of object in zone)
@@ -71,8 +55,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         QVector<double> datay(nZones);
         for (int j = 0; j < nZones; j++)
         {
-
-            datay[j] = (double)vObj[i].zones[j]; //rand() % 10;
+            datay[j] = vObj[i].zones[j];
         }
         dataArr[i] = datay;
     }

@@ -16,6 +16,7 @@ Heatmap::Heatmap(QWidget *parent) : QDialog(parent),
     {
         cout << x.name << endl;
     }
+
     struct myObj obj;
     obj.name = "apple";
     for (int x = 0; x < 30; x++)
