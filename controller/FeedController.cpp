@@ -40,7 +40,7 @@ FeedController::FeedController()
 FeedController::~FeedController()
 {
     // internalThread->interrupt();
-    std::cout << "hey" << std::endl;
+
     internalThread->join();
 }
 /*!
@@ -105,7 +105,7 @@ void FeedController::getObjectsSelected(int objectsSelected[10])
 
     for (int i = 0; i < 10; i++)
     {
-        cout << "ObjectLabelNo: " << objectsSelected[i] << endl;
+
         this->classesOfObjsSelected[i] = objectsSelected[i];
     }
 }
@@ -121,7 +121,6 @@ string *FeedController::getObjectsAvailable()
 void FeedController::setZonesCount(int zoneCount)
 {
     this->zonesDefinedCount = zoneCount;
-    cout << "FEEDC NZOMES: " << endl;
-    cout << this->zonesDefinedCount << endl;
+
     this->dbWriter->setNZones(zoneCount);
 }

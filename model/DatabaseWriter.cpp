@@ -1,3 +1,14 @@
+/**
+ * @file DatabaseWriter.cpp
+ * @author Madhav (you@domain.com)
+ * @brief DatabaseWriter Singleton to write to and read from DB
+ * @version 0.1
+ * @date 2019-11-28
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #include "DatabaseWriter.h"
 
 using namespace std;
@@ -10,7 +21,10 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 }
 
 DatabaseWriter *DatabaseWriter::instance = 0;
-
+/**
+ * @brief Construct a new Database Writer:: Database Writer object
+ * 
+ */
 DatabaseWriter::DatabaseWriter()
 {
 	nZones = 0;
@@ -84,10 +98,19 @@ DatabaseWriter::DatabaseWriter()
 	}
 }
 
+/**
+ * @brief Destroy the Database Writer:: Database Writer object
+ * 
+ */
 DatabaseWriter::~DatabaseWriter()
 {
 	sqlite3_close(this->db); // closes the database to preserve data
 }
+/**
+ * @brief Singleton returned object
+ * 
+ * @return DatabaseWriter* 
+ */
 
 DatabaseWriter *DatabaseWriter::getInstance()
 {
@@ -97,13 +120,16 @@ DatabaseWriter *DatabaseWriter::getInstance()
 	}
 	return instance;
 }
-
+/**
+ * @brief  write to database 
+ * 
+ * @param listOfClassesFound  The list of classes of objects return from the model
+ * @param zones The list of zones defined
+ * @param objsSel The array of objects selected
+ */
 void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone zones[30], int objsSel[10])
 {
-	// for (int i = 0; i < 8; i++)
-	// {
-	// 	cout << "ZONE 1: " << zones[0].getZoneArray()[i] << endl;
-	// }
+
 	(this->curTime)++;
 
 	int rc;
@@ -112,11 +138,8 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 	char *curTimeString;
 	char *number;
 
-	// cout << sql << endl;
-
 	char query[100];
 	sprintf(query, "INSERT INTO trackingData (time) VALUES (%d);", this->curTime); //creates a new entry into the database with the current keyID. Has nothing in the zones at this point
-	// cout << query << endl;
 
 	//Inserts new row
 	rc = sqlite3_exec(this->db, query, callback, 0, &zErrMsg);
@@ -137,10 +160,6 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 			char updateQuery[300];
 			string objectsFoundString = "";
 
-			// for (int obj = 0; obj < 10; obj++)
-			// {
-			// 	cout << objsSel[obj] << " ";
-			// }
 			int flag = 1;
 			for (auto objectFound : listOfClassesFound)
 			{
@@ -177,35 +196,6 @@ void DatabaseWriter::write(vector<tuple<int, int, int>> listOfClassesFound, Zone
 				rc = sqlite3_exec(this->db, updateQuery, callback, 0, &zErrMsg);
 				memset(updateQuery, 0, 300);
 			}
-
-			// int i = 1; // starts at 1 because array at 0 is the keyID column, which we do not need
-
-			// while (i <= MAX_ZONES) // up until 30 as we begin at 1, rather than less than
-			// {
-			// 	char parseArray[300]; // Used for the entire update statement
-			// 	char dataEntry[100];  // used for the current objeccts detected for the given zone
-
-			// 	for (vector<tuple<int, int, int>>::iterator it = listOfClassesFound.begin(); it != listOfClassesFound.end(); ++it)
-			// 	{ // for each object
-
-			// 		if (inZone(zones[i - 1], get<1>(*it), get<2>(*it)))
-			// 		{ // if it is in the current zone. i-1 as the columns begin at i=1 in the database but begins at 0 in the array
-			// 			char arr1[7];
-			// 			sprintf(arr1, "%d ", get<0>(*it));
-
-			// 			strcat(dataEntry, arr1);
-			// 		}
-			// 	}
-			// 	cout << "DATA ENTRY: " << dataEntry << endl;
-			// 	sprintf(parseArray, "UPDATE trackingData SET zone%d = '%s' WHERE time=%d;", i, dataEntry, this->curTime); // after looking through all the objects, we want to update the current column with all of the detected objects
-			// 	// cout << parseArray << endl;
-			// 	rc = sqlite3_exec(this->db, parseArray, callback, 0, &zErrMsg);
-
-			// 	memset(parseArray, 0, 300);
-
-			// 	memset(dataEntry, 0, 100);
-			// 	i++;
-			// }
 		}
 	}
 }
@@ -217,26 +207,22 @@ int DatabaseWriter::inZone(Zone zone, int x, int y)
 	int trY = zone.getZoneArray()[5];
 	int blY = zone.getZoneArray()[1];
 
-	// cout << "------" << endl;
-	// cout << "blX: " << blX << endl;
-	// cout << "trX:  " << trX << endl;
-	// cout << "trY: " << trY << endl;
-	// cout << "blY: " << blY << endl;
-	// cout << "Midpoint X " << x << endl;
-	// cout << "Midpoint Y" << y << endl;
-	// cout << "------" << endl;
-
+	//Condition to check if midpoint in Zone
 	if ((blX < x && x <= trX) && (trY < y && y <= blY))
 	{
-		// cout << "234567890" << endl;
-		//cout << "c: " << c << endl;
-		//cout << "ztl: " << z.tl.x << endl;
-		//cout << "zbr: " << z.br.x << endl;
+
 		return 1;
 	}
 	return 0;
 }
 
+/**
+ * @brief Check if an object returh from model is selected
+ * 
+ * @param objClassNo label no
+ * @param objsSel array of objects selected
+ * @return int 
+ */
 int DatabaseWriter::checkIfObjSelected(int objClassNo, int objsSel[10])
 {
 	for (int x = 0; x < 10; x++)
@@ -248,6 +234,14 @@ int DatabaseWriter::checkIfObjSelected(int objClassNo, int objsSel[10])
 	}
 	return 0;
 }
+
+/**
+ * @brief chec if object in zone
+ * 
+ * @param objectFound 
+ * @param zone 
+ * @return int 
+ */
 
 int DatabaseWriter::objectInZone(tuple<int, int, int> objectFound, Zone zone)
 {
@@ -261,28 +255,37 @@ int DatabaseWriter::objectInZone(tuple<int, int, int> objectFound, Zone zone)
 
 	if ((blX < midX && midX <= trX) && (trY < midY && midY <= blY))
 	{
-		// cout << "234567890" << endl;
-		//cout << "c: " << c << endl;
-		//cout << "ztl: " << z.tl.x << endl;
-		//cout << "zbr: " << z.br.x << endl;
+
 		return 1;
 	}
 	return 0;
 }
-
+/**
+ * @brief get Vector of items written
+ * 
+ * @return vector<struct myObj> 
+ */
 vector<struct myObj> DatabaseWriter::getVector()
 {
 	return this->vObj;
 }
 
+/**
+ * @brief set no of zones selected
+ * 
+ * @param nZones 
+ */
 void DatabaseWriter::setNZones(int nZones)
 {
-	cout << "PARAM Z: " << nZones << endl;
+
 	this->nZones = nZones;
-	cout << "SETTING: " << endl;
-	cout << this->nZones << endl;
 }
 
+/**
+ * @brief get no of zones selected
+ * 
+ * @return int 
+ */
 int DatabaseWriter::getZones()
 {
 	return this->nZones;

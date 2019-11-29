@@ -111,10 +111,10 @@ void MainWindow::on_pushButton_clicked()
             allCoords[k][6] = fourCoords[k][0];
             allCoords[k][7] = fourCoords[k][3];
         }
-        cout << "Zones Created: added zones to FeedController" << endl;
+
         client.createZones(allCoords[i]);
     }
-    cout << "GUI NZONES: " << nZones << endl;
+
     client.setZonesCount(nZones);
 }
 
@@ -199,11 +199,10 @@ void MainWindow::on_pushButton2_clicked() //Calls object list
 {
     ObjectList objlist;
     objlist.exec();
-    cout << "Objects Selected From GUI: " << endl;
+
     for (int i = 0; i < 10; i++)
     {
         chosenObjects[i] = objlist.getObjs(i);
-        cout << chosenObjects[i] << endl;
     }
     //Pass chosenObjects to controller here
     client.getObjectsSelected(chosenObjects);

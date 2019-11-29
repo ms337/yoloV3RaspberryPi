@@ -1,3 +1,13 @@
+/**
+ * @file histogram.cpp
+ * @author Allen
+ * @brief 
+ * @version 0.1
+ * @date 2019-11-28
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #include "histogram.h"
 #include "ui_histogram.h"
 #include <iostream>
@@ -6,6 +16,11 @@
 
 using namespace std;
 
+/**
+ * @brief Construct a new Histogram:: Histogram object
+ * 
+ * @param parent 
+ */
 Histogram::Histogram(QWidget *parent) : QDialog(parent),
                                         ui(new Ui::Histogram)
 {
@@ -14,15 +29,6 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     DatabaseWriter *dbWriter = DatabaseWriter::getInstance();
 
     vector<struct myObj> vObj = dbWriter->getVector();
-    cout << vObj.size() << endl;
-    cout << "PRINTING VECTOR: " << endl;
-    // for (struct myObj x : vObj)
-    // {
-    //     for (int z = 0; z < 30; z++)
-    //     {
-    //         cout << x.zones[z] << endl;
-    //     }
-    // }
 
     /**
      * Input: hash table where key is object and value is an array of ints
@@ -31,8 +37,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     **/
 
     int nZones = dbWriter->getZones(); //get this through a getter function in mainwindow
-    cout << "NZONES" << endl;
-    cout << nZones << endl;
+
     int nObjects = vObj.size(); //this is the number of structs
     int maxOccurrences = 10;
 
@@ -62,8 +67,7 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
         dataArr[i] = datay;
     }
 
-    // cout << dataArr.first();
-    QCPBarsGroup *group = new QCPBarsGroup(ui->widget);
+        QCPBarsGroup *group = new QCPBarsGroup(ui->widget);
 
     for (int i = 0; i < nObjects; i++)
     {
@@ -84,6 +88,10 @@ Histogram::Histogram(QWidget *parent) : QDialog(parent),
     //ui->widget->rescaleAxes();
     ui->widget->replot();
 }
+/**
+ * @brief Destroy the Histogram:: Histogram object
+ * 
+ */
 
 Histogram::~Histogram()
 {

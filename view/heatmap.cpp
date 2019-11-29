@@ -1,8 +1,23 @@
+/**
+ * @file heatmap.cpp
+ * @author Allen Bao
+ * @brief 
+ * @version 0.1
+ * @date 2019-11-28
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #include "heatmap.h"
 #include "ui_heatmap.h"
 
 using namespace std;
 
+/**
+ * @brief Construct a new Heatmap:: Heatmap object
+ * 
+ * @param parent 
+ */
 Heatmap::Heatmap(QWidget *parent) : QDialog(parent),
                                     ui(new Ui::Heatmap)
 {
@@ -81,6 +96,10 @@ Heatmap::Heatmap(QWidget *parent) : QDialog(parent),
     ui->widget->replot();
 }
 
+/**
+ * @brief Destroy the Heatmap:: Heatmap object
+ * 
+ */
 Heatmap::~Heatmap()
 {
     delete ui;

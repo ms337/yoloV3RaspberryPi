@@ -36,8 +36,7 @@ int main(int argc, char *argv[])
 
     // ModelOutput model = ModelOutput();
 
-    std::cout << "hey" << std::endl;
-
+    
     // client.render();
 
     return a.exec();
