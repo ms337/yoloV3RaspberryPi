@@ -1,4 +1,4 @@
-#Setup
+# Setup
 
 Following are the steps to setup and build the program:
 
